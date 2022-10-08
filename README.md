@@ -49,7 +49,7 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
 
 
 ### Project structure
-lib/
+```lib/
 ├─ core/
 │ ├─ constants/
 │ ├─ enums/
@@ -89,7 +89,7 @@ lib/
 ├─ app.dart
 ├─ main_dev.dart
 ├─ main_preprod.dart
-├─ main_prod.dart
+├─ main_prod.dart```
 
 ### The links that helped me create this template
 - [Dev Café](https://www.youtube.com/channel/UCOAErkorTQ0ZbUK9vkFyn8A)
