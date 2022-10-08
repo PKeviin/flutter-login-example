@@ -13,8 +13,11 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
 `flutter pub run build_runner build --delete-conflicting-outputs`
 
 #### [Splash screen](https://pub.dev/packages/flutter_native_splash) command line
-flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml
-flutter pub run flutter_native_splash:remove
+`flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml`
+`flutter pub run flutter_native_splash:remove`
+
+#### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons) command line
+`flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon.yaml`
 
 
 ### Informations

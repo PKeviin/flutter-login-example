@@ -74,10 +74,6 @@ dev_dependencies:
   freezed: ^2.1.1
   flutter_launcher_icons: ^0.10.0
   flutter_native_splash: ^2.2.10+1
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/icon.png"
 
 flutter:
   uses-material-design: true
