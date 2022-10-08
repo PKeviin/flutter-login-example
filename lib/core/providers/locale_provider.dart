@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -48,9 +47,7 @@ class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
     }
     _initLocalTimeAgo();
     _setLocalTimeAgo();
-    if (kDebugMode) {
-      print('language [${state.languageCode}]');
-    }
+    debugPrint('language [${state.languageCode}]');
   }
 
   /// Get the language code

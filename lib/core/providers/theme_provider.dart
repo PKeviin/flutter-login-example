@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../constants/secure_storage_constant.dart';
 import '../impl/secure_storage_impl.dart';
 
@@ -47,9 +47,7 @@ class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
     } else {
       state = ThemeMode.light;
     }
-    if (kDebugMode) {
-      print('theme [${state.name}]');
-    }
+    debugPrint('theme [${state.name}]');
   }
 
   /// Get theme
@@ -61,8 +59,6 @@ class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   Future<void> setTheme(ThemeMode theme) async {
     state = theme;
     await secureStorageImpl.addItem(keyThemeMode, state.name);
-    if (kDebugMode) {
-      print('theme [${state.name}]');
-    }
+    debugPrint('theme [${state.name}]');
   }
 }

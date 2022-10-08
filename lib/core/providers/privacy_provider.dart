@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../constants/secure_storage_constant.dart';
 import '../enums/privacy_status_enum.dart';
 import '../impl/secure_storage_impl.dart';
@@ -33,17 +34,13 @@ class PrivacyState extends StateNotifier<PrivacyStatusEnum> {
     } else {
       state = PrivacyStatusEnum.requested;
     }
-    if (kDebugMode) {
-      print('privacy [${state.name}]');
-    }
+    debugPrint('privacy [${state.name}]');
   }
 
   /// Changing the privacy
   Future<void> setPrivacy(PrivacyStatusEnum privacy) async {
     state = privacy;
     await secureStorageImpl.addItem(keyPrivacy, state.name);
-    if (kDebugMode) {
-      print('privacy [${state.name}]');
-    }
+    debugPrint('privacy [${state.name}]');
   }
 }

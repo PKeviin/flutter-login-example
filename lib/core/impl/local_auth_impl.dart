@@ -22,9 +22,7 @@ class LocalAuthImpl implements LocalAuth {
       return await LocalAuthentication().canCheckBiometrics &&
           await LocalAuthentication().isDeviceSupported();
     } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print(e.message);
-      }
+      debugPrint(e.message);
       return false;
     }
   }
@@ -35,9 +33,7 @@ class LocalAuthImpl implements LocalAuth {
     try {
       return await LocalAuthentication().getAvailableBiometrics();
     } on PlatformException catch (e) {
-      if (kDebugMode) {
-        print(e.message);
-      }
+      debugPrint(e.message);
       return <BiometricType>[];
     }
   }
@@ -54,9 +50,7 @@ class LocalAuthImpl implements LocalAuth {
           ),
         );
       } on PlatformException catch (e) {
-        if (kDebugMode) {
-          print(e.message);
-        }
+        debugPrint(e.message);
         return false;
       }
     } else {

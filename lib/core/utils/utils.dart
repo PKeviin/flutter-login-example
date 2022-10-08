@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+
 import '../credentials.dart';
 import '../impl/secure_storage_impl.dart';
 import 'platform/platform.dart';
@@ -19,7 +20,11 @@ class Utils {
     await SecureStorageImpl().initSecureStorage();
     _initErrorDisplayManagement();
     await _getVersion();
-    getPlatform();
+    _initDebugPrint(
+      isRelease: kReleaseMode,
+      version: Credential.appVersion,
+      platform: getPlatform(),
+    );
   }
 
   /// Checks if the production environment is active
@@ -37,9 +42,7 @@ class Utils {
       Credential.appVersion = packageInfo.version;
       Credential.buildNumber = packageInfo.buildNumber;
     });
-    if (kDebugMode) {
-      print('app version [${Credential.appVersion}]');
-    }
+    debugPrint('app version [${Credential.appVersion}]');
   }
 
   /// Get platform
@@ -59,10 +62,24 @@ class Utils {
     } else if (platformBase.isLinux) {
       platform = 'linux';
     }
-    if (kDebugMode) {
-      print('platform [$platform]');
-    }
+    debugPrint('platform [$platform]');
     return platform;
+  }
+
+  /// Disabling print in release
+  static void _initDebugPrint({
+    required bool isRelease,
+    required String platform,
+    String? version,
+  }) {
+    if (isRelease) {
+      debugPrint = (String? message, {int? wrapWidth}) {};
+    } else {
+      debugPrint = (String? message, {int? wrapWidth}) {
+        message = '[${DateTime.now()} - $version - $platform]: $message';
+        debugPrintSynchronously(message, wrapWidth: wrapWidth);
+      };
+    }
   }
 
   /// Logger
