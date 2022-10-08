@@ -59,10 +59,6 @@ linter:
     # return, but that return is still complex enough that a "body" is worth it.
     prefer_expression_function_bodies: false
 
-    # Conflicts with the convention used by flutter, which puts `Key key`
-    # and `@required Widget child` last.
-    always_put_required_named_parameters_first: false
-
     # There are situations where we voluntarily want to catch everything,
     # especially as a library.
     avoid_catches_without_on_clauses: false
