@@ -20,11 +20,11 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserEntity {
-  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   SessionEntity get session => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get mobile => throw _privateConstructorUsedError;
   bool get isValid => throw _privateConstructorUsedError;
   String? get localization => throw _privateConstructorUsedError;
@@ -41,11 +41,11 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      String name,
+      {String name,
       String lastName,
       String email,
       SessionEntity session,
+      int? id,
       String? mobile,
       bool isValid,
       String? localization});
@@ -63,20 +63,16 @@ class _$UserEntityCopyWithImpl<$Res> implements $UserEntityCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? session = freezed,
+    Object? id = freezed,
     Object? mobile = freezed,
     Object? isValid = freezed,
     Object? localization = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -93,6 +89,10 @@ class _$UserEntityCopyWithImpl<$Res> implements $UserEntityCopyWith<$Res> {
           ? _value.session
           : session // ignore: cast_nullable_to_non_nullable
               as SessionEntity,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       mobile: mobile == freezed
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
@@ -124,11 +124,11 @@ abstract class _$$_UserEntityCopyWith<$Res>
       __$$_UserEntityCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      String name,
+      {String name,
       String lastName,
       String email,
       SessionEntity session,
+      int? id,
       String? mobile,
       bool isValid,
       String? localization});
@@ -149,20 +149,16 @@ class __$$_UserEntityCopyWithImpl<$Res> extends _$UserEntityCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? lastName = freezed,
     Object? email = freezed,
     Object? session = freezed,
+    Object? id = freezed,
     Object? mobile = freezed,
     Object? isValid = freezed,
     Object? localization = freezed,
   }) {
     return _then(_$_UserEntity(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -179,6 +175,10 @@ class __$$_UserEntityCopyWithImpl<$Res> extends _$UserEntityCopyWithImpl<$Res>
           ? _value.session
           : session // ignore: cast_nullable_to_non_nullable
               as SessionEntity,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       mobile: mobile == freezed
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
@@ -199,11 +199,11 @@ class __$$_UserEntityCopyWithImpl<$Res> extends _$UserEntityCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserEntity implements _UserEntity {
   const _$_UserEntity(
-      {this.id,
-      required this.name,
+      {required this.name,
       required this.lastName,
       required this.email,
       required this.session,
+      this.id,
       this.mobile,
       this.isValid = false,
       this.localization});
@@ -212,8 +212,6 @@ class _$_UserEntity implements _UserEntity {
       _$$_UserEntityFromJson(json);
 
   @override
-  final int? id;
-  @override
   final String name;
   @override
   final String lastName;
@@ -221,6 +219,8 @@ class _$_UserEntity implements _UserEntity {
   final String email;
   @override
   final SessionEntity session;
+  @override
+  final int? id;
   @override
   final String? mobile;
   @override
@@ -231,7 +231,7 @@ class _$_UserEntity implements _UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, lastName: $lastName, email: $email, session: $session, mobile: $mobile, isValid: $isValid, localization: $localization)';
+    return 'UserEntity(name: $name, lastName: $lastName, email: $email, session: $session, id: $id, mobile: $mobile, isValid: $isValid, localization: $localization)';
   }
 
   @override
@@ -239,11 +239,11 @@ class _$_UserEntity implements _UserEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UserEntity &&
-            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality().equals(other.session, session) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.mobile, mobile) &&
             const DeepCollectionEquality().equals(other.isValid, isValid) &&
             const DeepCollectionEquality()
@@ -254,11 +254,11 @@ class _$_UserEntity implements _UserEntity {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(lastName),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(session),
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(mobile),
       const DeepCollectionEquality().hash(isValid),
       const DeepCollectionEquality().hash(localization));
@@ -278,11 +278,11 @@ class _$_UserEntity implements _UserEntity {
 
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
-      {final int? id,
-      required final String name,
+      {required final String name,
       required final String lastName,
       required final String email,
       required final SessionEntity session,
+      final int? id,
       final String? mobile,
       final bool isValid,
       final String? localization}) = _$_UserEntity;
@@ -291,8 +291,6 @@ abstract class _UserEntity implements UserEntity {
       _$_UserEntity.fromJson;
 
   @override
-  int? get id;
-  @override
   String get name;
   @override
   String get lastName;
@@ -300,6 +298,8 @@ abstract class _UserEntity implements UserEntity {
   String get email;
   @override
   SessionEntity get session;
+  @override
+  int? get id;
   @override
   String? get mobile;
   @override

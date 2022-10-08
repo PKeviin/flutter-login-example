@@ -122,10 +122,7 @@ class __$$_APIJsonResponseCopyWithImpl<$Res>
     Object? statusCode = freezed,
   }) {
     return _then(_$_APIJsonResponse(
-      data: data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      data: data == freezed ? _value.data : data,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
