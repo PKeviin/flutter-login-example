@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
+
 import '../colors/app_colors.dart';
 import 'app_font_weight.dart';
 
 class AppTextStyle {
-  // TODO(pastork): Using the theme text set 2021 instead of 2018
+  // TODO(PKeviin): Using the theme text set 2021 instead of 2018
   // displayLarge, displayMedium, displaySmall
   // headlineMedium, headlineSmall
   // titleLarge, titleMedium, titleSmall

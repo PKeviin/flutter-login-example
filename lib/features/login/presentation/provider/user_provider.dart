@@ -167,6 +167,6 @@ class UserState extends StateNotifier<UserEntity?> {
   /// User re-authentication request
   Future<void> reconnect({bool showDialog = true}) async {
     await logout();
-    // TODO(pastork): show popup
+    // TODO(PKeviin): show popup
   }
 }
