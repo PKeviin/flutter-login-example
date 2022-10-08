@@ -44,11 +44,10 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
 ### Possibility of improvement
 1. Replace [flutter_dotenv](https://pub.dev/packages/flutter_dotenv) package to make key hacking harder. Instead, use the [ENVied](https://pub.dev/packages/envied) package and enable obfuscation.
    - https://codewithandrea.com/articles/flutter-api-keys-dart-define-env-files/
-2. Add native splash screen with [flutter_native_splash](https://pub.dev/packages/flutter_native_splash)
-3. Added accessibility with [Semantics](https://api.flutter.dev/flutter/widgets/Semantics-class.html)
+2. Added accessibility with [Semantics](https://api.flutter.dev/flutter/widgets/Semantics-class.html)
    - https://blog.gskinner.com/archives/2022/09/flutter-crafting-a-great-experience-for-screen-readers.html
-4. Improved l10n files (`lib/core/locales`)
-5. Implementation of tests with [mockito](https://pub.dev/packages/mockito) and [alchemist](https://pub.dev/packages/alchemist)
+3. Improved l10n files (`lib/core/locales`)
+4. Implementation of tests with [mockito](https://pub.dev/packages/mockito) and [alchemist](https://pub.dev/packages/alchemist)
 
 
 ### Useful package
