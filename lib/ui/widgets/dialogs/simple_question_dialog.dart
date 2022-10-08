@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
 import '../../../core/locales/generated/l10n.dart';
 import '../../colors/app_colors.dart';
 import '../../spacing/app_spacing.dart';
@@ -50,7 +51,10 @@ class SimpleQuestionDialog extends StatelessWidget {
               descriptionText,
               maxLines: 3,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColors.black,
+              ),
             ),
             const SizedBox(height: AppSpacing.xxlg),
             Row(
