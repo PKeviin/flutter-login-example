@@ -12,6 +12,10 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
 ##### Build runner command line for [freezed](https://pub.dev/packages/freezed)
 `flutter pub run build_runner build --delete-conflicting-outputs`
 
+#### [Splash screen](https://pub.dev/packages/flutter_native_splash) command line
+flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml
+flutter pub run flutter_native_splash:remove
+
 
 ### Informations
 1. Implementation of `FakeLoginRemoteDataSourceImpl`, Using `LoginRemoteDataSourceImpl` to implement real login
