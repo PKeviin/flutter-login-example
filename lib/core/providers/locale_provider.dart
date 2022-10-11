@@ -7,13 +7,14 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../constants/params_constant.dart';
 import '../constants/secure_storage_constant.dart';
-import '../impl/secure_storage_impl.dart';
+import '../impl/secure_storage/secure_storage_provider.dart';
+import '../impl/secure_storage/secure_storage_repository.dart';
 import '../locales/generated/l10n.dart';
 
 final localeProvider = StateNotifierProvider<LocaleState, Locale>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
+  final secureStorage = ref.watch(secureStorageImplProvider);
   return LocaleState(
-    secureStorageImpl: secureStorage,
+    secureStorage: secureStorage,
   );
 });
 
@@ -25,16 +26,16 @@ abstract class LocaleRepository {
 
 class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
   LocaleState({
-    required this.secureStorageImpl,
+    required this.secureStorage,
   }) : super(kFallbackLocale) {
     unawaited(_initLocale());
   }
-  SecureStorageImpl secureStorageImpl;
+  SecureStorageRepository secureStorage;
 
   /// Retrieval of the language used
   Future _initLocale() async {
-    final languageCode = await secureStorageImpl.getItem(keyLanguageCode);
-    final countryCode = await secureStorageImpl.getItem(keyCountryCode);
+    final languageCode = await secureStorage.getItem(keyLanguageCode);
+    final countryCode = await secureStorage.getItem(keyCountryCode);
     if (languageCode != null) {
       state = Locale(languageCode, countryCode);
     } else {
@@ -62,8 +63,8 @@ class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
   @override
   Future<void> setLocale(Locale locale) async {
     state = locale;
-    await secureStorageImpl.addItem(keyLanguageCode, state.languageCode);
-    await secureStorageImpl.addItem(keyCountryCode, state.countryCode);
+    await secureStorage.addItem(keyLanguageCode, state.languageCode);
+    await secureStorage.addItem(keyCountryCode, state.countryCode);
     _setLocalTimeAgo();
   }
 

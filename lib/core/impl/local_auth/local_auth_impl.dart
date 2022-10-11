@@ -1,26 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 
-/// LocalAuth provider
-final localAuthProvider = Provider<LocalAuthImpl>((ref) => LocalAuthImpl());
+import 'local_auth_repository.dart';
 
-abstract class LocalAuth {
-  Future<bool>? get hasBiometrics;
-  Future<List<BiometricType>>? get availableBiometrics;
-  Future<bool>? get hasLocalAuthenticate;
-}
-
-class LocalAuthImpl implements LocalAuth {
-  LocalAuthImpl();
+class LocalAuthImpl implements LocalAuthRepository {
+  LocalAuthImpl({
+    required this.localAuthentication,
+  });
+  LocalAuthentication localAuthentication;
 
   /// Checks if biometric authentication is available
   @override
   Future<bool> get hasBiometrics async {
     try {
-      return await LocalAuthentication().canCheckBiometrics &&
-          await LocalAuthentication().isDeviceSupported();
+      return await localAuthentication.canCheckBiometrics &&
+          await localAuthentication.isDeviceSupported();
     } on PlatformException catch (e) {
       debugPrint(e.message);
       return false;
@@ -31,7 +26,7 @@ class LocalAuthImpl implements LocalAuth {
   @override
   Future<List<BiometricType>> get availableBiometrics async {
     try {
-      return await LocalAuthentication().getAvailableBiometrics();
+      return await localAuthentication.getAvailableBiometrics();
     } on PlatformException catch (e) {
       debugPrint(e.message);
       return <BiometricType>[];
@@ -43,7 +38,7 @@ class LocalAuthImpl implements LocalAuth {
   Future<bool> get hasLocalAuthenticate async {
     if (await hasBiometrics) {
       try {
-        return await LocalAuthentication().authenticate(
+        return await localAuthentication.authenticate(
           localizedReason: 'Scan to Authenticate',
           options: const AuthenticationOptions(
             stickyAuth: true,

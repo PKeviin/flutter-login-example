@@ -72,7 +72,7 @@ class App extends ConsumerWidget {
 
   /// Added a displayable snack throughout the application
   /// Listening failure provider
-  /// [WidgetRef] ref
+  /// [ref] ref
   void _listenFailureSnackbar(WidgetRef ref) {
     ref.listen<Failure?>(failureProvider, (oldFailure, newFailure) async {
       if (newFailure != null && navigatorKey.currentContext != null) {
@@ -86,7 +86,8 @@ class App extends ConsumerWidget {
 
   /// Added a loader overlay throughout the application
   /// Listening loader provider
-  /// [WidgetRef] ref
+  /// [ref] ref
+  /// [context] context
   void _listenLoaderOverlay(WidgetRef ref, BuildContext context) {
     ref.listen<bool>(loaderProvider, (oldLoader, newLoader) {
       if (newLoader) {

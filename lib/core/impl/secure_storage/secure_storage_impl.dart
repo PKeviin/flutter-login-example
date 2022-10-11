@@ -1,31 +1,26 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// SecureStorage provider
-final secureStorageProvider =
-    Provider<SecureStorageImpl>((ref) => SecureStorageImpl());
+import 'secure_storage_repository.dart';
 
 const _iOptions = IOSOptions(accessibility: IOSAccessibility.first_unlock);
 const AndroidOptions _androidOptions =
     AndroidOptions(encryptedSharedPreferences: true);
 
-abstract class SecureStorage {
-  Future addItem(String key, String value);
-  Future<String?> getItem(String key);
-  Future removeItem(String key);
-  Future removeAll();
-}
-
-class SecureStorageImpl implements SecureStorage {
-  SecureStorageImpl();
+class SecureStorageImpl implements SecureStorageRepository {
+  SecureStorageImpl({
+    required this.secureStorage,
+    required this.sharePreference,
+  });
+  FlutterSecureStorage secureStorage;
+  Future<SharedPreferences> sharePreference;
 
   /// Phone storage initialization
   /// IOS Keychain does not delete data when uninstalling the application
   Future initSecureStorage() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await sharePreference;
     if (prefs.getBool('first_run') ?? true) {
-      await const FlutterSecureStorage().deleteAll(
+      await secureStorage.deleteAll(
         iOptions: _iOptions,
         aOptions: _androidOptions,
       );
@@ -35,8 +30,7 @@ class SecureStorageImpl implements SecureStorage {
 
   /// Adding a record
   @override
-  Future addItem(String key, String? value) async =>
-      const FlutterSecureStorage().write(
+  Future addItem(String key, String? value) async => secureStorage.write(
         key: key,
         value: value,
         iOptions: _iOptions,
@@ -45,8 +39,7 @@ class SecureStorageImpl implements SecureStorage {
 
   /// Retrieving a recording
   @override
-  Future<String?> getItem(String key) async =>
-      const FlutterSecureStorage().read(
+  Future<String?> getItem(String key) async => secureStorage.read(
         key: key,
         iOptions: _iOptions,
         aOptions: _androidOptions,
@@ -54,7 +47,7 @@ class SecureStorageImpl implements SecureStorage {
 
   /// Deleting a recording
   @override
-  Future removeItem(String key) async => const FlutterSecureStorage().delete(
+  Future removeItem(String key) async => secureStorage.delete(
         key: key,
         iOptions: _iOptions,
         aOptions: _androidOptions,
@@ -62,7 +55,7 @@ class SecureStorageImpl implements SecureStorage {
 
   /// Delete all records
   @override
-  Future removeAll() async => const FlutterSecureStorage().deleteAll(
+  Future removeAll() async => secureStorage.deleteAll(
         iOptions: _iOptions,
         aOptions: _androidOptions,
       );

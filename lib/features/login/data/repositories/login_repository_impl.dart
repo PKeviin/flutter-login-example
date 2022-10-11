@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/impl/network_info_impl.dart';
+import '../../../../core/impl/network_info/network_info_repository.dart';
 import '../../../../core/utils/errors/exceptions.dart';
 import '../../../../core/utils/errors/failures.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/login_repository.dart';
-import '../datasources/login_remote_data_source.dart';
-import '../datasources/user_local_data_source.dart';
+import '../datasources/login_remote_data_source/login_remote_data_source_repository.dart';
+import '../datasources/user_local_data_source/user_local_data_source_repository.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl({
@@ -18,13 +18,13 @@ class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl.locale({
     required this.localDataSource,
   });
-  final UserLocalDataSource localDataSource;
-  LoginRemoteDataSource? remoteDataSource;
-  NetworkInfo? networkInfo;
+  final UserLocalDataSourceRepository localDataSource;
+  LoginRemoteDataSourceRepository? remoteDataSource;
+  NetworkInfoRepository? networkInfo;
 
   @override
   Future<Either<Failure, UserEntity?>> loginUser() async {
-    if (await networkInfo!.isConnected!) {
+    if (networkInfo != null && await networkInfo!.isConnected) {
       try {
         final user = await remoteDataSource!.login();
         await localDataSource.saveUser(user);

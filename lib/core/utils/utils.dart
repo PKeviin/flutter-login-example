@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../credentials.dart';
-import '../impl/secure_storage_impl.dart';
+import '../impl/secure_storage/secure_storage_provider.dart';
 import 'platform/platform.dart';
 
 class Utils {
@@ -17,7 +18,12 @@ class Utils {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    await SecureStorageImpl().initSecureStorage();
+
+    // Storage initialization
+    final container = ProviderContainer();
+    final secureStorage = container.read(secureStorageImplProvider);
+    await secureStorage.initSecureStorage();
+
     _initErrorDisplayManagement();
     await _getVersion();
     _initDebugPrint(

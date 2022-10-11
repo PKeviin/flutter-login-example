@@ -2,29 +2,24 @@ import 'dart:convert';
 
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../../core/constants/errors_en_message_constant.dart';
-import '../../../../core/constants/secure_storage_constant.dart';
-import '../../../../core/impl/secure_storage_impl.dart';
-import '../../../../core/locales/generated/l10n.dart';
-import '../../../../core/utils/errors/exceptions.dart';
-import '../models/user_model.dart';
+import '../../../../../core/constants/errors_en_message_constant.dart';
+import '../../../../../core/constants/secure_storage_constant.dart';
+import '../../../../../core/impl/secure_storage/secure_storage_repository.dart';
+import '../../../../../core/locales/generated/l10n.dart';
+import '../../../../../core/utils/errors/exceptions.dart';
+import '../../models/user_model.dart';
+import 'user_local_data_source_repository.dart';
 
-abstract class UserLocalDataSource {
-  Future<void>? saveUser(UserModel? user);
-  Future<UserModel>? getUser();
-  Future<void> removeUser();
-}
-
-class UserLocalDataSourceImpl implements UserLocalDataSource {
+class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
   UserLocalDataSourceImpl({
-    required this.secureStorageImpl,
+    required this.secureStorage,
   });
-  SecureStorageImpl secureStorageImpl;
+  SecureStorageRepository secureStorage;
 
   @override
   Future<UserModel>? getUser() async {
     try {
-      final jsonString = await secureStorageImpl.getItem(keyCachedUser);
+      final jsonString = await secureStorage.getItem(keyCachedUser);
       if (jsonString != null) {
         final user = UserModel.fromJson(json.decode(jsonString));
         if (await _isTokenValid(user.token)) {
@@ -63,7 +58,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<void>? saveUser(UserModel? user) async {
     try {
       if (user != null) {
-        return await secureStorageImpl.addItem(
+        return await secureStorage.addItem(
           keyCachedUser,
           json.encode(user.toJson()),
         );
@@ -86,7 +81,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future removeUser() async {
     try {
-      await await secureStorageImpl.removeItem(keyCachedUser);
+      await await secureStorage.removeItem(keyCachedUser);
     } on Exception catch (e, staktrace) {
       throw CacheException(
         message: S.current.errorRetrievingUserCache,

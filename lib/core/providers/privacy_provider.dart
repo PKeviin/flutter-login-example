@@ -5,28 +5,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/secure_storage_constant.dart';
 import '../enums/privacy_status_enum.dart';
-import '../impl/secure_storage_impl.dart';
+import '../impl/secure_storage/secure_storage_provider.dart';
+import '../impl/secure_storage/secure_storage_repository.dart';
 import '../utils/extensions/string_extension.dart';
 
 final privacyProvider =
     StateNotifierProvider<PrivacyState, PrivacyStatusEnum>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
+  final secureStorage = ref.watch(secureStorageImplProvider);
   return PrivacyState(
-    secureStorageImpl: secureStorage,
+    secureStorage: secureStorage,
   );
 });
 
 class PrivacyState extends StateNotifier<PrivacyStatusEnum> {
   PrivacyState({
-    required this.secureStorageImpl,
+    required this.secureStorage,
   }) : super(PrivacyStatusEnum.unknown) {
     unawaited(_checkStatusPrivacy());
   }
-  SecureStorageImpl secureStorageImpl;
+  SecureStorageRepository secureStorage;
 
   /// Privacy status Check
   Future<void> _checkStatusPrivacy() async {
-    final store = await secureStorageImpl.getItem(keyPrivacy);
+    final store = await secureStorage.getItem(keyPrivacy);
     if (store.isNotNullOrEmpty()) {
       state = store == PrivacyStatusEnum.authorized.name
           ? PrivacyStatusEnum.authorized
@@ -40,7 +41,7 @@ class PrivacyState extends StateNotifier<PrivacyStatusEnum> {
   /// Changing the privacy
   Future<void> setPrivacy(PrivacyStatusEnum privacy) async {
     state = privacy;
-    await secureStorageImpl.addItem(keyPrivacy, state.name);
+    await secureStorage.addItem(keyPrivacy, state.name);
     debugPrint('privacy [${state.name}]');
   }
 }

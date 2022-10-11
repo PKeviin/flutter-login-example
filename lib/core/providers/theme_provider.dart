@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants/secure_storage_constant.dart';
-import '../impl/secure_storage_impl.dart';
+import '../impl/secure_storage/secure_storage_provider.dart';
+import '../impl/secure_storage/secure_storage_repository.dart';
 
 final themeModeProvider = StateNotifierProvider<ThemeState, ThemeMode>((ref) {
-  final secureStorage = ref.watch(secureStorageProvider);
+  final secureStorage = ref.watch(secureStorageImplProvider);
   return ThemeState(
-    secureStorageImpl: secureStorage,
+    secureStorage: secureStorage,
   );
 });
 
@@ -20,15 +21,15 @@ abstract class ThemeRepository {
 
 class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   ThemeState({
-    required this.secureStorageImpl,
+    required this.secureStorage,
   }) : super(ThemeMode.light) {
     unawaited(_initTheme());
   }
-  SecureStorageImpl secureStorageImpl;
+  SecureStorageRepository secureStorage;
 
   /// Recovery of the theme used
   Future _initTheme() async {
-    final theme = await secureStorageImpl.getItem(keyThemeMode);
+    final theme = await secureStorage.getItem(keyThemeMode);
     if (theme != null) {
       switch (theme) {
         case 'light':
@@ -58,7 +59,7 @@ class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   @override
   Future<void> setTheme(ThemeMode theme) async {
     state = theme;
-    await secureStorageImpl.addItem(keyThemeMode, state.name);
+    await secureStorage.addItem(keyThemeMode, state.name);
     debugPrint('theme [${state.name}]');
   }
 }
