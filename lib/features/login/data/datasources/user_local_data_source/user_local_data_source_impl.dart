@@ -1,14 +1,24 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../../../../core/constants/errors_en_message_constant.dart';
 import '../../../../../core/constants/secure_storage_constant.dart';
+import '../../../../../core/impl/secure_storage/secure_storage_provider.dart';
 import '../../../../../core/impl/secure_storage/secure_storage_repository.dart';
 import '../../../../../core/locales/generated/l10n.dart';
 import '../../../../../core/utils/errors/exceptions.dart';
 import '../../models/user_model.dart';
 import 'user_local_data_source_repository.dart';
+
+final userLocalDataSourceImplProvider =
+    Provider<UserLocalDataSourceImpl>((ref) {
+  final secureStorage = ref.watch(secureStorageImplProvider);
+  return UserLocalDataSourceImpl(
+    secureStorage: secureStorage,
+  );
+});
 
 class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
   UserLocalDataSourceImpl({

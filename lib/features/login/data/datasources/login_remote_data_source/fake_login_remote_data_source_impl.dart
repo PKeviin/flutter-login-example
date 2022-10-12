@@ -1,28 +1,23 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../../core/constants/errors_en_message_constant.dart';
+import '../../../../../core/impl/api/models/api_response_entity.dart';
 import '../../../../../core/locales/generated/l10n.dart';
-import '../../../../../core/providers/locale_provider.dart';
-import '../../../../../core/services/api_service.dart';
-import '../../../../../core/services/models/api_response_entity.dart';
 import '../../../../../core/utils/errors/exceptions.dart';
-import '../../../presentation/provider/user_provider.dart';
 import '../../models/user_model.dart';
 import 'login_remote_data_source_repository.dart';
 
-class FakeLoginRemoteDataSourceImpl extends ApiService
-    implements LoginRemoteDataSourceRepository {
-  FakeLoginRemoteDataSourceImpl({
-    required UserState userState,
-    required LocaleState localeState,
-    required this.identifiant,
-    required this.password,
-  }) : super(userState, localeState);
-  final String identifiant;
-  final String password;
+final fakeLoginRemoteDataSourceImplProvider =
+    Provider.autoDispose<FakeLoginRemoteDataSourceImpl>(
+  (ref) => FakeLoginRemoteDataSourceImpl(),
+);
+
+class FakeLoginRemoteDataSourceImpl implements LoginRemoteDataSourceRepository {
+  FakeLoginRemoteDataSourceImpl();
 
   @override
   Future<UserModel>? login() async {
     await Future.delayed(const Duration(seconds: 2));
-    // FAKE DATA
     var jsonResponse = const APIJsonResponse();
     jsonResponse = jsonResponse.copyWith(error: false);
     jsonResponse = jsonResponse.copyWith(

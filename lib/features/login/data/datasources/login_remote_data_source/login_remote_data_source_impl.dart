@@ -1,22 +1,32 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../../core/constants/errors_en_message_constant.dart';
 import '../../../../../core/impl/api/api_http_provider.dart';
 import '../../../../../core/impl/api/api_repository.dart';
 import '../../../../../core/locales/generated/l10n.dart';
-import '../../../../../core/providers/locale_provider.dart';
-import '../../../../../core/services/api_service.dart';
 import '../../../../../core/utils/errors/exceptions.dart';
-import '../../../presentation/provider/user_provider.dart';
+import '../../../presentation/provider/login_provider.dart';
 import '../../models/user_model.dart';
 import 'login_remote_data_source_repository.dart';
 
-class LoginRemoteDataSourceImpl extends ApiService
-    implements LoginRemoteDataSourceRepository {
+final loginRemoteDataSourceImplProvider =
+    Provider.autoDispose<LoginRemoteDataSourceImpl>((ref) {
+  final api = ref.watch(apiHttpImplProvider);
+  final identifiant = ref.watch(identifiantProvider);
+  final password = ref.watch(passwordProvider);
+  return LoginRemoteDataSourceImpl(
+    api: api,
+    password: password,
+    identifiant: identifiant,
+  );
+});
+
+class LoginRemoteDataSourceImpl implements LoginRemoteDataSourceRepository {
   LoginRemoteDataSourceImpl({
     required this.api,
-    required LocaleState localeState,
     required this.identifiant,
     required this.password,
-  }) : super(userState, localeState);
+  });
   final ApiRepository api;
   final String identifiant;
   final String password;
