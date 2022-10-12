@@ -13,6 +13,6 @@ String platformApp = '';
 final packageInfo = PackageInfo.fromPlatform();
 
 /// Package Info Impl provider
-final packageInfoImplProvider = Provider<PackageInfoImpl>((ref) {
-  return PackageInfoImpl(packageInfo: packageInfo);
-});
+final packageInfoImplProvider = Provider<PackageInfoImpl>(
+  (ref) => PackageInfoImpl(packageInfo: packageInfo),
+);

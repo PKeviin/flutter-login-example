@@ -3,9 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/user_entity.dart';
 
 /// User provider
-final userProvider = StateNotifierProvider<UserState, UserEntity?>((ref) {
-  return UserState();
-});
+final userProvider =
+    StateNotifierProvider<UserState, UserEntity?>((ref) => UserState());
 
 class UserState extends StateNotifier<UserEntity?> {
   UserState() : super(null);

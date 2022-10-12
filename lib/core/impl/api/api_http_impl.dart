@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../features/login/presentation/provider/user_provider.dart';
@@ -11,6 +10,7 @@ import '../../enums/response_type_enum.dart';
 import '../../locales/generated/l10n.dart';
 import '../../providers/locale_provider.dart';
 import '../../utils/errors/exceptions.dart';
+import '../../utils/extensions/string_extension.dart';
 import '../logger/logger_repository.dart';
 import 'api_repository.dart';
 import 'models/api_response_entity.dart';
@@ -58,52 +58,12 @@ class ApiHttpImpl implements ApiRepository {
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
-      return request
-          .then((response) async => _getAPIJsonResponse(response, dataType));
-    } catch (e, stacktrace) {
-      if (e is HandshakeException || e is CertificateException) {
-        return _certificatException(e);
-      } else {
-        throw UnknownException(
-          message: S.current.errorApi,
-          messageEn: kErrorApi,
-          error: e,
-          stacktrace: stacktrace,
-        );
-      }
-    }
-  }
-
-  /// POST UPLOAD FILES
-  /// [route] route
-  /// [formData] file list
-  Future<APIJsonResponse> postWithFiles({
-    required String route,
-    required FormData formData,
-    ResponseDataTypeEnum dataType = ResponseDataTypeEnum.json,
-  }) async {
-    try {
-      final dio = Dio(
-        BaseOptions(
-          receiveDataWhenStatusError: true,
-          connectTimeout: 60 * 1000,
-          headers: {
-            'Authorization': 'Bearer ${userState?.getToken}',
-          },
+      return request.then(
+        (response) async => _getAPIResponse(
+          dataType: dataType,
+          response: response,
         ),
       );
-
-      final response = await dio.post(
-        '$_api$route',
-        data: formData,
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          validateStatus: (status) => status == HttpStatus.ok,
-        ),
-      );
-
-      return _getAPIJsonResponse(response, dataType);
     } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
@@ -135,8 +95,12 @@ class ApiHttpImpl implements ApiRepository {
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
-      return request
-          .then((response) async => _getAPIJsonResponse(response, dataType));
+      return request.then(
+        (response) async => _getAPIResponse(
+          dataType: dataType,
+          response: response,
+        ),
+      );
     } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
@@ -176,8 +140,12 @@ class ApiHttpImpl implements ApiRepository {
         headers: _headers,
       );
 
-      return request
-          .then((response) async => _getAPIJsonResponse(response, dataType));
+      return request.then(
+        (response) async => _getAPIResponse(
+          dataType: dataType,
+          response: response,
+        ),
+      );
     } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
@@ -208,10 +176,10 @@ class ApiHttpImpl implements ApiRepository {
   }
 
   /// Response retrieval
-  Future<APIJsonResponse> _getAPIJsonResponse(
-    response,
-    ResponseDataTypeEnum dataType,
-  ) async {
+  Future<APIJsonResponse> _getAPIResponse({
+    required ResponseDataTypeEnum dataType,
+    required http.Response response,
+  }) async {
     dynamic data;
     try {
       switch (dataType) {
@@ -219,13 +187,8 @@ class ApiHttpImpl implements ApiRepository {
           data = json.decode(response.body);
           break;
         case ResponseDataTypeEnum.bytes:
-          data = response;
-          break;
         case ResponseDataTypeEnum.string:
-          data = await response.transform(utf8.decoder).join();
-          break;
         case ResponseDataTypeEnum.stream:
-          break;
         case ResponseDataTypeEnum.plain:
           break;
       }
@@ -246,15 +209,22 @@ class ApiHttpImpl implements ApiRepository {
           response.statusCode != HttpStatus.created &&
           response.statusCode != HttpStatus.accepted) {
         // To be modified according to the API
-        errors = data?['errors']
+        if (data is Map<String, dynamic>) {
+          if (data['errors'].toString().isNotNullOrEmpty()) {
+            errors = data['errors']
                 .toString()
                 .replaceAll('{', '')
                 .replaceAll('}', '')
                 .replaceAll('[', '')
-                .replaceAll(']', '') ??
-            data['error'].toString();
-        error = data['error'];
-        result = data['result'];
+                .replaceAll(']', '');
+          }
+          if (data['error'].toString().isNotNullOrEmpty()) {
+            error = data['error'].toString();
+          }
+          if (data['result'].toString().isNotNullOrEmpty()) {
+            result = data['result'];
+          }
+        }
       }
     } catch (e, stacktrace) {
       await logger.traceLogError(

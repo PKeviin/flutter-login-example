@@ -37,9 +37,6 @@ linter:
     # Personal preference. I prefer "if (bool) return;" over having it in multiple lines
     always_put_control_body_on_new_line: false
 
-    # Personal preference.
-    cascade_invocations: true
-
     # Conflicts with `prefer_single_quotes`
     # Single quotes are easier to type and don't compromise on readability.
     prefer_double_quotes: false
@@ -54,10 +51,6 @@ linter:
     # Having immutable local variables makes larger functions more predictable
     # so we will use `prefer_final_locals` instead.
     unnecessary_final: false
-
-    # Not quite suitable for Flutter, which may have a `build` method with a single
-    # return, but that return is still complex enough that a "body" is worth it.
-    prefer_expression_function_bodies: false
 
     # There are situations where we voluntarily want to catch everything,
     # especially as a library.
@@ -77,7 +70,9 @@ linter:
     # Disabled for now until we have NNBD as it otherwise conflicts with `missing_return`
     no_default_cases: false
 
-    public_member_api_docs: false
+    # Disabled to order packages by category
     sort_pub_dependencies: false
-    avoid_dynamic_calls: false
-    flutter_style_todos: true
+
+    # Temporarily disabled documenting all public members
+    public_member_api_docs: false
+
