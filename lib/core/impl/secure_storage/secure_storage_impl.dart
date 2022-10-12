@@ -17,7 +17,7 @@ class SecureStorageImpl implements SecureStorageRepository {
 
   /// Phone storage initialization
   /// IOS Keychain does not delete data when uninstalling the application
-  Future initSecureStorage() async {
+  Future<void> initSecureStorage() async {
     final prefs = await sharePreference;
     if (prefs.getBool('first_run') ?? true) {
       await secureStorage.deleteAll(
@@ -30,7 +30,7 @@ class SecureStorageImpl implements SecureStorageRepository {
 
   /// Adding a record
   @override
-  Future addItem(String key, String? value) async => secureStorage.write(
+  Future<void> addItem(String key, String? value) async => secureStorage.write(
         key: key,
         value: value,
         iOptions: _iOptions,
@@ -47,7 +47,7 @@ class SecureStorageImpl implements SecureStorageRepository {
 
   /// Deleting a recording
   @override
-  Future removeItem(String key) async => secureStorage.delete(
+  Future<void> removeItem(String key) async => secureStorage.delete(
         key: key,
         iOptions: _iOptions,
         aOptions: _androidOptions,
@@ -55,7 +55,7 @@ class SecureStorageImpl implements SecureStorageRepository {
 
   /// Delete all records
   @override
-  Future removeAll() async => secureStorage.deleteAll(
+  Future<void> removeAll() async => secureStorage.deleteAll(
         iOptions: _iOptions,
         aOptions: _androidOptions,
       );

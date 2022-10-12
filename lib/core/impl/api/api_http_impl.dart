@@ -12,13 +12,19 @@ import '../../locales/generated/l10n.dart';
 import '../../providers/locale_provider.dart';
 import '../../utils/errors/exceptions.dart';
 import '../../utils/utils.dart';
+import '../logger/logger_repository.dart';
 import 'api_repository.dart';
 import 'models/api_response_entity.dart';
 
 class ApiHttpImpl implements ApiRepository {
-  ApiHttpImpl(this._userState, this._localeState);
-  final UserState? _userState;
-  final LocaleState _localeState;
+  ApiHttpImpl({
+    required this.logger,
+    required this.localeState,
+    this.userState,
+  });
+  final LoggerRepository logger;
+  final LocaleState localeState;
+  final UserState? userState;
 
   String api = Credential.apiBase;
   Map<String, String> headers = {
@@ -28,11 +34,11 @@ class ApiHttpImpl implements ApiRepository {
 
   /// Init header
   void _setHeaders() {
-    final userJWT = _userState?.getToken;
+    final userJWT = userState?.getToken;
     if (userJWT != null) {
       headers[HttpHeaders.authorizationHeader] = 'Bearer $userJWT';
     }
-    headers['x-lang'] = _localeState.getLanguageCode;
+    headers['x-lang'] = localeState.getLanguageCode;
   }
 
   /// POST
@@ -54,7 +60,7 @@ class ApiHttpImpl implements ApiRepository {
 
       return request
           .then((response) async => _getAPIJsonResponse(response, dataType));
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
@@ -82,7 +88,7 @@ class ApiHttpImpl implements ApiRepository {
           receiveDataWhenStatusError: true,
           connectTimeout: 60 * 1000,
           headers: {
-            'Authorization': 'Bearer ${_userState?.getToken}',
+            'Authorization': 'Bearer ${userState?.getToken}',
           },
         ),
       );
@@ -98,7 +104,7 @@ class ApiHttpImpl implements ApiRepository {
       );
 
       return _getAPIJsonResponse(response, dataType);
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
@@ -131,7 +137,7 @@ class ApiHttpImpl implements ApiRepository {
 
       return request
           .then((response) async => _getAPIJsonResponse(response, dataType));
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
@@ -172,7 +178,7 @@ class ApiHttpImpl implements ApiRepository {
 
       return request
           .then((response) async => _getAPIJsonResponse(response, dataType));
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
@@ -223,7 +229,7 @@ class ApiHttpImpl implements ApiRepository {
         case ResponseDataTypeEnum.plain:
           break;
       }
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       throw ParseDataException(
         message: S.current.errorDataApi,
         messageEn: kErrorDataApi,
@@ -250,8 +256,12 @@ class ApiHttpImpl implements ApiRepository {
         error = data['error'];
         result = data['result'];
       }
-    } on Exception catch (e, stacktrace) {
-      await Utils.traceLogError(kErrorDataApi, e, stacktrace);
+    } catch (e, stacktrace) {
+      await logger.traceLogError(
+        message: kErrorDataApi,
+        error: e,
+        stacktrace: stacktrace,
+      );
     }
 
     switch (response.statusCode) {

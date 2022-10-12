@@ -35,7 +35,7 @@ class LoginRepositoryImpl implements LoginRepository {
         );
       } on ParseDataException catch (e) {
         return Left(ParseDataFailure(message: e.toString()));
-      } on Exception catch (e) {
+      } catch (e) {
         return Left(UnknownFailure(message: e.toString()));
       }
     } else {
@@ -44,7 +44,7 @@ class LoginRepositoryImpl implements LoginRepository {
         return Right(localUser?.toEntity());
       } on CacheException catch (e) {
         return Left(CacheFailure(message: e.toString()));
-      } on Exception catch (e) {
+      } catch (e) {
         return Left(UnknownFailure(message: e.toString()));
       }
     }
@@ -57,7 +57,7 @@ class LoginRepositoryImpl implements LoginRepository {
       return Right(localUser?.toEntity());
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.toString()));
-    } on Exception catch (e) {
+    } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
   }

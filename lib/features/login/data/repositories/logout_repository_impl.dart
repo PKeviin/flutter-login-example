@@ -18,7 +18,7 @@ class LogoutRepositoryImpl implements LogoutRepository {
       return const Right(true);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.toString()));
-    } on Exception catch (e) {
+    } catch (e) {
       return Left(UnknownFailure(message: e.toString()));
     }
   }

@@ -1,6 +1,6 @@
-import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../utils.dart';
+import '../../impl/logger/logger_provider.dart';
 
 abstract class ExceptionCustom implements Exception {
   ExceptionCustom({
@@ -9,7 +9,12 @@ abstract class ExceptionCustom implements Exception {
     this.error,
     this.stacktrace,
   }) {
-    unawaited(Utils.traceLogError(messageEn, error, stacktrace));
+    final container = ProviderContainer();
+    container.read(loggerImplProvider).traceLogError(
+          message: 'dart error',
+          error: error,
+          stacktrace: stacktrace,
+        );
   }
   final String message;
   final String messageEn;

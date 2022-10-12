@@ -9,7 +9,7 @@ import '../../../../core/impl/network_info/network_info_repository.dart';
 import '../../../../core/providers/failure_provider.dart';
 import '../../../../core/providers/loader_provider.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../data/datasources/login_remote_data_source/fake_login_remote_data_source_impl.dart';
+import '../../data/datasources/login_remote_data_source/login_remote_data_source_impl.dart';
 import '../../data/datasources/login_remote_data_source/login_remote_data_source_repository.dart';
 import '../../data/datasources/user_local_data_source/user_local_data_source_impl.dart';
 import '../../data/datasources/user_local_data_source/user_local_data_source_repository.dart';
@@ -34,7 +34,7 @@ final loginProvider =
   // Implementation of a fake login
   // Using LoginRemoteDataSourceImpl to implement real login
   final fakeLoginRemoteDataSourceImpl =
-      ref.watch(fakeLoginRemoteDataSourceImplProvider);
+      ref.watch(loginRemoteDataSourceImplProvider);
   return LoginState(
     userState: userState,
     failureState: failureState,

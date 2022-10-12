@@ -54,7 +54,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
         error: e,
         stacktrace: staktrace,
       );
-    } on Exception catch (e, staktrace) {
+    } catch (e, staktrace) {
       throw CacheException(
         message: S.current.errorRetrievingUserCache,
         messageEn: kErrorRetrievingUserCache,
@@ -78,7 +78,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
           messageEn: kErrorSaveUserCache,
         );
       }
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       throw CacheException(
         message: S.current.errorSaveUserCache,
         messageEn: kErrorSaveUserCache,
@@ -92,7 +92,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
   Future removeUser() async {
     try {
       await await secureStorage.removeItem(keyCachedUser);
-    } on Exception catch (e, staktrace) {
+    } catch (e, staktrace) {
       throw CacheException(
         message: S.current.errorRetrievingUserCache,
         messageEn: kErrorRetrievingUserCache,
@@ -115,7 +115,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
           error: e,
           stacktrace: stacktrace,
         );
-      } on Exception catch (e, stacktrace) {
+      } catch (e, stacktrace) {
         throw TokenException(
           message: S.current.errorSessionExpireApi,
           messageEn: kErrorSessionExpireApi,

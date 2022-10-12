@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../credentials.dart';
+import '../impl/logger/logger_provider.dart';
 import '../impl/secure_storage/secure_storage_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/privacy_provider.dart';
@@ -23,26 +22,30 @@ class Utils {
     ]);
 
     final container = ProviderContainer();
+    // Logger initialization
+    final logger = container.read(loggerImplProvider);
+    await logger.initErrorDisplayManagement();
+    logger.initDebugPrint(
+      isRelease: kReleaseMode,
+      version: Credential.appVersion,
+      platform: Credential.platform,
+    );
+
     // Storage initialization
     final secureStorage = container.read(secureStorageImplProvider);
     await secureStorage.initSecureStorage();
+
     // Locale initialization
     final locale = container.read(localeProvider.notifier);
     await locale.initLocale();
+
     // Theme initialization
     final theme = container.read(themeModeProvider.notifier);
     await theme.initTheme();
+
     // Privacy initialization
     final privacy = container.read(privacyProvider.notifier);
     await privacy.initStatusPrivacy();
-
-    _initErrorDisplayManagement();
-    await _getVersion();
-    _initDebugPrint(
-      isRelease: kReleaseMode,
-      version: Credential.appVersion,
-      platform: getPlatform(),
-    );
   }
 
   /// Checks if the production environment is active
@@ -82,49 +85,5 @@ class Utils {
     }
     debugPrint('platform [$platform]');
     return platform;
-  }
-
-  /// Disabling print in release
-  static void _initDebugPrint({
-    required bool isRelease,
-    required String platform,
-    String? version,
-  }) {
-    if (isRelease) {
-      debugPrint = (String? message, {int? wrapWidth}) {};
-    } else {
-      debugPrint = (String? message, {int? wrapWidth}) {
-        message = '[${DateTime.now()} - $version - $platform]: $message';
-        debugPrintSynchronously(message, wrapWidth: wrapWidth);
-      };
-    }
-  }
-
-  /// Logger
-  static Logger logger = Logger(
-    printer: PrettyPrinter(),
-  );
-
-  /// Trace Error Log
-  static Future<void> traceLogError(
-    String message,
-    Object? error,
-    StackTrace? stacktrace,
-  ) async {
-    logger.e(message, error, stacktrace);
-    if (!Utils.isDevEnv && error != null) {
-      await Sentry.captureException(error, stackTrace: stacktrace);
-    }
-  }
-
-  /// Error display management
-  static void _initErrorDisplayManagement() {
-    FlutterError.onError = (errorDetails) async {
-      await Utils.traceLogError(
-        'error',
-        errorDetails.exception,
-        errorDetails.stack,
-      );
-    };
   }
 }

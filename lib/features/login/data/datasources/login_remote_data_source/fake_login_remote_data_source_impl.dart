@@ -34,7 +34,7 @@ class FakeLoginRemoteDataSourceImpl implements LoginRemoteDataSourceRepository {
 
     try {
       return UserModel.fromJson(jsonResponse.data!);
-    } on Exception catch (e, stacktrace) {
+    } catch (e, stacktrace) {
       throw ParseDataException(
         message: S.current.errorDataApi,
         messageEn: kErrorDataApi,
