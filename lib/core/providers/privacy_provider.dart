@@ -20,13 +20,11 @@ final privacyProvider =
 class PrivacyState extends StateNotifier<PrivacyStatusEnum> {
   PrivacyState({
     required this.secureStorage,
-  }) : super(PrivacyStatusEnum.unknown) {
-    unawaited(_checkStatusPrivacy());
-  }
+  }) : super(PrivacyStatusEnum.unknown);
   SecureStorageRepository secureStorage;
 
-  /// Privacy status Check
-  Future<void> _checkStatusPrivacy() async {
+  /// Init privacy status Check
+  Future<void> initStatusPrivacy() async {
     final store = await secureStorage.getItem(keyPrivacy);
     if (store.isNotNullOrEmpty()) {
       state = store == PrivacyStatusEnum.authorized.name

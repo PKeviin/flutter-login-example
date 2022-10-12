@@ -22,13 +22,11 @@ abstract class ThemeRepository {
 class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   ThemeState({
     required this.secureStorage,
-  }) : super(ThemeMode.light) {
-    unawaited(_initTheme());
-  }
+  }) : super(ThemeMode.light);
   SecureStorageRepository secureStorage;
 
   /// Recovery of the theme used
-  Future _initTheme() async {
+  Future initTheme() async {
     final theme = await secureStorage.getItem(keyThemeMode);
     if (theme != null) {
       switch (theme) {

@@ -27,13 +27,11 @@ abstract class LocaleRepository {
 class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
   LocaleState({
     required this.secureStorage,
-  }) : super(kFallbackLocale) {
-    unawaited(_initLocale());
-  }
+  }) : super(kFallbackLocale);
   SecureStorageRepository secureStorage;
 
   /// Retrieval of the language used
-  Future _initLocale() async {
+  Future initLocale() async {
     final languageCode = await secureStorage.getItem(keyLanguageCode);
     final countryCode = await secureStorage.getItem(keyCountryCode);
     if (languageCode != null) {

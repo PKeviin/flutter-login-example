@@ -8,6 +8,9 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../credentials.dart';
 import '../impl/secure_storage/secure_storage_provider.dart';
+import '../providers/locale_provider.dart';
+import '../providers/privacy_provider.dart';
+import '../providers/theme_provider.dart';
 import 'platform/platform.dart';
 
 class Utils {
@@ -19,10 +22,19 @@ class Utils {
       DeviceOrientation.portraitDown,
     ]);
 
-    // Storage initialization
     final container = ProviderContainer();
+    // Storage initialization
     final secureStorage = container.read(secureStorageImplProvider);
     await secureStorage.initSecureStorage();
+    // Locale initialization
+    final locale = container.read(localeProvider.notifier);
+    await locale.initLocale();
+    // Theme initialization
+    final theme = container.read(themeModeProvider.notifier);
+    await theme.initTheme();
+    // Privacy initialization
+    final privacy = container.read(privacyProvider.notifier);
+    await privacy.initStatusPrivacy();
 
     _initErrorDisplayManagement();
     await _getVersion();
