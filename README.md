@@ -110,3 +110,4 @@ lib/
 - https://github.com/flutter/packages/tree/main/packages/go_router
 - https://brickhub.dev/bricks/app_ui/0.0.4
 - https://brickhub.dev/bricks/clean_architecture_folders_lib/0.1.0+2
+- https://github.com/gskinnerTeam/flutter-wonderous-app
