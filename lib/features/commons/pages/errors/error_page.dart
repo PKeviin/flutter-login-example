@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/locales/generated/l10n.dart';
+import '../../../../ui/assets/app_assets.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../../../../ui/spacing/app_spacing.dart';
 import '../../../../ui/widgets/buttons/app_rounded_button.dart';
@@ -18,7 +19,7 @@ class ErrorPage extends StatelessWidget {
         body: Stack(
           children: [
             Image.asset(
-              'assets/images/errors/error.png',
+              AppImagePaths.error,
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height,
             ),

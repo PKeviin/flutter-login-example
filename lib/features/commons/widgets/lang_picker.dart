@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/locales/generated/l10n.dart';
 import '../../../core/providers/locale_provider.dart';
+import '../../../ui/assets/app_assets.dart';
 
 class LangPicker extends ConsumerWidget {
   const LangPicker({super.key});
@@ -21,7 +22,7 @@ class LangPicker extends ConsumerWidget {
                   child: Center(
                     child: CircleAvatar(
                       backgroundImage: AssetImage(
-                        'assets/images/flags/flag_${locale.languageCode}.png',
+                        '${AppImagePaths.flags}/flag_${locale.languageCode}.png',
                       ),
                       radius: 15,
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../ui/assets/app_assets.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../provider/login_provider.dart';
 import '../provider/user_has_already_logged_in_provider.dart';
@@ -20,7 +21,7 @@ class ReconnectBiometricButtonWidget extends ConsumerWidget {
           child: Center(
             child: GestureDetector(
               child: SvgPicture.asset(
-                'assets/images/fingerprint.svg',
+                AppSvgPaths.fingerprint,
                 width: 50,
                 height: 50,
                 color: AppColors.darkGray,

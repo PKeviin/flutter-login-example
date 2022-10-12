@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/params_constant.dart';
 import '../../../../core/router/routes.dart';
+import '../../../../ui/assets/app_assets.dart';
 import '../../../../ui/colors/app_colors.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
@@ -36,7 +37,7 @@ class SplashPageState extends ConsumerState<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/icons/icon.png',
+                AppImagePaths.appLogo,
                 width: MediaQuery.of(context).size.width / 3.5,
               ),
               const SizedBox(height: 20),

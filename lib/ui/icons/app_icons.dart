@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-abstract class AppIcons {
+class AppIcons {
   static const IconData add = Icons.add;
   static const IconData close = Icons.close;
   static const IconData visibility = FontAwesomeIcons.eyeSlash;
