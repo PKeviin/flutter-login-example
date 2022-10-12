@@ -20,8 +20,4 @@ class Credential {
   /// WIREDASH
   static final String wiredashId = dotenv.env['WIREDASH_ID']!;
   static final String wiredashKey = dotenv.env['WIREDASH_KEY']!;
-
-  /// APP INFORMATION
-  static late final String? appVersion;
-  static late final String? buildNumber;
 }

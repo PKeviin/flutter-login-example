@@ -11,7 +11,6 @@ import '../../enums/response_type_enum.dart';
 import '../../locales/generated/l10n.dart';
 import '../../providers/locale_provider.dart';
 import '../../utils/errors/exceptions.dart';
-import '../../utils/utils.dart';
 import '../logger/logger_repository.dart';
 import 'api_repository.dart';
 import 'models/api_response_entity.dart';
@@ -20,25 +19,26 @@ class ApiHttpImpl implements ApiRepository {
   ApiHttpImpl({
     required this.logger,
     required this.localeState,
+    required this.platform,
     this.userState,
   });
   final LoggerRepository logger;
   final LocaleState localeState;
+  final String platform;
   final UserState? userState;
 
-  String api = Credential.apiBase;
-  Map<String, String> headers = {
-    'x-app': Utils.getPlatform(),
-    HttpHeaders.contentTypeHeader: 'application/json',
-  };
+  final String _api = Credential.apiBase;
+  final Map<String, String> _headers = {};
 
   /// Init header
-  void _setHeaders() {
+  void _initHeaders() {
     final userJWT = userState?.getToken;
     if (userJWT != null) {
-      headers[HttpHeaders.authorizationHeader] = 'Bearer $userJWT';
+      _headers[HttpHeaders.authorizationHeader] = 'Bearer $userJWT';
     }
-    headers['x-lang'] = localeState.getLanguageCode;
+    _headers['x-lang'] = localeState.getLanguageCode;
+    _headers['x-app'] = platform;
+    _headers[HttpHeaders.contentTypeHeader] = 'application/json';
   }
 
   /// POST
@@ -51,10 +51,10 @@ class ApiHttpImpl implements ApiRepository {
     ResponseDataTypeEnum dataType = ResponseDataTypeEnum.json,
   }) async {
     try {
-      _setHeaders();
+      _initHeaders();
       final request = http.post(
-        Uri.parse('$api$route'),
-        headers: headers,
+        Uri.parse('$_api$route'),
+        headers: _headers,
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
@@ -94,7 +94,7 @@ class ApiHttpImpl implements ApiRepository {
       );
 
       final response = await dio.post(
-        '$api$route',
+        '$_api$route',
         data: formData,
         options: Options(
           responseType: ResponseType.bytes,
@@ -128,10 +128,10 @@ class ApiHttpImpl implements ApiRepository {
     ResponseDataTypeEnum dataType = ResponseDataTypeEnum.json,
   }) async {
     try {
-      _setHeaders();
+      _initHeaders();
       final request = http.put(
-        Uri.parse('$api$route'),
-        headers: headers,
+        Uri.parse('$_api$route'),
+        headers: _headers,
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
@@ -161,7 +161,7 @@ class ApiHttpImpl implements ApiRepository {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
-      _setHeaders();
+      _initHeaders();
       Map<String, dynamic>? parsedQuery;
       if (queryParams != null) {
         parsedQuery =
@@ -172,8 +172,8 @@ class ApiHttpImpl implements ApiRepository {
           : '';
 
       final request = http.get(
-        Uri.parse('$api$route$queryString'),
-        headers: headers,
+        Uri.parse('$_api$route$queryString'),
+        headers: _headers,
       );
 
       return request

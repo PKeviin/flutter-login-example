@@ -5,6 +5,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:wiredash/wiredash.dart';
 
 import 'core/credentials.dart';
+import 'core/impl/platform_info/package_info_provider.dart';
 import 'core/locales/generated/l10n.dart';
 import 'core/providers/failure_provider.dart';
 import 'core/providers/loader_provider.dart';
@@ -35,8 +36,8 @@ class App extends ConsumerWidget {
       ),
       feedbackOptions: WiredashFeedbackOptions(
         collectMetaData: (metaData) => metaData
-          ..buildVersion = Credential.appVersion
-          ..buildNumber = Credential.buildNumber
+          ..buildVersion = versionApp
+          ..buildNumber = buildNumberApp
           ..userId = ref.watch(userProvider)?.id.toString() ?? 'Not connected'
           ..custom['Environment'] = Credential.env
           ..custom['Operating system'] = Platform().operatingSystem
