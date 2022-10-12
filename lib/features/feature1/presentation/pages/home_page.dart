@@ -7,7 +7,7 @@ import '../../../../core/providers/privacy_provider.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../../../../ui/widgets/buttons/app_rounded_button.dart';
 import '../../../../ui/widgets/dialogs/simple_question_dialog.dart';
-import '../../../login/presentation/provider/user_provider.dart';
+import '../../../login/presentation/provider/login_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -30,7 +30,7 @@ class HomePage extends ConsumerWidget {
                 color: AppColors.primary,
                 textColor: AppColors.white,
                 width: MediaQuery.of(context).size.width,
-                onTap: () async => ref.read(userProvider.notifier).logout(),
+                onTap: () async => ref.read(loginProvider.notifier).logout(),
               ),
             ),
           ],

@@ -20,6 +20,7 @@ dependencies:
   webview_flutter: ^3.0.4
   auto_size_text: ^3.0.0
   another_flushbar: ^1.12.29
+  flutter_svg: ^1.1.5
 
   # Tools
   intl: ^0.17.0
