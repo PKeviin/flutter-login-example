@@ -14,7 +14,6 @@ import 'core/providers/theme_provider.dart';
 import 'core/router/router.dart';
 import 'core/utils/errors/failures.dart';
 import 'core/utils/platform/platform.dart';
-import 'core/utils/utils.dart';
 import 'core/utils/utils_ui.dart';
 import 'features/login/presentation/provider/user_provider.dart';
 import 'ui/widgets/circular_indicator.dart';
@@ -50,7 +49,7 @@ class App extends ConsumerWidget {
           overlayWidget: const Center(child: CircularIndicator()),
           child: MaterialApp.router(
             title: 'Template App',
-            debugShowCheckedModeBanner: Utils.isDevEnv,
+            debugShowCheckedModeBanner: Credential.isDev,
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

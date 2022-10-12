@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../credentials.dart';
 import '../impl/logger/logger_provider.dart';
 import '../impl/platform_info/package_info_provider.dart';
 import '../impl/secure_storage/secure_storage_provider.dart';
@@ -51,13 +50,4 @@ class Utils {
     final privacy = container.read(privacyProvider.notifier);
     await privacy.initStatusPrivacy();
   }
-
-  /// Checks if the production environment is active
-  static bool get isProductionEnv => Credential.isProduction;
-
-  /// Checks if the preprod environment is active
-  static bool get isPreprodEnv => Credential.isPreprod;
-
-  /// Checks if the dev environment is active
-  static bool get isDevEnv => Credential.isDev;
 }

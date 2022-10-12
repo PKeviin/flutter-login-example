@@ -5,7 +5,7 @@ class Credential {
   static final String env = dotenv.env['ENV']!;
   static final bool isProduction = env == 'prod';
   static final bool isPreprod = env == 'preprod';
-  static final bool isDev = env == 'dev';
+  static final bool isDev = env != 'prod' && env != 'preprod';
   static final String fcmId = dotenv.env['FCM_ID'] ?? 'TEMPLATE';
 
   /// API

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import '../../utils/utils.dart';
+import '../../credentials.dart';
 import 'logger_repository.dart';
 
 class LoggerImpl implements LoggerRepository {
@@ -47,7 +47,7 @@ class LoggerImpl implements LoggerRepository {
     StackTrace? stacktrace,
   }) async {
     logger.e(message, error, stacktrace);
-    if (!Utils.isDevEnv && error != null) {
+    if (!Credential.isDev && error != null) {
       await Sentry.captureException(error, stackTrace: stacktrace);
     }
   }

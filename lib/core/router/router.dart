@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/commons/pages/errors/error_page.dart';
-import '../utils/utils.dart';
+import '../credentials.dart';
 import 'router_notifier.dart';
 import 'router_observer.dart';
 import 'routes.dart';
@@ -15,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
-    debugLogDiagnostics: Utils.isDevEnv,
+    debugLogDiagnostics: Credential.isDev,
     // Global key for snacback
     navigatorKey: navigatorKey,
     // Initial location
