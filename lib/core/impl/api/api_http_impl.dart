@@ -2,29 +2,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
-import '../../features/login/presentation/provider/user_provider.dart';
-import '../constants/errors_en_message_constant.dart';
-import '../credentials.dart';
-import '../enums/response_type_enum.dart';
-import '../locales/generated/l10n.dart';
-import '../providers/locale_provider.dart';
-import '../utils/errors/exceptions.dart';
-import '../utils/utils.dart';
+import '../../../features/login/presentation/provider/user_provider.dart';
+import '../../constants/errors_en_message_constant.dart';
+import '../../credentials.dart';
+import '../../enums/response_type_enum.dart';
+import '../../locales/generated/l10n.dart';
+import '../../providers/locale_provider.dart';
+import '../../utils/errors/exceptions.dart';
+import '../../utils/utils.dart';
+import 'api_repository.dart';
 import 'models/api_response_entity.dart';
 
-final apiServiceProvider = Provider<ApiService>(
-  (ref) => ApiService(
-    ref.watch(userProvider.notifier),
-    ref.watch(localeProvider.notifier),
-  ),
-);
-
-class ApiService {
-  ApiService(this._userState, this._localeState);
-  final UserState _userState;
+class ApiHttpImpl implements ApiRepository {
+  ApiHttpImpl(this._userState, this._localeState);
+  final UserState? _userState;
   final LocaleState _localeState;
 
   String api = Credential.apiBase;
@@ -35,7 +28,7 @@ class ApiService {
 
   /// Init header
   void _setHeaders() {
-    final userJWT = _userState.getToken;
+    final userJWT = _userState?.getToken;
     if (userJWT != null) {
       headers[HttpHeaders.authorizationHeader] = 'Bearer $userJWT';
     }
@@ -45,6 +38,7 @@ class ApiService {
   /// POST
   /// [route] route
   /// [body] dara
+  @override
   Future<APIJsonResponse> post({
     required String route,
     Map<String, dynamic>? body,
@@ -88,7 +82,7 @@ class ApiService {
           receiveDataWhenStatusError: true,
           connectTimeout: 60 * 1000,
           headers: {
-            'Authorization': 'Bearer ${_userState.getToken}',
+            'Authorization': 'Bearer ${_userState?.getToken}',
           },
         ),
       );
@@ -121,6 +115,7 @@ class ApiService {
   /// PUT
   /// [route] route
   /// [body] data
+  @override
   Future<APIJsonResponse> put({
     required String route,
     Map<String, dynamic>? body,
@@ -153,6 +148,7 @@ class ApiService {
   /// GET
   /// [route] route
   /// [queryParams] params
+  @override
   Future<APIJsonResponse> get({
     required String route,
     required ResponseDataTypeEnum dataType,
@@ -279,7 +275,8 @@ class ApiService {
       case HttpStatus.unauthorized:
       case HttpStatus.forbidden:
         if (result != null) {
-          await _userState.reconnect();
+          // TODO(KeviinP): delete ?
+          // await _userState?.reconnect();
           throw ServerException(
             message: S.current.errorSessionExpireApi,
             messageEn: kErrorSessionExpireApi,
