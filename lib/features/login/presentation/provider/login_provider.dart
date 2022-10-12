@@ -9,7 +9,8 @@ import '../../../../core/impl/network_info/network_info_repository.dart';
 import '../../../../core/providers/failure_provider.dart';
 import '../../../../core/providers/loader_provider.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../data/datasources/login_remote_data_source/login_remote_data_source_impl.dart';
+import '../../../../core/utils/errors/failures.dart';
+import '../../data/datasources/login_remote_data_source/fake_login_remote_data_source_impl.dart';
 import '../../data/datasources/login_remote_data_source/login_remote_data_source_repository.dart';
 import '../../data/datasources/user_local_data_source/user_local_data_source_impl.dart';
 import '../../data/datasources/user_local_data_source/user_local_data_source_repository.dart';
@@ -34,7 +35,7 @@ final loginProvider =
   // Implementation of a fake login
   // Using LoginRemoteDataSourceImpl to implement real login
   final fakeLoginRemoteDataSourceImpl =
-      ref.watch(loginRemoteDataSourceImplProvider);
+      ref.watch(fakeLoginRemoteDataSourceImplProvider);
   return LoginState(
     userState: userState,
     failureState: failureState,
@@ -57,8 +58,8 @@ class LoginState extends StateNotifier<bool?> {
     required this.loginRemoteDataSourceImpl,
   }) : super(null);
   UserState userState;
-  FailureProviderState failureState;
-  LoaderProviderState loaderState;
+  StateController<Failure?> failureState;
+  StateController<bool> loaderState;
   LocalAuthRepository localAuth;
   NetworkInfoRepository networkInfoImpl;
   LoginRemoteDataSourceRepository loginRemoteDataSourceImpl;
