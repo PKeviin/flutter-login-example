@@ -21,7 +21,7 @@ class BodyFieldWidget extends ConsumerStatefulWidget {
 }
 
 class BodyFieldWidgetState extends ConsumerState<BodyFieldWidget> {
-  final FocusNode _identifiantFocusNode = FocusNode();
+  final FocusNode _usernameFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
   @override
@@ -50,7 +50,7 @@ class BodyFieldWidgetState extends ConsumerState<BodyFieldWidget> {
                   ref.read(usernameProvider.notifier).state = value,
               textFieldType: TextFieldType.name,
               keyboardType: TextInputType.name,
-              focus: _identifiantFocusNode,
+              focus: _usernameFocusNode,
               nextFocus: _passwordFocusNode,
             ),
             const SizedBox(height: 16),
