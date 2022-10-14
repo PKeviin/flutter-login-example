@@ -1,38 +1,28 @@
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../../../../core/constants/errors_en_message_constant.dart';
 import '../../../../../core/constants/secure_storage_constant.dart';
-import '../../../../../core/impl/secure_storage/secure_storage_provider.dart';
 import '../../../../../core/impl/secure_storage/secure_storage_repository.dart';
 import '../../../../../core/locales/generated/l10n.dart';
 import '../../../../../core/utils/errors/exceptions.dart';
 import '../../models/user_model.dart';
-import 'user_local_data_source_repository.dart';
+import 'login_local_data_source_repository.dart';
 
-final userLocalDataSourceImplProvider =
-    Provider<UserLocalDataSourceImpl>((ref) {
-  final secureStorage = ref.watch(secureStorageImplProvider);
-  return UserLocalDataSourceImpl(
-    secureStorage: secureStorage,
-  );
-});
-
-class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
+class UserLocalDataSourceImpl implements LoginLocalDataSourceRepository {
   UserLocalDataSourceImpl({
     required this.secureStorage,
   });
   SecureStorageRepository secureStorage;
 
   @override
-  Future<UserModel>? getUser() async {
+  Future<UserModel> getUser() async {
     try {
       final jsonString = await secureStorage.getItem(keyCachedUser);
       if (jsonString != null) {
         final user = UserModel.fromJson(json.decode(jsonString));
-        if (await _isTokenValid(user.token)) {
+        if (await _isTokenValid(user.session.token)) {
           return user;
         } else {
           throw TokenException(
@@ -65,7 +55,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
   }
 
   @override
-  Future<void>? saveUser(UserModel? user) async {
+  Future<void> cacheUser(UserModel? user) async {
     try {
       if (user != null) {
         return await secureStorage.addItem(
@@ -89,7 +79,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSourceRepository {
   }
 
   @override
-  Future removeUser() async {
+  Future<void> removeUser() async {
     try {
       await await secureStorage.removeItem(keyCachedUser);
     } catch (e, staktrace) {

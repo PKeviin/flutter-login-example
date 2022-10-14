@@ -1,7 +1,7 @@
 import '../../models/user_model.dart';
 
-abstract class UserLocalDataSourceRepository {
-  Future<void>? saveUser(UserModel? user);
+abstract class LoginLocalDataSourceRepository {
+  Future<void>? cacheUser(UserModel? user);
   Future<UserModel>? getUser();
   Future<void> removeUser();
 }

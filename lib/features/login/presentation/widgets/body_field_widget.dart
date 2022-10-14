@@ -27,7 +27,7 @@ class BodyFieldWidgetState extends ConsumerState<BodyFieldWidget> {
   @override
   Widget build(BuildContext context) {
     final userHasAlreadyLoggedIn = ref.watch(userHasAlreadyLoggedInProvider);
-    final identifiant = ref.watch(identifiantProvider);
+    final username = ref.watch(usernameProvider);
     final password = ref.watch(passwordProvider);
     return Column(
       children: <Widget>[
@@ -47,7 +47,7 @@ class BodyFieldWidgetState extends ConsumerState<BodyFieldWidget> {
                 size: 20,
               ),
               onChanged: (value) =>
-                  ref.read(identifiantProvider.notifier).state = value,
+                  ref.read(usernameProvider.notifier).state = value,
               textFieldType: TextFieldType.name,
               keyboardType: TextInputType.name,
               focus: _identifiantFocusNode,
@@ -74,11 +74,11 @@ class BodyFieldWidgetState extends ConsumerState<BodyFieldWidget> {
               keyboardType: TextInputType.visiblePassword,
               focus: _passwordFocusNode,
               onFieldSubmitted: (value) async {
-                if (identifiant.isNotEmpty && password.isNotEmpty) {
+                if (username.isNotEmpty && password.isNotEmpty) {
                   await ref
                       .read(loginProvider.notifier)
                       .eitherFailureOrLoginUser(
-                        identifiant,
+                        username,
                         password,
                       );
                 }

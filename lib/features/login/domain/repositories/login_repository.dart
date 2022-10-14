@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/utils/errors/failures.dart';
-import '../entities/user_entity.dart';
+import '../entities/user.dart';
 
 abstract class LoginRepository {
-  Future<Either<Failure, UserEntity?>>? loginUser();
-  Future<Either<Failure, UserEntity?>>? loginLocaleUser();
+  Future<Either<Failure, User?>> loginUser();
+  Future<Either<Failure, User?>> loginLocalUser();
+  Future<Either<Failure, bool>> checkUserHasAlreadyLoggedIn();
 }

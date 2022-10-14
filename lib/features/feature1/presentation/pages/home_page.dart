@@ -30,7 +30,9 @@ class HomePage extends ConsumerWidget {
                 color: AppColors.primary,
                 textColor: AppColors.white,
                 width: MediaQuery.of(context).size.width,
-                onTap: () async => ref.read(loginProvider.notifier).logout(),
+                onTap: () async => ref
+                    .read(loginProvider.notifier)
+                    .eitherFailureOrLogoutUser(),
               ),
             ),
           ],

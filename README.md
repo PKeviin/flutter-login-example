@@ -46,8 +46,7 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
    - https://codewithandrea.com/articles/flutter-api-keys-dart-define-env-files/
 2. Added accessibility with [Semantics](https://api.flutter.dev/flutter/widgets/Semantics-class.html)
    - https://blog.gskinner.com/archives/2022/09/flutter-crafting-a-great-experience-for-screen-readers.html
-3. Improved l10n files (`lib/core/locales`)
-4. Implementation of tests with [mockito](https://pub.dev/packages/mockito) and [alchemist](https://pub.dev/packages/alchemist)
+3. Implementation of tests with [mockito](https://pub.dev/packages/mockito) and [alchemist](https://pub.dev/packages/alchemist)
 
 
 ### Useful package
@@ -58,16 +57,24 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
 ```
 lib/
 ├─ core/
+│ ├─ credentials.dart
 │ ├─ constants/
 │ ├─ enums/
 │ ├─ impl/
 │ ├─ locales/
 │ ├─ providers/
 │ ├─ router/
-│ ├─ services/
-│ ├─ usecases/
 │ ├─ utils/
-│ ├─ credentials.dart
+│ │ ├─ errors/
+│ │ ├─ extensions/
+│ │ ├─ platform/
+│ │ ├─ usecases/
+│ │ ├─ utils.dart
+│ │ ├─ utils_convertor.dart
+│ │ ├─ utils_file.dart
+│ │ ├─ utils_format.dart
+│ │ ├─ utils_ui.dart
+│ │ ├─ utils_validator.dart
 ├─ features/
 │ ├─ commons/
 │ │ ├─ pages/
@@ -86,6 +93,7 @@ lib/
 │ │ │ ├─ provider/
 │ │ │ ├─ widgets/
 ├─ ui/
+│ ├─ assets/
 │ ├─ colors/
 │ ├─ icons/
 │ ├─ layout/

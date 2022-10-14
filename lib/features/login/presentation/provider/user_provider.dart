@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/entities/user_entity.dart';
+import '../../domain/entities/user.dart';
 
 /// User provider
 final userProvider =
-    StateNotifierProvider<UserState, UserEntity?>((ref) => UserState());
+    StateNotifierProvider<UserState, User?>((ref) => UserState());
 
-class UserState extends StateNotifier<UserEntity?> {
+class UserState extends StateNotifier<User?> {
   UserState() : super(null);
 
   /// Get the user's token

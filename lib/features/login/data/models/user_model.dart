@@ -1,32 +1,29 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entities/session_entity.dart';
-import '../../domain/entities/user_entity.dart';
+import '../../domain/entities/session.dart';
+import '../../domain/entities/user.dart';
 
-part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
-@freezed
-class UserModel with _$UserModel {
-  const factory UserModel({
-    required String name,
-    required String lastName,
-    required String email,
-    required String token,
-    int? id,
-    String? mobile,
-  }) = _UserModel;
+@JsonSerializable()
+@immutable
+class UserModel extends User {
+  UserModel({
+    required super.name,
+    required super.lastName,
+    required super.email,
+    super.id,
+    this.token,
+    this.mobile,
+  }) : super(session: Session(token: token));
 
-  factory UserModel.fromJson(Map<String, Object?> json) =>
+  /// Connect the generated [_$UserModelFromJson] function to the `fromJson`
+  /// factory.
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
-  const UserModel._();
+  final String? token;
+  final String? mobile;
 
-  UserEntity toEntity() => UserEntity(
-        id: id,
-        name: name,
-        lastName: lastName,
-        email: email,
-        mobile: mobile,
-        session: SessionEntity(token: token),
-      );
+  /// Connect the generated [_$UserModelToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

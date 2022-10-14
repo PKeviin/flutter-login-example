@@ -1,26 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/usecases/usecase.dart';
-import '../../data/datasources/user_local_data_source/user_local_data_source_impl.dart';
+import '../../../../core/impl/secure_storage/secure_storage_provider.dart';
+import '../../../../core/utils/usecases/usecase.dart';
+import '../../data/datasources/login_local_data_source/login_local_data_source_impl.dart';
 import '../../data/repositories/login_repository_impl.dart';
-import '../../domain/usecases/login_user.dart';
+import '../../domain/usecases/check_user_has_already_logged_in.dart';
 
 /// User has already logged in provider
 final userHasAlreadyLoggedInProvider =
     FutureProvider.autoDispose<bool>((ref) async {
   var hasAlreadyLoggedIn = false;
-  final userLocalDataSourceImpl = ref.watch(userLocalDataSourceImplProvider);
   final repository = LoginRepositoryImpl.locale(
-    localDataSource: userLocalDataSourceImpl,
+    localDataSource: UserLocalDataSourceImpl(
+      secureStorage: ref.watch(secureStorageImplProvider),
+    ),
   );
 
-  final failureOrUser = await LoginUser(repository).loginLocaleUser(NoParams());
-  failureOrUser?.fold(
+  final failureOrUser =
+      await CheckUserHasAlreadyLoggedIn(repository)(NoParams());
+  failureOrUser.fold(
     (newFailure) {
       hasAlreadyLoggedIn = false;
     },
-    (user) {
-      hasAlreadyLoggedIn = true;
+    (loggedIn) {
+      hasAlreadyLoggedIn = loggedIn;
     },
   );
   return hasAlreadyLoggedIn;

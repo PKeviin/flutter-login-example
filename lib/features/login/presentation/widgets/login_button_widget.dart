@@ -11,22 +11,22 @@ class LoginButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final identifiant = ref.watch(identifiantProvider);
+    final username = ref.watch(usernameProvider);
     final password = ref.watch(passwordProvider);
 
     return AppRoundedButton(
       text: S.current.login,
-      color: identifiant.isNotEmpty && password.isNotEmpty
+      color: username.isNotEmpty && password.isNotEmpty
           ? AppColors.primary
           : AppColors.gray,
-      disabled: identifiant.isEmpty || password.isEmpty,
-      textColor: identifiant.isNotEmpty && password.isNotEmpty
+      disabled: username.isEmpty || password.isEmpty,
+      textColor: username.isNotEmpty && password.isNotEmpty
           ? AppColors.white
           : AppColors.black,
       width: MediaQuery.of(context).size.width / 1.5,
       onTap: () async =>
           ref.read(loginProvider.notifier).eitherFailureOrLoginUser(
-                identifiant,
+                username,
                 password,
               ),
     );

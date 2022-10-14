@@ -5,13 +5,13 @@ import '../../../../core/utils/usecases/usecase.dart';
 import '../entities/user.dart';
 import '../repositories/login_repository.dart';
 
-class LoginUser implements UseCase<User?, NoParams> {
-  LoginUser(this.repository);
+class LoginLocalUser implements UseCase<User?, NoParams> {
+  LoginLocalUser(this.repository);
   final LoginRepository repository;
 
   @override
   Future<Either<Failure, User?>> call(
     NoParams params,
   ) async =>
-      repository.loginUser();
+      repository.loginLocalUser();
 }

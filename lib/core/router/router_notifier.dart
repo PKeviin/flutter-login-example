@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/login/domain/entities/user_entity.dart';
+import '../../features/login/domain/entities/user.dart';
 import '../../features/login/presentation/provider/user_provider.dart';
 import 'routes.dart';
 
@@ -17,7 +17,7 @@ class RouterNotifier extends ChangeNotifier {
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<UserEntity?>(
+    _ref.listen<User?>(
       userProvider, // In our case, we're interested in the log in / log out events.
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );

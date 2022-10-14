@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'session_entity.dart';
+part of 'session.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,38 +14,30 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-SessionEntity _$SessionEntityFromJson(Map<String, dynamic> json) {
-  return _SessionEntity.fromJson(json);
-}
-
 /// @nodoc
-mixin _$SessionEntity {
+mixin _$Session {
   String? get token => throw _privateConstructorUsedError;
   String? get currentLocation => throw _privateConstructorUsedError;
   String? get previousLocation => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SessionEntityCopyWith<SessionEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  $SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SessionEntityCopyWith<$Res> {
-  factory $SessionEntityCopyWith(
-          SessionEntity value, $Res Function(SessionEntity) then) =
-      _$SessionEntityCopyWithImpl<$Res>;
+abstract class $SessionCopyWith<$Res> {
+  factory $SessionCopyWith(Session value, $Res Function(Session) then) =
+      _$SessionCopyWithImpl<$Res>;
   $Res call({String? token, String? currentLocation, String? previousLocation});
 }
 
 /// @nodoc
-class _$SessionEntityCopyWithImpl<$Res>
-    implements $SessionEntityCopyWith<$Res> {
-  _$SessionEntityCopyWithImpl(this._value, this._then);
+class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
+  _$SessionCopyWithImpl(this._value, this._then);
 
-  final SessionEntity _value;
+  final Session _value;
   // ignore: unused_field
-  final $Res Function(SessionEntity) _then;
+  final $Res Function(Session) _then;
 
   @override
   $Res call({
@@ -71,25 +63,22 @@ class _$SessionEntityCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_SessionEntityCopyWith<$Res>
-    implements $SessionEntityCopyWith<$Res> {
-  factory _$$_SessionEntityCopyWith(
-          _$_SessionEntity value, $Res Function(_$_SessionEntity) then) =
-      __$$_SessionEntityCopyWithImpl<$Res>;
+abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
+  factory _$$_SessionCopyWith(
+          _$_Session value, $Res Function(_$_Session) then) =
+      __$$_SessionCopyWithImpl<$Res>;
   @override
   $Res call({String? token, String? currentLocation, String? previousLocation});
 }
 
 /// @nodoc
-class __$$_SessionEntityCopyWithImpl<$Res>
-    extends _$SessionEntityCopyWithImpl<$Res>
-    implements _$$_SessionEntityCopyWith<$Res> {
-  __$$_SessionEntityCopyWithImpl(
-      _$_SessionEntity _value, $Res Function(_$_SessionEntity) _then)
-      : super(_value, (v) => _then(v as _$_SessionEntity));
+class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
+    implements _$$_SessionCopyWith<$Res> {
+  __$$_SessionCopyWithImpl(_$_Session _value, $Res Function(_$_Session) _then)
+      : super(_value, (v) => _then(v as _$_Session));
 
   @override
-  _$_SessionEntity get _value => super._value as _$_SessionEntity;
+  _$_Session get _value => super._value as _$_Session;
 
   @override
   $Res call({
@@ -97,7 +86,7 @@ class __$$_SessionEntityCopyWithImpl<$Res>
     Object? currentLocation = freezed,
     Object? previousLocation = freezed,
   }) {
-    return _then(_$_SessionEntity(
+    return _then(_$_Session(
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -115,13 +104,9 @@ class __$$_SessionEntityCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$_SessionEntity implements _SessionEntity {
-  const _$_SessionEntity(
-      {this.token, this.currentLocation, this.previousLocation});
 
-  factory _$_SessionEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_SessionEntityFromJson(json);
+class _$_Session implements _Session {
+  const _$_Session({this.token, this.currentLocation, this.previousLocation});
 
   @override
   final String? token;
@@ -132,14 +117,14 @@ class _$_SessionEntity implements _SessionEntity {
 
   @override
   String toString() {
-    return 'SessionEntity(token: $token, currentLocation: $currentLocation, previousLocation: $previousLocation)';
+    return 'Session(token: $token, currentLocation: $currentLocation, previousLocation: $previousLocation)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SessionEntity &&
+            other is _$_Session &&
             const DeepCollectionEquality().equals(other.token, token) &&
             const DeepCollectionEquality()
                 .equals(other.currentLocation, currentLocation) &&
@@ -147,7 +132,6 @@ class _$_SessionEntity implements _SessionEntity {
                 .equals(other.previousLocation, previousLocation));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -157,25 +141,15 @@ class _$_SessionEntity implements _SessionEntity {
 
   @JsonKey(ignore: true)
   @override
-  _$$_SessionEntityCopyWith<_$_SessionEntity> get copyWith =>
-      __$$_SessionEntityCopyWithImpl<_$_SessionEntity>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_SessionEntityToJson(
-      this,
-    );
-  }
+  _$$_SessionCopyWith<_$_Session> get copyWith =>
+      __$$_SessionCopyWithImpl<_$_Session>(this, _$identity);
 }
 
-abstract class _SessionEntity implements SessionEntity {
-  const factory _SessionEntity(
+abstract class _Session implements Session {
+  const factory _Session(
       {final String? token,
       final String? currentLocation,
-      final String? previousLocation}) = _$_SessionEntity;
-
-  factory _SessionEntity.fromJson(Map<String, dynamic> json) =
-      _$_SessionEntity.fromJson;
+      final String? previousLocation}) = _$_Session;
 
   @override
   String? get token;
@@ -185,6 +159,6 @@ abstract class _SessionEntity implements SessionEntity {
   String? get previousLocation;
   @override
   @JsonKey(ignore: true)
-  _$$_SessionEntityCopyWith<_$_SessionEntity> get copyWith =>
+  _$$_SessionCopyWith<_$_Session> get copyWith =>
       throw _privateConstructorUsedError;
 }

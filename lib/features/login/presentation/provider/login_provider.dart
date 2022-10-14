@@ -6,22 +6,24 @@ import '../../../../core/impl/local_auth/local_auth_provider.dart';
 import '../../../../core/impl/local_auth/local_auth_repository.dart';
 import '../../../../core/impl/network_info/network_info_provider.dart';
 import '../../../../core/impl/network_info/network_info_repository.dart';
+import '../../../../core/impl/secure_storage/secure_storage_provider.dart';
 import '../../../../core/providers/failure_provider.dart';
 import '../../../../core/providers/loader_provider.dart';
-import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/errors/failures.dart';
+import '../../../../core/utils/usecases/usecase.dart';
+import '../../data/datasources/login_local_data_source/login_local_data_source_impl.dart';
+import '../../data/datasources/login_local_data_source/login_local_data_source_repository.dart';
 import '../../data/datasources/login_remote_data_source/fake_login_remote_data_source_impl.dart';
 import '../../data/datasources/login_remote_data_source/login_remote_data_source_repository.dart';
-import '../../data/datasources/user_local_data_source/user_local_data_source_impl.dart';
-import '../../data/datasources/user_local_data_source/user_local_data_source_repository.dart';
 import '../../data/repositories/login_repository_impl.dart';
 import '../../data/repositories/logout_repository_impl.dart';
+import '../../domain/usecases/login_local_user.dart';
 import '../../domain/usecases/login_user.dart';
 import '../../domain/usecases/logout_user.dart';
 import 'user_provider.dart';
 
 final passwordProvider = StateProvider.autoDispose<String>((ref) => '');
-final identifiantProvider = StateProvider.autoDispose<String>((ref) => '');
+final usernameProvider = StateProvider.autoDispose<String>((ref) => '');
 
 /// Login provider
 final loginProvider =
@@ -31,11 +33,10 @@ final loginProvider =
   final loaderState = ref.watch(loaderProvider.notifier);
   final localAuth = ref.watch(localAuthImplProvider);
   final networkInfo = ref.watch(networkInfoImplProvider);
-  final userLocalDataSourceImpl = ref.watch(userLocalDataSourceImplProvider);
-  // Implementation of a fake login
-  // Using LoginRemoteDataSourceImpl to implement real login
-  final fakeLoginRemoteDataSourceImpl =
-      ref.watch(fakeLoginRemoteDataSourceImplProvider);
+  final userLocalDataSourceImpl = UserLocalDataSourceImpl(
+    secureStorage: ref.watch(secureStorageImplProvider),
+  );
+
   return LoginState(
     userState: userState,
     failureState: failureState,
@@ -43,7 +44,9 @@ final loginProvider =
     localAuth: localAuth,
     userLocalDataSourceImpl: userLocalDataSourceImpl,
     networkInfoImpl: networkInfo,
-    loginRemoteDataSourceImpl: fakeLoginRemoteDataSourceImpl,
+    // Implementation of a fake login
+    // Using LoginRemoteDataSourceImpl to implement real login
+    loginRemoteDataSourceImpl: FakeLoginRemoteDataSourceImpl(),
   );
 });
 
@@ -63,7 +66,7 @@ class LoginState extends StateNotifier<bool?> {
   LocalAuthRepository localAuth;
   NetworkInfoRepository networkInfoImpl;
   LoginRemoteDataSourceRepository loginRemoteDataSourceImpl;
-  UserLocalDataSourceRepository userLocalDataSourceImpl;
+  LoginLocalDataSourceRepository userLocalDataSourceImpl;
 
   /// User locale session
   Future<void> eitherFailureOrLoginLocaleUser() async {
@@ -71,10 +74,9 @@ class LoginState extends StateNotifier<bool?> {
       localDataSource: userLocalDataSourceImpl,
     );
 
-    final failureOrUser =
-        await LoginUser(repository).loginLocaleUser(NoParams());
+    final failureOrUser = await LoginLocalUser(repository)(NoParams());
 
-    await failureOrUser?.fold(
+    await failureOrUser.fold(
       (newFailure) {
         userState.state = null;
         // Disabling user fetch error in cache
@@ -105,9 +107,9 @@ class LoginState extends StateNotifier<bool?> {
       networkInfo: networkInfoImpl,
     );
 
-    final failureOrUser = await LoginUser(repository).loginUser(NoParams());
+    final failureOrUser = await LoginUser(repository)(NoParams());
 
-    failureOrUser?.fold(
+    failureOrUser.fold(
       (newFailure) {
         userState.state = null;
         failureState.state = newFailure;
@@ -121,16 +123,15 @@ class LoginState extends StateNotifier<bool?> {
   }
 
   /// Logout user
-  Future<void> logout() async {
+  Future<void> eitherFailureOrLogoutUser() async {
     loaderState.state = true;
     final repository = LogoutRepositoryImpl(
       localDataSource: userLocalDataSourceImpl,
     );
 
-    final failureOrSession =
-        await LogoutUser(repository).logoutUser(NoParams());
+    final failureOrSession = await LogoutUser(repository)(NoParams());
 
-    failureOrSession?.fold(
+    failureOrSession.fold(
       (newFailure) {
         failureState.state = newFailure;
       },
@@ -143,7 +144,7 @@ class LoginState extends StateNotifier<bool?> {
 
   /// User re-authentication request
   Future<void> reconnect({bool showDialog = true}) async {
-    await logout();
+    await eitherFailureOrLogoutUser();
     // TODO(PKeviin): show popup
   }
 }
