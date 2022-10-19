@@ -1,4 +1,6 @@
 class AppSpacing {
+  AppSpacing._();
+
   /// The default unit of spacing
   static const double _spaceUnit = 16;
 

@@ -1,6 +1,8 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Credential {
+  Credential._();
+
   /// ENVIRONEMENT
   static final String env = dotenv.env['ENV']!;
   static final bool isProduction = env == 'prod';

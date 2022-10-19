@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UtilsConvertor {
+  UtilsConvertor._();
+
   /// Document recovery in base64 format
   /// [url] file url
   static Future<String> networkFileToBase64(String url) async {

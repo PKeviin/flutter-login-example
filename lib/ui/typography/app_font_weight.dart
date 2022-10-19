@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 class AppFontWeight {
+  AppFontWeight._();
+
   /// FontWeight value of `w900`
   static const FontWeight black = FontWeight.w900;
 

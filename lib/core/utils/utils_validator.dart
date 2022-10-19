@@ -1,6 +1,6 @@
 class Patterns {
   static String url =
-      r'(https?|http)://([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?';
+      r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
   static String phone =
       r'^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$';
   static String email =
@@ -14,6 +14,8 @@ class Patterns {
 }
 
 class UtilsValidator {
+  UtilsValidator._();
+
   /// Email validation
   static bool validateEmail(String value) =>
       RegExp(Patterns.email).hasMatch(value);
@@ -26,7 +28,7 @@ class UtilsValidator {
   static bool validationUrl(String value) =>
       RegExp(Patterns.url).hasMatch(value);
 
-  /// Validation of a duplicate
+  /// Validating an double
   static bool validationDouble(String value) =>
       RegExp(Patterns.double).hasMatch(value);
 

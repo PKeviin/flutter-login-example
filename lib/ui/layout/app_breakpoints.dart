@@ -1,4 +1,6 @@
 class AppBreakpoints {
+  AppBreakpoints._();
+
   /// Max width for a small layout.
   static const double small = 760;
 

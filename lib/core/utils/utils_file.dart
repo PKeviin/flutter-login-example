@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
 class UtilsFile {
+  UtilsFile._();
+
   /// Sharing the pdf file
   static Future<void> shareFile(
     List<String> localPaths,
