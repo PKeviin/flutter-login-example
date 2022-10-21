@@ -1,23 +1,32 @@
 # Template
-Flutter app template (Android and iOS)
+Authentication flutter app example for Android and iOS.  
+Implementation of a clean architecture with riverpod and +180 tests (95% code coverage without UI, provider & go_router).  
+The objective of this project is to make the best use of good practices and to provide a template for a new project.
 
 ### Getting Started
-Editing `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file
+Editing `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file.  
 Run `main_dev.dart`, `main_preprod.dart`, `main_prod.dart`
 
-##### Build release command line
-iOS : `flutter build ios -t lib/main_prod.dart --release`
+### Commande line
+##### Build release
+iOS : `flutter build ios -t lib/main_prod.dart --release`  
 Android : `flutter build appbundle -t lib/main_prod.dart --release`
 
-##### Build runner command line for [freezed](https://pub.dev/packages/freezed)
+##### Build runner for [freezed](https://pub.dev/packages/freezed) and [json_serializable](https://pub.dev/packages/json_serializable)
 `flutter pub run build_runner build --delete-conflicting-outputs`
 
-#### [Splash screen](https://pub.dev/packages/flutter_native_splash) command line
-`flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml`
+#### [Splash screen](https://pub.dev/packages/flutter_native_splash)
+`flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml`  
 `flutter pub run flutter_native_splash:remove`
 
-#### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons) command line
+#### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
 `flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon.yaml`
+
+#### Test coverage [More detail here](https://www.etiennetheodore.com/test-coverage-explain-with-lcov-on-dart/)
+```
+sh scripts/import_files_coverage.sh template
+sh scripts/create_clean_lcov_and_generate_html.sh true
+```
 
 
 ### Informations
@@ -39,18 +48,18 @@ Android : `flutter build appbundle -t lib/main_prod.dart --release`
    - https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl
 7. Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
 8. Using [fvm](https://fvm.app/) to manage flutter versions with [sidekick](https://github.com/fluttertools/sidekick)
-
+9. Using [mocktail](https://pub.dev/packages/mocktail) for tests
 
 ### Possibility of improvement
 1. Replace [flutter_dotenv](https://pub.dev/packages/flutter_dotenv) package to make key hacking harder. Instead, use the [ENVied](https://pub.dev/packages/envied) package and enable obfuscation.
    - https://codewithandrea.com/articles/flutter-api-keys-dart-define-env-files/
 2. Added accessibility with [Semantics](https://api.flutter.dev/flutter/widgets/Semantics-class.html)
    - https://blog.gskinner.com/archives/2022/09/flutter-crafting-a-great-experience-for-screen-readers.html
-3. Implementation of tests with [mockito](https://pub.dev/packages/mockito) and [alchemist](https://pub.dev/packages/alchemist)
-
+3. Implementation widget test, provider test, go_router test and integration tests
 
 ### Useful package
 1. [pigeon](https://pub.dev/packages/pigeon)
+2. [alchemist](https://pub.dev/packages/alchemist)
 
 
 ### Project structure
@@ -61,8 +70,15 @@ lib/
 │ ├─ constants/
 │ ├─ enums/
 │ ├─ impl/
+│ │ ├─ api/
+│ │ ├─ local_auth/
+│ │ ├─ logger/
+│ │ ├─ network_info/
+│ │ ├─ package_info/
+│ │ ├─ picker_file/
+│ │ ├─ secure_storage/
+│ │ ├─ share_file/
 │ ├─ locales/
-│ ├─ providers/
 │ ├─ router/
 │ ├─ utils/
 │ │ ├─ errors/
@@ -70,14 +86,12 @@ lib/
 │ │ ├─ platform/
 │ │ ├─ usecases/
 │ │ ├─ utils.dart
-│ │ ├─ utils_convertor.dart
-│ │ ├─ utils_file.dart
-│ │ ├─ utils_format.dart
 │ │ ├─ utils_ui.dart
 │ │ ├─ utils_validator.dart
 ├─ features/
 │ ├─ commons/
 │ │ ├─ pages/
+│ │ ├─ providers/
 │ │ ├─ widgets/
 │ ├─ feature1/
 │ │ ├─ data/
@@ -105,6 +119,7 @@ lib/
 ├─ main_dev.dart
 ├─ main_preprod.dart
 ├─ main_prod.dart
+test/
 ```
 
 ### The links that helped me create this template
