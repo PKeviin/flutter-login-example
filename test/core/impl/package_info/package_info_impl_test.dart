@@ -23,6 +23,7 @@ void main() {
       version: tVersion,
       buildNumber: tBuildNumber,
       buildSignature: tBuildSignature,
+      installerStore: '',
     );
     mockPackageInfo = PackageInfo.fromPlatform();
     packageInfoImpl = PackageInfoImpl(packageInfo: mockPackageInfo!);
