@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/locales/generated/l10n.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../../../../ui/widgets/buttons/app_rounded_button.dart';
-import '../provider/login_provider.dart';
+import '../providers/login_provider.dart';
 
 class LoginButtonWidget extends ConsumerWidget {
   const LoginButtonWidget({super.key});

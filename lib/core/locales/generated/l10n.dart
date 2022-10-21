@@ -509,6 +509,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Biometric verification did not work.`
+  String get errorBiometrics {
+    return Intl.message(
+      'Biometric verification did not work.',
+      name: 'errorBiometrics',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

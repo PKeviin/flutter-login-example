@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../ui/assets/app_assets.dart';
 import '../../../../ui/colors/app_colors.dart';
-import '../provider/login_provider.dart';
-import '../provider/user_has_already_logged_in_provider.dart';
+import '../providers/login_provider.dart';
+import '../providers/user_has_already_logged_in_provider.dart';
 
 class ReconnectBiometricButtonWidget extends ConsumerWidget {
   const ReconnectBiometricButtonWidget({super.key});

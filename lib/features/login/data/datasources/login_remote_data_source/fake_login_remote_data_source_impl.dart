@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import '../../../../../core/constants/errors_en_message_constant.dart';
 import '../../../../../core/impl/api/models/api_response_entity.dart';
 import '../../../../../core/locales/generated/l10n.dart';
@@ -9,7 +10,7 @@ class FakeLoginRemoteDataSourceImpl implements LoginRemoteDataSourceRepository {
   FakeLoginRemoteDataSourceImpl();
 
   @override
-  Future<UserModel>? login() async {
+  Future<UserModel> login() async {
     await Future.delayed(const Duration(seconds: 2));
     var jsonResponse = const APIJsonResponse();
     jsonResponse = jsonResponse.copyWith(error: false);

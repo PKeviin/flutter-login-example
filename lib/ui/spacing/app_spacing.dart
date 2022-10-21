@@ -1,5 +1,5 @@
 class AppSpacing {
-  AppSpacing._();
+  AppSpacing._(); // coverage:ignore-line
 
   /// The default unit of spacing
   static const double _spaceUnit = 16;

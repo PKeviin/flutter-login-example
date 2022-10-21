@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-import '../../credentials.dart';
 import 'logger_repository.dart';
 
 class LoggerImpl implements LoggerRepository {
@@ -11,12 +10,45 @@ class LoggerImpl implements LoggerRepository {
   });
   Logger logger;
 
-  /// Error display management
+  /// Info log
   @override
-  Future<void> initErrorDisplayManagement() async {
+  void traceLogInfo(String message) => logger.i(message);
+
+  /// Warning log
+  @override
+  void traceLogWarning(String message) => logger.w(message);
+
+  /// Debug log
+  @override
+  void traceLogDebug(String message) => logger.d(message);
+
+  /// Verbose log
+  @override
+  void traceLogVerbose(String message) => logger.v(message);
+
+  /// Error log
+  @override
+  Future<void> traceLogError({
+    required String message,
+    required bool isDev,
+    Object? error,
+    StackTrace? stacktrace,
+  }) async {
+    logger.e(message, error, stacktrace);
+    if (!isDev && error != null) {
+      await Sentry.captureException(error, stackTrace: stacktrace);
+    }
+  }
+
+  /// Error display management
+  Future<void> initErrorDisplayManagement({
+    required String message,
+    required bool isDev,
+  }) async {
     FlutterError.onError = (errorDetails) async {
       await traceLogError(
-        message: 'error',
+        message: message,
+        isDev: isDev,
         error: errorDetails.exception,
         stacktrace: errorDetails.stack,
       );
@@ -36,19 +68,6 @@ class LoggerImpl implements LoggerRepository {
         message = '[${DateTime.now()} - $version - $platform]: $message';
         debugPrintSynchronously(message, wrapWidth: wrapWidth);
       };
-    }
-  }
-
-  /// Error log
-  @override
-  Future<void> traceLogError({
-    required String message,
-    Object? error,
-    StackTrace? stacktrace,
-  }) async {
-    logger.e(message, error, stacktrace);
-    if (!Credential.isDev && error != null) {
-      await Sentry.captureException(error, stackTrace: stacktrace);
     }
   }
 }

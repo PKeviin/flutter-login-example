@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppIcons {
-  AppIcons._();
+  AppIcons._(); // coverage:ignore-line
 
   static const IconData add = Icons.add;
   static const IconData close = Icons.close;

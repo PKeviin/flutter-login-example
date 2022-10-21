@@ -1,15 +1,18 @@
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/enums/file_format_enum.dart';
+import '../../../../core/impl/share_file/share_file_provider.dart';
 import '../../../../core/locales/generated/l10n.dart';
-import '../../../../core/utils/utils_file.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../../../../ui/icons/app_icons.dart';
 import '../../../../ui/spacing/app_spacing.dart';
 import '../../../../ui/widgets/circular_indicator.dart';
 
-class ImgViewerPage extends StatelessWidget {
+class ImgViewerPage extends ConsumerWidget {
   const ImgViewerPage({
     required this.name,
     super.key,
@@ -27,24 +30,26 @@ class ImgViewerPage extends StatelessWidget {
   final bool showShare;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(name)),
-        body: _getBody(),
-        floatingActionButton: showShare && localPath != null
-            ? FloatingActionButton(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                onPressed: () async => UtilsFile.shareFile(
-                  [localPath!],
-                  name,
-                  [],
-                ),
-                child: Icon(
-                  AppIcons.shareOutlined,
-                  color: AppColors.white,
-                ),
-              )
-            : const SizedBox.shrink(),
-      );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final share = ref.read(shareFileImplProvider);
+    return Scaffold(
+      appBar: AppBar(title: Text(name)),
+      body: _getBody(),
+      floatingActionButton: showShare && localPath != null
+          ? FloatingActionButton(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              onPressed: () async => share.shareXFiles(
+                files: [XFile(localPath!)],
+                text: name,
+              ),
+              child: Icon(
+                AppIcons.shareOutlined,
+                color: AppColors.white,
+              ),
+            )
+          : const SizedBox.shrink(),
+    );
+  }
 
   /// Image display
   Widget _getBody() => SafeArea(

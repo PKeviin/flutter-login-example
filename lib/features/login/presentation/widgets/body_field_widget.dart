@@ -8,8 +8,8 @@ import '../../../../ui/icons/app_icons.dart';
 import '../../../../ui/widgets/circular_indicator.dart';
 import '../../../../ui/widgets/decorations/app_input_decoration.dart';
 import '../../../../ui/widgets/fields/app_text_form_field.dart';
-import '../provider/login_provider.dart';
-import '../provider/user_has_already_logged_in_provider.dart';
+import '../providers/login_provider.dart';
+import '../providers/user_has_already_logged_in_provider.dart';
 import 'login_button_widget.dart';
 import 'reconnect_widget.dart';
 

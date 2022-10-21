@@ -9,10 +9,11 @@ extension StringExtensions on String? {
 
   /// Returns a progression that goes over the same range in the opposite
   /// direction with the same step.
-  String reversed() {
+  String? reversed() {
+    if (this == null) return null;
     var res = '';
-    for (var i = this!.length; i >= 0; --i) {
-      res = this![i];
+    for (var i = this!.length - 1; i >= 0; --i) {
+      res += this![i];
     }
     return res;
   }
@@ -43,51 +44,6 @@ extension StringExtensions on String? {
   /// or null if can not be parsed.
   DateTime? toDateTimeOrNull() => DateTime.tryParse(this!);
 
-  ///  Replaces part of string after the first occurrence of given delimiter
-  ///  with the [replacement] string.
-  ///  If the string does not contain the delimiter, returns [defaultValue]
-  ///  which defaults to the original string.
-  String? replaceAfter(
-    String delimiter,
-    String replacement, [
-    String? defaultValue,
-  ]) {
-    if (this == null) {
-      return null;
-    }
-    final index = this!.indexOf(delimiter);
-    return (index == -1)
-        ? defaultValue!.isNullOrEmpty()
-            ? this
-            : defaultValue
-        : this!.replaceRange(index + 1, this!.length, replacement);
-  }
-
-  /// Replaces part of string before the first occurrence of given delimiter
-  /// with the [replacement] string.
-  /// If the string does not contain the delimiter,
-  /// returns [missingDelimiterValue!] which defaults to the original string.
-  String? replaceBefore(
-    String delimiter,
-    String replacement, [
-    String? defaultValue,
-  ]) {
-    if (this == null) {
-      return null;
-    }
-    final index = this!.indexOf(delimiter);
-    return (index == -1)
-        ? defaultValue!.isNullOrEmpty()
-            ? this
-            : defaultValue
-        : this!.replaceRange(0, index, replacement);
-  }
-
-  ///Returns `true` if at least one element matches the given [predicate].
-  /// the [predicate] should have only one character
-  bool anyChar(bool Function(String element) predicate) =>
-      this?.split('').any((s) => predicate(s)) ?? false;
-
   /// Returns last symbol of string or empty string if `this` is null or empty
   String get last => isNullOrEmpty() ? '' : this![this!.length - 1];
 
@@ -98,5 +54,24 @@ extension StringExtensions on String? {
           other != null &&
           this?.toLowerCase() == other.toLowerCase());
 
+  /// Returns empty if null
   String orEmpty() => this ?? '';
+
+  /// Formatting phone numbers that have different formats
+  String? formatTelNumber() {
+    var result = '';
+    if (this != '' && this != null) {
+      result = this!
+          .replaceAll('(0)', '')
+          .replaceAll(' ', '')
+          .replaceAll(RegExp(r'[\.-]'), '');
+      final regex = RegExp(r'^[^0\+]');
+      if (regex.hasMatch(this!)) {
+        result = '+${this!.replaceAll(' ', '')}';
+      }
+    } else {
+      return null;
+    }
+    return result;
+  }
 }

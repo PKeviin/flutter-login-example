@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/providers/theme_provider.dart';
+
+import '../../features/commons/providers/theme_provider.dart';
 import '../colors/app_colors.dart';
 
 /// Display of the indicator according to the platform

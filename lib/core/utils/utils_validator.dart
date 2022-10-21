@@ -14,7 +14,7 @@ class Patterns {
 }
 
 class UtilsValidator {
-  UtilsValidator._();
+  UtilsValidator._(); // coverage:ignore-line
 
   /// Email validation
   static bool validateEmail(String value) =>

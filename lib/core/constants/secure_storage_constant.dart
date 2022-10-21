@@ -1,3 +1,4 @@
+const keyFirstRun = 'first_run';
 const keyTokenFirebase = 'token_firebase';
 const keyLanguageCode = 'language_code';
 const keyCountryCode = 'country_code';

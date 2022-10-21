@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/login/domain/entities/user.dart';
-import '../../features/login/presentation/provider/user_provider.dart';
+import '../../features/login/presentation/providers/user_provider.dart';
 import 'routes.dart';
 
 /// My favorite approach: ofc there's room for improvement, but it works fine.

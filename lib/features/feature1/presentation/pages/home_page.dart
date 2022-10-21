@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/enums/privacy_status_enum.dart';
 import '../../../../core/locales/generated/l10n.dart';
-import '../../../../core/providers/privacy_provider.dart';
 import '../../../../ui/colors/app_colors.dart';
 import '../../../../ui/widgets/buttons/app_rounded_button.dart';
 import '../../../../ui/widgets/dialogs/simple_question_dialog.dart';
-import '../../../login/presentation/provider/login_provider.dart';
+import '../../../commons/providers/privacy_provider.dart';
+import '../../../login/presentation/providers/login_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});

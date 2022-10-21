@@ -10,8 +10,8 @@ import '../../../../../core/utils/errors/exceptions.dart';
 import '../../models/user_model.dart';
 import 'login_local_data_source_repository.dart';
 
-class UserLocalDataSourceImpl implements LoginLocalDataSourceRepository {
-  UserLocalDataSourceImpl({
+class LoginLocalDataSourceImpl implements LoginLocalDataSourceRepository {
+  LoginLocalDataSourceImpl({
     required this.secureStorage,
   });
   SecureStorageRepository secureStorage;
@@ -36,13 +36,12 @@ class UserLocalDataSourceImpl implements LoginLocalDataSourceRepository {
           messageEn: kErrorRetrievingUserCache,
         );
       }
-    } on FormatException catch (e, staktrace) {
-      // TODO(PKeviin): check format exception
-      throw ParseDataException(
-        message: S.current.errorDataApi,
-        messageEn: kErrorDataApi,
+    } on TokenException catch (e, stacktrace) {
+      throw TokenException(
+        message: S.current.errorSessionExpireApi,
+        messageEn: kErrorSessionExpireApi,
         error: e,
-        stacktrace: staktrace,
+        stacktrace: stacktrace,
       );
     } catch (e, staktrace) {
       throw CacheException(
@@ -98,17 +97,10 @@ class UserLocalDataSourceImpl implements LoginLocalDataSourceRepository {
     if (token != null) {
       try {
         isTokenValid = !JwtDecoder.isExpired(token);
-      } on FormatException catch (e, stacktrace) {
+      } catch (e, stacktrace) {
         throw TokenException(
           message: S.current.errorFormatToken,
           messageEn: kErrorFormatToken,
-          error: e,
-          stacktrace: stacktrace,
-        );
-      } catch (e, stacktrace) {
-        throw TokenException(
-          message: S.current.errorSessionExpireApi,
-          messageEn: kErrorSessionExpireApi,
           error: e,
           stacktrace: stacktrace,
         );

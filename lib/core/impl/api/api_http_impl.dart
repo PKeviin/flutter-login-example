@@ -3,42 +3,38 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '../../../features/login/presentation/provider/user_provider.dart';
 import '../../constants/errors_en_message_constant.dart';
-import '../../credentials.dart';
 import '../../enums/response_type_enum.dart';
 import '../../locales/generated/l10n.dart';
-import '../../providers/locale_provider.dart';
 import '../../utils/errors/exceptions.dart';
 import '../../utils/extensions/string_extension.dart';
-import '../logger/logger_repository.dart';
 import 'api_repository.dart';
 import 'models/api_response_entity.dart';
 
 class ApiHttpImpl implements ApiRepository {
   ApiHttpImpl({
-    required this.logger,
-    required this.localeState,
+    required this.client,
+    required this.locale,
     required this.platform,
-    this.userState,
+    required this.apiUrl,
+    this.token,
   });
-  final LoggerRepository logger;
-  final LocaleState localeState;
+  final http.Client client;
+  final String locale;
   final String platform;
-  final UserState? userState;
-
-  final String _api = Credential.apiBase;
-  final Map<String, String> _headers = {};
+  final String apiUrl;
+  final String? token;
 
   /// Init header
-  void _initHeaders() {
-    final userJWT = userState?.getToken;
-    if (userJWT != null) {
-      _headers[HttpHeaders.authorizationHeader] = 'Bearer $userJWT';
+  Map<String, String> get getHeaders {
+    final headers = <String, String>{};
+    if (token != null) {
+      headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }
-    _headers['x-lang'] = localeState.getLanguageCode;
-    _headers['x-app'] = platform;
-    _headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    headers['x-lang'] = locale;
+    headers['x-app'] = platform;
+    headers[HttpHeaders.contentTypeHeader] = 'application/json';
+    return headers;
   }
 
   /// POST
@@ -51,10 +47,9 @@ class ApiHttpImpl implements ApiRepository {
     ResponseDataTypeEnum dataType = ResponseDataTypeEnum.json,
   }) async {
     try {
-      _initHeaders();
-      final request = http.post(
-        Uri.parse('$_api$route'),
-        headers: _headers,
+      final request = client.post(
+        Uri.parse('$apiUrl$route'),
+        headers: getHeaders,
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
@@ -68,11 +63,12 @@ class ApiHttpImpl implements ApiRepository {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
-        throw UnknownException(
+        throw ServerException(
           message: S.current.errorApi,
           messageEn: kErrorApi,
           error: e,
           stacktrace: stacktrace,
+          statusCode: -1,
         );
       }
     }
@@ -88,10 +84,9 @@ class ApiHttpImpl implements ApiRepository {
     ResponseDataTypeEnum dataType = ResponseDataTypeEnum.json,
   }) async {
     try {
-      _initHeaders();
-      final request = http.put(
-        Uri.parse('$_api$route'),
-        headers: _headers,
+      final request = client.put(
+        Uri.parse('$apiUrl$route'),
+        headers: getHeaders,
         body: body != null ? utf8.encode(jsonEncode(body)) : null,
       );
 
@@ -105,11 +100,12 @@ class ApiHttpImpl implements ApiRepository {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
-        throw UnknownException(
+        throw ServerException(
           message: S.current.errorApi,
           messageEn: kErrorApi,
           error: e,
           stacktrace: stacktrace,
+          statusCode: -1,
         );
       }
     }
@@ -125,7 +121,6 @@ class ApiHttpImpl implements ApiRepository {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
-      _initHeaders();
       Map<String, dynamic>? parsedQuery;
       if (queryParams != null) {
         parsedQuery =
@@ -135,9 +130,9 @@ class ApiHttpImpl implements ApiRepository {
           ? '?${Uri(queryParameters: parsedQuery).query}'
           : '';
 
-      final request = http.get(
-        Uri.parse('$_api$route$queryString'),
-        headers: _headers,
+      final request = client.get(
+        Uri.parse('$apiUrl$route$queryString'),
+        headers: getHeaders,
       );
 
       return request.then(
@@ -150,11 +145,12 @@ class ApiHttpImpl implements ApiRepository {
       if (e is HandshakeException || e is CertificateException) {
         return _certificatException(e);
       } else {
-        throw UnknownException(
+        throw ServerException(
           message: S.current.errorApi,
           messageEn: kErrorApi,
           error: e,
           stacktrace: stacktrace,
+          statusCode: -1,
         );
       }
     }
@@ -186,11 +182,13 @@ class ApiHttpImpl implements ApiRepository {
         case ResponseDataTypeEnum.json:
           data = json.decode(response.body);
           break;
+        // coverage:ignore-start
         case ResponseDataTypeEnum.bytes:
         case ResponseDataTypeEnum.string:
         case ResponseDataTypeEnum.stream:
         case ResponseDataTypeEnum.plain:
           break;
+        // coverage:ignore-end
       }
     } catch (e, stacktrace) {
       throw ParseDataException(
@@ -203,35 +201,24 @@ class ApiHttpImpl implements ApiRepository {
 
     String? error;
     String? errors;
+    // ignore: unused_local_variable
     String? result;
-    try {
-      if (response.statusCode != HttpStatus.ok &&
-          response.statusCode != HttpStatus.created &&
-          response.statusCode != HttpStatus.accepted) {
-        // To be modified according to the API
-        if (data is Map<String, dynamic>) {
-          if (data['errors'].toString().isNotNullOrEmpty()) {
-            errors = data['errors']
-                .toString()
-                .replaceAll('{', '')
-                .replaceAll('}', '')
-                .replaceAll('[', '')
-                .replaceAll(']', '');
-          }
-          if (data['error'].toString().isNotNullOrEmpty()) {
-            error = data['error'].toString();
-          }
-          if (data['result'].toString().isNotNullOrEmpty()) {
-            result = data['result'];
-          }
+    if (response.statusCode != HttpStatus.ok &&
+        response.statusCode != HttpStatus.created &&
+        response.statusCode != HttpStatus.accepted) {
+      // To be modified according to the API
+      if (data is Map<String, dynamic>) {
+        error = data['error'] as String?;
+        result = data['result'] as String?;
+        errors = data['errors'] as String?;
+        if (errors.isNotNullOrEmpty()) {
+          errors = errors
+              ?.replaceAll('{', '')
+              .replaceAll('}', '')
+              .replaceAll('[', '')
+              .replaceAll(']', '');
         }
       }
-    } catch (e, stacktrace) {
-      await logger.traceLogError(
-        message: kErrorDataApi,
-        error: e,
-        stacktrace: stacktrace,
-      );
     }
 
     switch (response.statusCode) {
@@ -250,48 +237,45 @@ class ApiHttpImpl implements ApiRepository {
           messageEn: errors != null && errors.isNotEmpty
               ? errors
               : kErrorBadRequestApi,
-          statutCode: response.statusCode,
+          statusCode: response.statusCode,
         );
       case HttpStatus.unauthorized:
+        throw ServerException(
+          message: error ?? S.current.errorApiUnauthorized,
+          messageEn: error ?? kErrorApiUnauthorized,
+          statusCode: response.statusCode,
+        );
       case HttpStatus.forbidden:
-        if (result != null) {
-          // TODO(KeviinP): delete ?
-          // await _userState?.reconnect();
-          throw ServerException(
-            message: S.current.errorSessionExpireApi,
-            messageEn: kErrorSessionExpireApi,
-            statutCode: response.statusCode,
-          );
-        } else {
-          throw ServerException(
-            message: S.current.errorApiUnauthorized,
-            messageEn: kErrorApiUnauthorized,
-            statutCode: response.statusCode,
-          );
-        }
+        // TODO(KeviinP): delete ?
+        // await _userState?.reconnect();
+        throw ServerException(
+          message: error ?? S.current.errorSessionExpireApi,
+          messageEn: error ?? kErrorSessionExpireApi,
+          statusCode: response.statusCode,
+        );
       case HttpStatus.notFound:
         throw ServerException(
           message: error ?? S.current.errorApiNotFound,
           messageEn: error ?? kErrorApiNotFound,
-          statutCode: response.statusCode,
+          statusCode: response.statusCode,
         );
       case HttpStatus.conflict:
         throw ServerException(
           message: error ?? S.current.errorApi,
           messageEn: error ?? kErrorApi,
-          statutCode: response.statusCode,
+          statusCode: response.statusCode,
         );
       case HttpStatus.internalServerError:
         throw ServerException(
           message: S.current.errorServerApi,
           messageEn: kErrorServerApi,
-          statutCode: response.statusCode,
+          statusCode: response.statusCode,
         );
       default:
         throw ServerException(
           message: S.current.errorApi,
           messageEn: kErrorApi,
-          statutCode: response.statusCode,
+          statusCode: response.statusCode,
         );
     }
   }

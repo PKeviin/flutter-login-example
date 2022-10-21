@@ -1,0 +1,8 @@
+{
+  "name": "Name test",
+  "lastName": "Last Name test",
+  "email": "Email test",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0ODA5MjkyODIsImV4cCI6MTA4MDEzMjE2OCwibmFtZSI6IlVzZXJuYW1lIn0.lkc2jEclaVvhVHC0_EcjBrnPYNx8gUqgR8cKHl6p6F4",
+  "id": 1,
+  "mobile": "Mobile test"
+}

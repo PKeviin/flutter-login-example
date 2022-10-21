@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Vous n\'êtes pas autorisé à accéder à ce contenu. Veuillez vous reconnecter."),
         "errorBadRequestApi":
             MessageLookupByLibrary.simpleMessage("Demande invalide."),
+        "errorBiometrics": MessageLookupByLibrary.simpleMessage(
+            "La vérification biométrique n\'a pas fonctionnée."),
         "errorCertificatServerApi": MessageLookupByLibrary.simpleMessage(
             "Une erreur s\'est produite lors de la mise en place d\'une connexion sécurisée avec le serveur. Veuillez réessayer."),
         "errorDataApi": MessageLookupByLibrary.simpleMessage(

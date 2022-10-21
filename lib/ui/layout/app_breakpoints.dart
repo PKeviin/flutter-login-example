@@ -1,5 +1,5 @@
 class AppBreakpoints {
-  AppBreakpoints._();
+  AppBreakpoints._(); // coverage:ignore-line
 
   /// Max width for a small layout.
   static const double small = 760;

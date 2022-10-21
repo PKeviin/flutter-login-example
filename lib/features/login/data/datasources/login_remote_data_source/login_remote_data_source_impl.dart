@@ -16,7 +16,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSourceRepository {
   final String password;
 
   @override
-  Future<UserModel>? login() async {
+  Future<UserModel> login() async {
     final jsonResponse = await api.post(
       route: '/user/login',
       body: {

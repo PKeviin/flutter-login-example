@@ -34,3 +34,4 @@ const String kErrorCertificatServerApi =
     'Try Again.';
 const String kErrorRetrievingUserCache = 'Error retrieving user from cache.';
 const String kErrorSaveUserCache = 'Failed to save user in cache.';
+const String kErrorBiometrics = 'Biometric verification did not work.';

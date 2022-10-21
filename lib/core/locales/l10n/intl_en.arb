@@ -55,5 +55,6 @@
   "errorVerificationCertificatApi": "An error occurred while verifying the certificate. Try Again.",
   "errorCertificatServerApi": "An error occurred while setting up a secure connection to the server. Try Again.",
   "errorRetrievingUserCache": "Error retrieving user from cache.",
-  "errorSaveUserCache": "Failed to save user in cache."
+  "errorSaveUserCache": "Failed to save user in cache.",
+  "errorBiometrics": "Biometric verification did not work."
 }

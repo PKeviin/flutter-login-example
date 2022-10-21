@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
 import 'local_auth_repository.dart';
@@ -16,8 +15,8 @@ class LocalAuthImpl implements LocalAuthRepository {
     try {
       return await localAuthentication.canCheckBiometrics &&
           await localAuthentication.isDeviceSupported();
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
+    } catch (e) {
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -27,8 +26,8 @@ class LocalAuthImpl implements LocalAuthRepository {
   Future<List<BiometricType>> get availableBiometrics async {
     try {
       return await localAuthentication.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
+    } catch (e) {
+      debugPrint(e.toString());
       return <BiometricType>[];
     }
   }
@@ -44,8 +43,8 @@ class LocalAuthImpl implements LocalAuthRepository {
             stickyAuth: true,
           ),
         );
-      } on PlatformException catch (e) {
-        debugPrint(e.message);
+      } catch (e) {
+        debugPrint(e.toString());
         return false;
       }
     } else {

@@ -8,15 +8,15 @@ abstract class PlatformInterface {
     this.isMacOS = false,
     this.operatingSystem = '',
   });
-  final bool isWeb;
-  final bool isIOS;
-  final bool isAndroid;
-  final bool isWindows;
-  final bool isLinux;
-  final bool isMacOS;
+  bool isWeb;
+  bool isIOS;
+  bool isAndroid;
+  bool isWindows;
+  bool isLinux;
+  bool isMacOS;
 
   final String operatingSystem;
 
   bool get isDesktop => isWindows || isMacOS || isLinux;
-  bool get isModbile => isIOS || isAndroid;
+  bool get isMobile => isIOS || isAndroid;
 }

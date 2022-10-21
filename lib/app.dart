@@ -5,17 +5,17 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:wiredash/wiredash.dart';
 
 import 'core/credentials.dart';
-import 'core/impl/platform_info/package_info_provider.dart';
+import 'core/impl/package_info/package_info_provider.dart';
 import 'core/locales/generated/l10n.dart';
-import 'core/providers/failure_provider.dart';
-import 'core/providers/loader_provider.dart';
-import 'core/providers/locale_provider.dart';
-import 'core/providers/theme_provider.dart';
 import 'core/router/router.dart';
 import 'core/utils/errors/failures.dart';
 import 'core/utils/platform/platform.dart';
 import 'core/utils/utils_ui.dart';
-import 'features/login/presentation/provider/user_provider.dart';
+import 'features/commons/providers/failure_provider.dart';
+import 'features/commons/providers/loader_provider.dart';
+import 'features/commons/providers/locale_provider.dart';
+import 'features/commons/providers/theme_provider.dart';
+import 'features/login/presentation/providers/user_provider.dart';
 import 'ui/widgets/circular_indicator.dart';
 import 'ui/widgets/dismiss_keyboard.dart';
 
@@ -27,6 +27,7 @@ class App extends ConsumerWidget {
     _listenFailureSnackbar(ref);
     _listenLoaderOverlay(ref, context);
     final router = ref.watch(routerProvider);
+    final theme = ref.watch(themeModeProvider.notifier);
     return Wiredash(
       projectId: Credential.wiredashId,
       secret: Credential.wiredashKey,
@@ -61,8 +62,8 @@ class App extends ConsumerWidget {
             routerDelegate: router.routerDelegate,
             locale: ref.watch(localeProvider),
             supportedLocales: S.delegate.supportedLocales,
-            theme: UtilsUI.getThemeData(isLightTheme: true),
-            darkTheme: UtilsUI.getThemeData(isLightTheme: false),
+            theme: theme.getThemeData(isLightTheme: true),
+            darkTheme: theme.getThemeData(isLightTheme: false),
             themeMode: ref.watch(themeModeProvider),
           ),
         ),

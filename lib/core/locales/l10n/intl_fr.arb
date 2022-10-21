@@ -56,5 +56,6 @@
   "errorVerificationCertificatApi": "Une erreur s'est produite lors de la vérification du certificat. Veuillez réessayer.",
   "errorCertificatServerApi": "Une erreur s'est produite lors de la mise en place d'une connexion sécurisée avec le serveur. Veuillez réessayer.",
   "errorRetrievingUserCache": "Erreur lors de la récupération de l'utilisateur à partir du cache.",
-  "errorSaveUserCache": "Impossible d'enregistrer l'utilisateur dans le cache."
+  "errorSaveUserCache": "Impossible d'enregistrer l'utilisateur dans le cache.",
+  "errorBiometrics": "La vérification biométrique n'a pas fonctionnée."
 }

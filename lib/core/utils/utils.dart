@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/commons/providers/locale_provider.dart';
+import '../../features/commons/providers/privacy_provider.dart';
+import '../../features/commons/providers/theme_provider.dart';
+import '../credentials.dart';
 import '../impl/logger/logger_provider.dart';
-import '../impl/platform_info/package_info_provider.dart';
+import '../impl/package_info/package_info_provider.dart';
 import '../impl/secure_storage/secure_storage_provider.dart';
-import '../providers/locale_provider.dart';
-import '../providers/privacy_provider.dart';
-import '../providers/theme_provider.dart';
+import '../utils/platform/platform.dart';
 
 class Utils {
   /// Application initialization
@@ -23,11 +25,14 @@ class Utils {
 
     // Package info initialization
     final pacakgeInfo = container.read(packageInfoImplProvider);
-    await pacakgeInfo.initPackageInfo();
+    await pacakgeInfo.initPackageInfo(Platform());
 
     // Logger initialization
     final logger = container.read(loggerImplProvider);
-    await logger.initErrorDisplayManagement();
+    await logger.initErrorDisplayManagement(
+      message: 'Error',
+      isDev: Credential.isDev,
+    );
     logger.initDebugPrint(
       isRelease: kReleaseMode,
       version: versionApp,

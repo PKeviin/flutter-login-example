@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/providers/theme_provider.dart';
+
 import '../../../ui/colors/app_colors.dart';
 import '../../../ui/icons/app_icons.dart';
 import '../../../ui/widgets/switch/animationd_toggle.dart';
+import '../providers/theme_provider.dart';
 
 class ThemeSwitch extends ConsumerWidget {
   const ThemeSwitch({super.key});

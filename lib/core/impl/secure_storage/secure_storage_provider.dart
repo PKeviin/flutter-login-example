@@ -17,5 +17,7 @@ final secureStorageImplProvider = Provider<SecureStorageImpl>((ref) {
   return SecureStorageImpl(
     secureStorage: secureStorage,
     sharePreference: sharedPreferences,
+    iOptions: const IOSOptions(accessibility: IOSAccessibility.first_unlock),
+    aOptions: const AndroidOptions(encryptedSharedPreferences: true),
   );
 });

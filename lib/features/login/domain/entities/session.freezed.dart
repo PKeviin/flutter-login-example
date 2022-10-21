@@ -27,18 +27,22 @@ mixin _$Session {
 /// @nodoc
 abstract class $SessionCopyWith<$Res> {
   factory $SessionCopyWith(Session value, $Res Function(Session) then) =
-      _$SessionCopyWithImpl<$Res>;
+      _$SessionCopyWithImpl<$Res, Session>;
+  @useResult
   $Res call({String? token, String? currentLocation, String? previousLocation});
 }
 
 /// @nodoc
-class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
+class _$SessionCopyWithImpl<$Res, $Val extends Session>
+    implements $SessionCopyWith<$Res> {
   _$SessionCopyWithImpl(this._value, this._then);
 
-  final Session _value;
   // ignore: unused_field
-  final $Res Function(Session) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? token = freezed,
@@ -46,19 +50,19 @@ class _$SessionCopyWithImpl<$Res> implements $SessionCopyWith<$Res> {
     Object? previousLocation = freezed,
   }) {
     return _then(_value.copyWith(
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      currentLocation: currentLocation == freezed
+      currentLocation: freezed == currentLocation
           ? _value.currentLocation
           : currentLocation // ignore: cast_nullable_to_non_nullable
               as String?,
-      previousLocation: previousLocation == freezed
+      previousLocation: freezed == previousLocation
           ? _value.previousLocation
           : previousLocation // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -68,18 +72,18 @@ abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
           _$_Session value, $Res Function(_$_Session) then) =
       __$$_SessionCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? token, String? currentLocation, String? previousLocation});
 }
 
 /// @nodoc
-class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
+class __$$_SessionCopyWithImpl<$Res>
+    extends _$SessionCopyWithImpl<$Res, _$_Session>
     implements _$$_SessionCopyWith<$Res> {
   __$$_SessionCopyWithImpl(_$_Session _value, $Res Function(_$_Session) _then)
-      : super(_value, (v) => _then(v as _$_Session));
+      : super(_value, _then);
 
-  @override
-  _$_Session get _value => super._value as _$_Session;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? token = freezed,
@@ -87,15 +91,15 @@ class __$$_SessionCopyWithImpl<$Res> extends _$SessionCopyWithImpl<$Res>
     Object? previousLocation = freezed,
   }) {
     return _then(_$_Session(
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      currentLocation: currentLocation == freezed
+      currentLocation: freezed == currentLocation
           ? _value.currentLocation
           : currentLocation // ignore: cast_nullable_to_non_nullable
               as String?,
-      previousLocation: previousLocation == freezed
+      previousLocation: freezed == previousLocation
           ? _value.previousLocation
           : previousLocation // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -125,22 +129,20 @@ class _$_Session implements _Session {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Session &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality()
-                .equals(other.currentLocation, currentLocation) &&
-            const DeepCollectionEquality()
-                .equals(other.previousLocation, previousLocation));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.currentLocation, currentLocation) ||
+                other.currentLocation == currentLocation) &&
+            (identical(other.previousLocation, previousLocation) ||
+                other.previousLocation == previousLocation));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(currentLocation),
-      const DeepCollectionEquality().hash(previousLocation));
+  int get hashCode =>
+      Object.hash(runtimeType, token, currentLocation, previousLocation);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SessionCopyWith<_$_Session> get copyWith =>
       __$$_SessionCopyWithImpl<_$_Session>(this, _$identity);
 }

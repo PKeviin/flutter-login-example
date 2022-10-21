@@ -14,19 +14,15 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-APIJsonResponse _$APIJsonResponseFromJson(Map<String, dynamic> json) {
-  return _APIJsonResponse.fromJson(json);
-}
-
 /// @nodoc
 mixin _$APIJsonResponse {
   dynamic get data => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  String get messageEn => throw _privateConstructorUsedError;
   bool get error => throw _privateConstructorUsedError;
   bool get unauthorized => throw _privateConstructorUsedError;
   int get statusCode => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $APIJsonResponseCopyWith<APIJsonResponse> get copyWith =>
       throw _privateConstructorUsedError;
@@ -36,54 +32,63 @@ mixin _$APIJsonResponse {
 abstract class $APIJsonResponseCopyWith<$Res> {
   factory $APIJsonResponseCopyWith(
           APIJsonResponse value, $Res Function(APIJsonResponse) then) =
-      _$APIJsonResponseCopyWithImpl<$Res>;
+      _$APIJsonResponseCopyWithImpl<$Res, APIJsonResponse>;
+  @useResult
   $Res call(
       {dynamic data,
       String message,
+      String messageEn,
       bool error,
       bool unauthorized,
       int statusCode});
 }
 
 /// @nodoc
-class _$APIJsonResponseCopyWithImpl<$Res>
+class _$APIJsonResponseCopyWithImpl<$Res, $Val extends APIJsonResponse>
     implements $APIJsonResponseCopyWith<$Res> {
   _$APIJsonResponseCopyWithImpl(this._value, this._then);
 
-  final APIJsonResponse _value;
   // ignore: unused_field
-  final $Res Function(APIJsonResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
-    Object? message = freezed,
-    Object? error = freezed,
-    Object? unauthorized = freezed,
-    Object? statusCode = freezed,
+    Object? data = null,
+    Object? message = null,
+    Object? messageEn = null,
+    Object? error = null,
+    Object? unauthorized = null,
+    Object? statusCode = null,
   }) {
     return _then(_value.copyWith(
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      messageEn: null == messageEn
+          ? _value.messageEn
+          : messageEn // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      unauthorized: unauthorized == freezed
+      unauthorized: null == unauthorized
           ? _value.unauthorized
           : unauthorized // ignore: cast_nullable_to_non_nullable
               as bool,
-      statusCode: statusCode == freezed
+      statusCode: null == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -94,9 +99,11 @@ abstract class _$$_APIJsonResponseCopyWith<$Res>
           _$_APIJsonResponse value, $Res Function(_$_APIJsonResponse) then) =
       __$$_APIJsonResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {dynamic data,
       String message,
+      String messageEn,
       bool error,
       bool unauthorized,
       int statusCode});
@@ -104,38 +111,41 @@ abstract class _$$_APIJsonResponseCopyWith<$Res>
 
 /// @nodoc
 class __$$_APIJsonResponseCopyWithImpl<$Res>
-    extends _$APIJsonResponseCopyWithImpl<$Res>
+    extends _$APIJsonResponseCopyWithImpl<$Res, _$_APIJsonResponse>
     implements _$$_APIJsonResponseCopyWith<$Res> {
   __$$_APIJsonResponseCopyWithImpl(
       _$_APIJsonResponse _value, $Res Function(_$_APIJsonResponse) _then)
-      : super(_value, (v) => _then(v as _$_APIJsonResponse));
+      : super(_value, _then);
 
-  @override
-  _$_APIJsonResponse get _value => super._value as _$_APIJsonResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
-    Object? message = freezed,
-    Object? error = freezed,
-    Object? unauthorized = freezed,
-    Object? statusCode = freezed,
+    Object? data = null,
+    Object? message = null,
+    Object? messageEn = null,
+    Object? error = null,
+    Object? unauthorized = null,
+    Object? statusCode = null,
   }) {
     return _then(_$_APIJsonResponse(
-      data: data == freezed ? _value.data : data,
-      message: message == freezed
+      data: null == data ? _value.data : data,
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      messageEn: null == messageEn
+          ? _value.messageEn
+          : messageEn // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as bool,
-      unauthorized: unauthorized == freezed
+      unauthorized: null == unauthorized
           ? _value.unauthorized
           : unauthorized // ignore: cast_nullable_to_non_nullable
               as bool,
-      statusCode: statusCode == freezed
+      statusCode: null == statusCode
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
@@ -144,24 +154,25 @@ class __$$_APIJsonResponseCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_APIJsonResponse extends _APIJsonResponse {
   const _$_APIJsonResponse(
       {this.data,
       this.message = '',
+      this.messageEn = '',
       this.error = false,
       this.unauthorized = false,
       this.statusCode = -1})
       : super._();
-
-  factory _$_APIJsonResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_APIJsonResponseFromJson(json);
 
   @override
   final dynamic data;
   @override
   @JsonKey()
   final String message;
+  @override
+  @JsonKey()
+  final String messageEn;
   @override
   @JsonKey()
   final bool error;
@@ -174,7 +185,7 @@ class _$_APIJsonResponse extends _APIJsonResponse {
 
   @override
   String toString() {
-    return 'APIJsonResponse(data: $data, message: $message, error: $error, unauthorized: $unauthorized, statusCode: $statusCode)';
+    return 'APIJsonResponse(data: $data, message: $message, messageEn: $messageEn, error: $error, unauthorized: $unauthorized, statusCode: $statusCode)';
   }
 
   @override
@@ -183,53 +194,49 @@ class _$_APIJsonResponse extends _APIJsonResponse {
         (other.runtimeType == runtimeType &&
             other is _$_APIJsonResponse &&
             const DeepCollectionEquality().equals(other.data, data) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality()
-                .equals(other.unauthorized, unauthorized) &&
-            const DeepCollectionEquality()
-                .equals(other.statusCode, statusCode));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.messageEn, messageEn) ||
+                other.messageEn == messageEn) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.unauthorized, unauthorized) ||
+                other.unauthorized == unauthorized) &&
+            (identical(other.statusCode, statusCode) ||
+                other.statusCode == statusCode));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(data),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(unauthorized),
-      const DeepCollectionEquality().hash(statusCode));
+      message,
+      messageEn,
+      error,
+      unauthorized,
+      statusCode);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_APIJsonResponseCopyWith<_$_APIJsonResponse> get copyWith =>
       __$$_APIJsonResponseCopyWithImpl<_$_APIJsonResponse>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_APIJsonResponseToJson(
-      this,
-    );
-  }
 }
 
 abstract class _APIJsonResponse extends APIJsonResponse {
   const factory _APIJsonResponse(
       {final dynamic data,
       final String message,
+      final String messageEn,
       final bool error,
       final bool unauthorized,
       final int statusCode}) = _$_APIJsonResponse;
   const _APIJsonResponse._() : super._();
 
-  factory _APIJsonResponse.fromJson(Map<String, dynamic> json) =
-      _$_APIJsonResponse.fromJson;
-
   @override
   dynamic get data;
   @override
   String get message;
+  @override
+  String get messageEn;
   @override
   bool get error;
   @override

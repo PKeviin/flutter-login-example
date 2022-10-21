@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/login/presentation/provider/user_provider.dart';
+import '../../features/login/presentation/providers/user_provider.dart';
 
 /// The Navigator observer.
 class NavObserver extends NavigatorObserver {
