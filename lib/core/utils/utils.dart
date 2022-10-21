@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/commons/providers/locale_provider.dart';
-import '../../features/commons/providers/privacy_provider.dart';
-import '../../features/commons/providers/theme_provider.dart';
 import '../credentials.dart';
 import '../impl/logger/logger_provider.dart';
 import '../impl/package_info/package_info_provider.dart';
@@ -14,7 +11,7 @@ import '../utils/platform/platform.dart';
 
 class Utils {
   /// Application initialization
-  static Future<void> init() async {
+  static Future<void> initBeforeRunApp() async {
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -42,17 +39,5 @@ class Utils {
     // Storage initialization
     final secureStorage = container.read(secureStorageImplProvider);
     await secureStorage.initSecureStorage();
-
-    // Locale initialization
-    final locale = container.read(localeProvider.notifier);
-    await locale.initLocale();
-
-    // Theme initialization
-    final theme = container.read(themeModeProvider.notifier);
-    await theme.initTheme();
-
-    // Privacy initialization
-    final privacy = container.read(privacyProvider.notifier);
-    await privacy.initStatusPrivacy();
   }
 }

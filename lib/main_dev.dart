@@ -12,7 +12,7 @@ import 'core/utils/utils.dart';
 Future main() async {
   await runZonedGuarded(() async {
     await dotenv.load(fileName: '.env.dev');
-    await Utils.init();
+    await Utils.initBeforeRunApp();
     runApp(const ProviderScope(child: App()));
   }, (error, stacktrace) async {
     final container = ProviderContainer();

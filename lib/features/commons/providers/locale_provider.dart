@@ -27,7 +27,9 @@ abstract class LocaleRepository {
 class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
   LocaleState({
     required this.secureStorage,
-  }) : super(kFallbackLocale);
+  }) : super(kFallbackLocale)  {
+    initLocale();
+  }
   SecureStorageRepository secureStorage;
 
   /// Retrieval of the language used

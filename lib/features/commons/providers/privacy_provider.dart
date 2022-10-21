@@ -20,7 +20,9 @@ final privacyProvider =
 class PrivacyState extends StateNotifier<PrivacyStatusEnum> {
   PrivacyState({
     required this.secureStorage,
-  }) : super(PrivacyStatusEnum.unknown);
+  }) : super(PrivacyStatusEnum.unknown) {
+    initStatusPrivacy();
+  }
   SecureStorageRepository secureStorage;
 
   /// Init privacy status Check

@@ -28,6 +28,7 @@ class App extends ConsumerWidget {
     _listenLoaderOverlay(ref, context);
     final router = ref.watch(routerProvider);
     final theme = ref.watch(themeModeProvider.notifier);
+
     return Wiredash(
       projectId: Credential.wiredashId,
       secret: Credential.wiredashKey,

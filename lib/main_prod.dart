@@ -13,7 +13,7 @@ import 'core/utils/utils.dart';
 Future main() async {
   await runZonedGuarded(() async {
     await dotenv.load(fileName: '.env.prod');
-    await Utils.init();
+    await Utils.initBeforeRunApp();
     await SentryFlutter.init(
       (options) {
         options

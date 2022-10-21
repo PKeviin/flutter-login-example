@@ -24,7 +24,9 @@ abstract class ThemeRepository {
 class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   ThemeState({
     required this.secureStorage,
-  }) : super(ThemeMode.light);
+  }) : super(ThemeMode.light) {
+    initTheme();
+  }
   SecureStorageRepository secureStorage;
 
   /// Recovery of the theme used
