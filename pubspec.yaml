@@ -29,7 +29,6 @@ dependencies:
   json_annotation: ^4.7.0
   jwt_decoder: ^2.0.1
   permission_handler: ^10.2.0
-  dio: ^4.0.6
   path: ^1.8.2
   timeago: ^3.3.0
   internet_connection_checker: ^1.0.0+1
