@@ -21,8 +21,17 @@ Future<void> main() async {
 
   LoginRemoteDataSourceImpl? loginRemoteDataSourceImpl;
   MockApiHttpImpl? mockApiHttpImpl;
+  UserModel? tUser;
 
   setUp(() {
+    tUser = UserModel(
+      id: 1,
+      name: 'Name test',
+      lastName: 'Last Name test',
+      email: 'Email test',
+      token: 'Token test',
+      mobile: 'Mobile test',
+    );
     mockApiHttpImpl = MockApiHttpImpl();
     loginRemoteDataSourceImpl = LoginRemoteDataSourceImpl(
       api: mockApiHttpImpl!,
@@ -30,15 +39,6 @@ Future<void> main() async {
       password: 'password',
     );
   });
-
-  final tUser = UserModel(
-    id: 1,
-    name: 'Name test',
-    lastName: 'Last Name test',
-    email: 'Email test',
-    token: 'Token test',
-    mobile: 'Mobile test',
-  );
 
   group('login user', () {
     test('should return user model when login is successful', () async {

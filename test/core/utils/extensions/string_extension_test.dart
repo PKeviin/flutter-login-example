@@ -146,7 +146,6 @@ void main() {
         const tStringPhone4 = '06-26-27-28-29';
         const tStringPhone5 = '06.26.27.28.29';
         const tStringPhone6 = '0626272829  ';
-
         // assert
         expect(tStringPhone.formatTelNumber(), tResult);
         expect(tStringPhone2.formatTelNumber(), '+330626272829');

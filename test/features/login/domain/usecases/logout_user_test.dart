@@ -17,9 +17,8 @@ void main() {
   });
 
   test('should logout user from the repository', () async {
-    const tResult = true;
-
     // arrange
+    const tResult = true;
     when(() => mockLogoutRepository!.logoutUser())
         .thenAnswer((_) async => const Right(tResult));
     // act
@@ -31,9 +30,8 @@ void main() {
   });
 
   test('should not logout user from the repository', () async {
-    const tResult = false;
-
     // arrange
+    const tResult = false;
     when(() => mockLogoutRepository!.logoutUser())
         .thenAnswer((_) async => const Right(tResult));
     // act

@@ -15,8 +15,9 @@ Future<void> main() async {
       });
 
       test('Incorrect environement should be rejected', () {
-        const tResult = 'prod';
         // arrange
+        const tResult = 'prod';
+        // act
         final env = dotenv.env['ENV'];
         final isProd = env == tResult;
         // assert
@@ -28,7 +29,7 @@ Future<void> main() async {
       });
 
       test('incorrect api url should be rejected', () {
-        // arrange
+        // act
         final apiURL = dotenv.env['API_URL'];
         // assert
         expect(apiURL.isNotNullOrEmpty(), true);
@@ -36,13 +37,13 @@ Future<void> main() async {
       });
 
       test('nullable fallback getter works', () {
+        // assert
         expect(dotenv.env['FCM_ID'], isNotNull);
         expect(dotenv.env['API_PORT'], isNotNull);
         expect(dotenv.env['API_VERSION'], isNotNull);
         expect(dotenv.env['SENTRY_URL'], isNotNull);
         expect(dotenv.env['WIREDASH_ID'], isNotNull);
         expect(dotenv.env['WIREDASH_KEY'], isNotNull);
-
         expect(Credential.fcmId, isNotNull);
         expect(Credential.port, isNotNull);
         expect(Credential.apiVersion, isNotNull);

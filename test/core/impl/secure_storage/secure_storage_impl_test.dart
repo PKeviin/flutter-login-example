@@ -52,6 +52,7 @@ void main() {
       await prefs!.setBool(keyFirstRun, false);
       when(() => mockFlutterSecureStorage!.deleteAll())
           .thenAnswer((_) async => {});
+      // act
       await secureStorageImpl!.initSecureStorage();
       // assert
       verifyNever(() => mockFlutterSecureStorage!.deleteAll());
@@ -106,6 +107,7 @@ void main() {
           .thenAnswer((_) async => {});
       when(() => mockFlutterSecureStorage!.deleteAll())
           .thenAnswer((_) async => {});
+      // act
       await secureStorageImpl!.removeAll();
       // assert
       verify(() => mockFlutterSecureStorage!.deleteAll());

@@ -130,8 +130,8 @@ void main() {
         platform: tPlatform,
         version: tVersion,
       );
-      // assert
       debugPrint(tMessage);
+      // assert
       // TODO(pkeviin): find a way to test debugPrint result
     });
 
@@ -147,8 +147,8 @@ void main() {
         platform: tPlatform,
         version: tVersion,
       );
-      // assert
       debugPrint(tMessage);
+      // assert
       // TODO(pkeviin): find a way to test debugPrint result
     });
   });

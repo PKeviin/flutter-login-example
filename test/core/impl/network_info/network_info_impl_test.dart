@@ -21,15 +21,12 @@ void main() {
       () async {
         // arrange
         final tHasConnectionFuture = Future.value(true);
-        // act
         when(() => mockInternetConnectionChecker!.hasConnection)
             .thenAnswer((_) => tHasConnectionFuture);
-        // NOTICE: We're NOT awaiting the result
+        // act
         final result = networkInfo!.isConnected;
         // assert
         verify(() => mockInternetConnectionChecker!.hasConnection);
-        // Utilizing Dart's default referential equality.
-        // Only references to the same object are equal.
         expect(result, tHasConnectionFuture);
       },
     );
@@ -38,15 +35,12 @@ void main() {
       () async {
         // arrange
         final tHasConnectionFuture = Future.value(false);
-        // act
         when(() => mockInternetConnectionChecker!.hasConnection)
             .thenAnswer((_) => tHasConnectionFuture);
-        // NOTICE: We're NOT awaiting the result
+        // act
         final result = networkInfo!.isConnected;
         // assert
         verify(() => mockInternetConnectionChecker!.hasConnection);
-        // Utilizing Dart's default referential equality.
-        // Only references to the same object are equal.
         expect(result, tHasConnectionFuture);
       },
     );

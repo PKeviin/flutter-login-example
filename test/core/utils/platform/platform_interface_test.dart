@@ -3,21 +3,25 @@ import 'package:template/core/utils/platform/platform.dart';
 
 void main() {
   group('Global platform', () {
+    Platform? platformBase;
+    setUp(() {
+      platformBase = Platform()
+        ..isAndroid = false
+        ..isIOS = false
+        ..isWeb = false
+        ..isWindows = false
+        ..isMacOS = false
+        ..isLinux = false;
+    });
+
     test(
       'should forward the call to retrieve the platform is web',
       () async {
         // arrange
         const isWeb = true;
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = true
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
-
+        platformBase!.isWeb = true;
         // act
-        final result = platformBase.isWeb;
+        final result = platformBase!.isWeb;
         // assert
         expect(result, isWeb);
       },
@@ -27,16 +31,9 @@ void main() {
       () async {
         // arrange
         const isMobile = true;
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = true
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
-
+        platformBase!.isIOS = true;
         // act
-        final result = platformBase.isMobile;
+        final result = platformBase!.isMobile;
         // assert
         expect(result, isMobile);
       },
@@ -46,16 +43,9 @@ void main() {
       () async {
         // arrange
         const isMobile = false;
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = true
-          ..isLinux = false;
-
+        platformBase!.isMacOS = true;
         // act
-        final result = platformBase.isMobile;
+        final result = platformBase!.isMobile;
         // assert
         expect(result, isMobile);
       },
@@ -65,16 +55,9 @@ void main() {
       () async {
         // arrange
         const isDesktop = true;
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = true;
-
+        platformBase!.isLinux = true;
         // act
-        final result = platformBase.isDesktop;
+        final result = platformBase!.isDesktop;
         // assert
         expect(result, isDesktop);
       },
@@ -84,15 +67,9 @@ void main() {
       () async {
         // arrange
         const isDesktop = false;
-        final platformBase = Platform()
-          ..isAndroid = true
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
+        platformBase!.isAndroid = true;
         // act
-        final result = platformBase.isDesktop;
+        final result = platformBase!.isDesktop;
         // assert
         expect(result, isDesktop);
       },

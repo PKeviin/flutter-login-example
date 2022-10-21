@@ -19,28 +19,28 @@ Future<void> main() async {
 
   LoginLocalDataSourceImpl? localDataSourceImpl;
   MockSecureStorageImpl? mockSecureStorageImpl;
+  UserModel? tUser;
 
   setUp(() {
+    tUser = UserModel(
+      id: 1,
+      name: 'Name test',
+      lastName: 'Last Name test',
+      email: 'Email test',
+      token: 'Token test',
+      mobile: 'Mobile test',
+    );
     mockSecureStorageImpl = MockSecureStorageImpl();
     localDataSourceImpl =
         LoginLocalDataSourceImpl(secureStorage: mockSecureStorageImpl!);
   });
 
-  final tUser = UserModel(
-    id: 1,
-    name: 'Name test',
-    lastName: 'Last Name test',
-    email: 'Email test',
-    token: 'Token test',
-    mobile: 'Mobile test',
-  );
-
   group('locale user', () {
     group('get user from cache', () {
       test('should throw a TokenException when the token format is invalid',
           () async {
-        final tUserJson = fixture('user.json');
         // arrange
+        final tUserJson = fixture('user.json');
         when(() => mockSecureStorageImpl!.getItem(any()))
             .thenAnswer((_) async => Future.value(tUserJson));
         // act

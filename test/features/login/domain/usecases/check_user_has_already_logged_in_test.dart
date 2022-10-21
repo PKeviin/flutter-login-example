@@ -21,9 +21,8 @@ void main() {
   });
 
   test('should check user has already logged in from the repository', () async {
-    const tResult = true;
-
     // arrange
+    const tResult = true;
     when(
       () => mockCheckUserHasAlreadyLoggedInRepository!
           .checkUserHasAlreadyLoggedIn(),
@@ -40,9 +39,8 @@ void main() {
   });
 
   test('should check user has not logged in from the repository', () async {
-    const tResult = false;
-
     // arrange
+    const tResult = false;
     when(
       () => mockCheckUserHasAlreadyLoggedInRepository!
           .checkUserHasAlreadyLoggedIn(),

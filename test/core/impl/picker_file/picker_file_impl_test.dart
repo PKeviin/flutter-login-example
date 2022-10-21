@@ -43,7 +43,7 @@ void main() {
         ).called(1);
       },
     );
-    test('shoud return a list of files', () async {
+    test('should return a list of files', () async {
       // arrange
       final tResult = FilePickerResult(
         [
@@ -57,14 +57,10 @@ void main() {
           type: FileType.custom,
           allowedExtensions: ['pdf'],
         ),
-      ).thenAnswer(
-        (_) async => tResult,
-      );
+      ).thenAnswer((_) async => tResult);
       // act
-      final result = await pickerFileImpl!.pickerFiles(
-        allowMultiple: true,
-        allowedExtensions: ['pdf'],
-      );
+      final result = await pickerFileImpl!
+          .pickerFiles(allowMultiple: true, allowedExtensions: ['pdf']);
       // assert
       verify(
         () => mockFilePicker!.pickFiles(

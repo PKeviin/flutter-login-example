@@ -27,7 +27,6 @@ Future<void> main() async {
   const apiUrl = 'https://api.com';
 
   setUp(() async {
-    TestWidgetsFlutterBinding.ensureInitialized();
     await S.load(const Locale.fromSubtags(languageCode: locale));
     registerFallbackValue(FakeUri());
     mockHttpClient = MockHttpClient();
@@ -114,7 +113,6 @@ Future<void> main() async {
             } catch (e) {
               result = e as ParseDataException;
             }
-
             // assert
             verify(
               () => mockHttpClient!.get(any(), headers: any(named: 'headers')),
@@ -533,7 +531,7 @@ Future<void> main() async {
     });
 
     group('post', () {
-      void setUpMockHttpClientSuccessPost(String data) {
+      void _setUpMockHttpClientSuccessPost(String data) {
         final tResponseSucess = http.Response(data, 200);
         when(
           () => mockHttpClient!.post(
@@ -544,7 +542,7 @@ Future<void> main() async {
         ).thenAnswer((_) async => tResponseSucess);
       }
 
-      void setUpMockHttpClientUnsuccessPost(int statusCode, String data) {
+      void _setUpMockHttpClientUnsuccessPost(int statusCode, String data) {
         final tResponseUnsucess = http.Response(data, statusCode);
         when(
           () => mockHttpClient!.post(
@@ -563,7 +561,7 @@ Future<void> main() async {
             const tError = false;
             const tUnauthorized = false;
             const tData = '{"title": "test"}';
-            setUpMockHttpClientSuccessPost(tData);
+            _setUpMockHttpClientSuccessPost(tData);
             // act
             final result = await apiHttpImpl!.post(
               route: tRoute,
@@ -593,7 +591,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorDataApi;
             const tData = '{"title": {} "test"}';
-            setUpMockHttpClientSuccessPost(tData);
+            _setUpMockHttpClientSuccessPost(tData);
             // act
             ParseDataException? result;
             try {
@@ -604,7 +602,6 @@ Future<void> main() async {
             } catch (e) {
               result = e as ParseDataException;
             }
-
             // assert
             verify(
               () => mockHttpClient!.post(
@@ -737,7 +734,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 404 not found message';
             const tStatusCode = 404;
-            setUpMockHttpClientUnsuccessPost(
+            _setUpMockHttpClientUnsuccessPost(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -773,7 +770,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApiNotFound;
             const tStatusCode = 404;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -806,7 +803,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'errors 400 badRequest message';
             const tStatusCode = 400;
-            setUpMockHttpClientUnsuccessPost(
+            _setUpMockHttpClientUnsuccessPost(
               tStatusCode,
               '{"errors": "$tErrorMessage"}',
             );
@@ -842,7 +839,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorBadRequestApi;
             const tStatusCode = 400;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -875,7 +872,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 401 unauthorized message';
             const tStatusCode = 401;
-            setUpMockHttpClientUnsuccessPost(
+            _setUpMockHttpClientUnsuccessPost(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -911,7 +908,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApiUnauthorized;
             const tStatusCode = 401;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -944,7 +941,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 403 forbidden message';
             const tStatusCode = 403;
-            setUpMockHttpClientUnsuccessPost(
+            _setUpMockHttpClientUnsuccessPost(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -980,7 +977,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorSessionExpireApi;
             const tStatusCode = 403;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1013,7 +1010,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 409 conflict message';
             const tStatusCode = 409;
-            setUpMockHttpClientUnsuccessPost(
+            _setUpMockHttpClientUnsuccessPost(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -1049,7 +1046,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApi;
             const tStatusCode = 409;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1082,7 +1079,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorServerApi;
             const tStatusCode = 500;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1115,7 +1112,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApi;
             const tStatusCode = 505;
-            setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPost(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1144,7 +1141,7 @@ Future<void> main() async {
     });
 
     group('put', () {
-      void setUpMockHttpClientSuccessPut(String data) {
+      void _setUpMockHttpClientSuccessPut(String data) {
         final tResponseSucess = http.Response(data, 200);
         when(
           () => mockHttpClient!.put(
@@ -1155,7 +1152,7 @@ Future<void> main() async {
         ).thenAnswer((_) async => tResponseSucess);
       }
 
-      void setUpMockHttpClientUnsuccessPut(int statusCode, String data) {
+      void _setUpMockHttpClientUnsuccessPut(int statusCode, String data) {
         final tResponseUnsucess = http.Response(data, statusCode);
         when(
           () => mockHttpClient!.put(
@@ -1174,7 +1171,7 @@ Future<void> main() async {
             const tError = false;
             const tUnauthorized = false;
             const tData = '{"title": "Test"}';
-            setUpMockHttpClientSuccessPut(tData);
+            _setUpMockHttpClientSuccessPut(tData);
             // act
             final result = await apiHttpImpl!.put(
               route: tRoute,
@@ -1204,7 +1201,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorDataApi;
             const tData = '{"title": { : } "Test"}';
-            setUpMockHttpClientSuccessPut(tData);
+            _setUpMockHttpClientSuccessPut(tData);
             // act
             ParseDataException? result;
             try {
@@ -1215,7 +1212,6 @@ Future<void> main() async {
             } catch (e) {
               result = e as ParseDataException;
             }
-
             // assert
             verify(
               () => mockHttpClient!.put(
@@ -1348,7 +1344,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 404 not found message';
             const tStatusCode = 404;
-            setUpMockHttpClientUnsuccessPut(
+            _setUpMockHttpClientUnsuccessPut(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -1384,7 +1380,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApiNotFound;
             const tStatusCode = 404;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1417,7 +1413,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'errors 400 badRequest message';
             const tStatusCode = 400;
-            setUpMockHttpClientUnsuccessPut(
+            _setUpMockHttpClientUnsuccessPut(
               tStatusCode,
               '{"errors": "$tErrorMessage"}',
             );
@@ -1453,7 +1449,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorBadRequestApi;
             const tStatusCode = 400;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1486,7 +1482,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 401 unauthorized message';
             const tStatusCode = 401;
-            setUpMockHttpClientUnsuccessPut(
+            _setUpMockHttpClientUnsuccessPut(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -1522,7 +1518,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApiUnauthorized;
             const tStatusCode = 401;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1555,7 +1551,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 403 forbidden message';
             const tStatusCode = 403;
-            setUpMockHttpClientUnsuccessPut(
+            _setUpMockHttpClientUnsuccessPut(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -1591,7 +1587,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorSessionExpireApi;
             const tStatusCode = 403;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1624,7 +1620,7 @@ Future<void> main() async {
             // arrange
             const tErrorMessage = 'error 409 conflict message';
             const tStatusCode = 409;
-            setUpMockHttpClientUnsuccessPut(
+            _setUpMockHttpClientUnsuccessPut(
               tStatusCode,
               '{"error": "$tErrorMessage"}',
             );
@@ -1660,7 +1656,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApi;
             const tStatusCode = 409;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1693,7 +1689,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorServerApi;
             const tStatusCode = 500;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {
@@ -1726,7 +1722,7 @@ Future<void> main() async {
             // arrange
             final tErrorMessage = S.current.errorApi;
             const tStatusCode = 505;
-            setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
+            _setUpMockHttpClientUnsuccessPut(tStatusCode, '{}');
             // act
             ServerException? result;
             try {

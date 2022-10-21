@@ -15,8 +15,16 @@ void main() {
   const tAppName = 'App test';
   const tPackageName = 'com.app.test';
   const tBuildSignature = '100';
+  Platform? tPlatformBase;
 
   setUp(() {
+    tPlatformBase = Platform()
+      ..isAndroid = false
+      ..isIOS = false
+      ..isWeb = false
+      ..isWindows = false
+      ..isMacOS = false
+      ..isLinux = false;
     PackageInfo.setMockInitialValues(
       appName: tAppName,
       packageName: tPackageName,
@@ -34,15 +42,9 @@ void main() {
       'should forward the call to PackageInfo init to retrieve the data',
       () async {
         const tPlatform = 'iOS';
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = true
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
+        tPlatformBase!.isIOS = true;
         // act
-        await packageInfoImpl!.initPackageInfo(platformBase);
+        await packageInfoImpl!.initPackageInfo(tPlatformBase!);
         // assert
         expect(versionApp, tVersion);
         expect(buildNumberApp, tBuildNumber);
@@ -72,16 +74,9 @@ void main() {
       () async {
         // arrange
         const tPlatform = 'iOS';
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = true
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
-
+        tPlatformBase!.isIOS = true;
         // act
-        final result = packageInfoImpl!.getPlatform(platformBase);
+        final result = packageInfoImpl!.getPlatform(tPlatformBase!);
         // assert
         expect(result, tPlatform);
       },
@@ -91,16 +86,9 @@ void main() {
       () async {
         // arrange
         const tPlatform = 'android';
-        final platformBase = Platform()
-          ..isAndroid = true
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = false;
-
+        tPlatformBase!.isAndroid = true;
         // act
-        final result = packageInfoImpl!.getPlatform(platformBase);
+        final result = packageInfoImpl!.getPlatform(tPlatformBase!);
         // assert
         expect(result, tPlatform);
       },
@@ -110,16 +98,9 @@ void main() {
       () async {
         // arrange
         const tPlatform = 'macos';
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = true
-          ..isLinux = false;
-
+        tPlatformBase!.isMacOS = true;
         // act
-        final result = packageInfoImpl!.getPlatform(platformBase);
+        final result = packageInfoImpl!.getPlatform(tPlatformBase!);
         // assert
         expect(result, tPlatform);
       },
@@ -129,16 +110,9 @@ void main() {
       () async {
         // arrange
         const tPlatform = 'windows';
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = true
-          ..isMacOS = false
-          ..isLinux = false;
-
+        tPlatformBase!.isWindows = true;
         // act
-        final result = packageInfoImpl!.getPlatform(platformBase);
+        final result = packageInfoImpl!.getPlatform(tPlatformBase!);
         // assert
         expect(result, tPlatform);
       },
@@ -148,16 +122,9 @@ void main() {
       () async {
         // arrange
         const tPlatform = 'linux';
-        final platformBase = Platform()
-          ..isAndroid = false
-          ..isIOS = false
-          ..isWeb = false
-          ..isWindows = false
-          ..isMacOS = false
-          ..isLinux = true;
-
+        tPlatformBase!.isLinux = true;
         // act
-        final result = packageInfoImpl!.getPlatform(platformBase);
+        final result = packageInfoImpl!.getPlatform(tPlatformBase!);
         // assert
         expect(result, tPlatform);
       },

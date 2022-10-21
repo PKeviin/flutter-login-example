@@ -28,7 +28,6 @@ void main() {
       // act
       final result = UserModel.fromJson(jsonMap);
       // assert
-      // TODO(pkeviin): do not work
       expect(result, tUserModel);
     });
 
@@ -46,7 +45,6 @@ void main() {
       // act
       final result = UserModel.fromJson(jsonMap);
       // assert
-      // TODO(pkeviin): do not work
       expect(result, tUserModel);
     });
   });
@@ -77,7 +75,6 @@ void main() {
       expect(result['id'], user.id);
       expect(result['mobile'], user.mobile);
       expect(result['token'], user.token);
-
       expect(result2['name'], user2.name);
       expect(result2['lastName'], user2.lastName);
       expect(result2['email'], user2.email);

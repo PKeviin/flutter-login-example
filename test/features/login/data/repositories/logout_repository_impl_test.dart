@@ -22,8 +22,8 @@ void main() {
 
   group('logout local user', () {
     test('should return true when user is removed from cache', () async {
-      const tResult = true;
       // arrange
+      const tResult = true;
       when(() => mockLocalDataSource!.removeUser())
           .thenAnswer((_) => Future.value());
       // act
@@ -35,9 +35,9 @@ void main() {
     test(
         'should return CacheFailure when user is could not be removed from cache',
         () async {
+      // arrange
       final tCacheException =
           CacheException(message: 'message', messageEn: 'messageEn');
-      // arrange
       when(() => mockLocalDataSource!.removeUser()).thenThrow(tCacheException);
       // act
       final result = await repositoryImpl!.logoutUser();

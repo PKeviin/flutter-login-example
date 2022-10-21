@@ -15,7 +15,7 @@ void main() {
   group('Share Plus', () {
     test('should forward the call to Share.shareXFiles (success)', () async {
       // arrange
-      const shareResultStatus = ShareResultStatus.success;
+      const tShareResultStatus = ShareResultStatus.success;
       const MethodChannel('dev.fluttercommunity.plus/share')
           .setMockMethodCallHandler((MethodCall methodCall) async {
         if (methodCall.method == 'shareFilesWithResult') {
@@ -23,22 +23,22 @@ void main() {
         }
         return null;
       });
-      final xFiles = <XFile>[
+      final tXFiles = <XFile>[
         XFile('path1', mimeType: 'image/jpg'),
         XFile('path1', mimeType: 'image/png')
       ];
       const tName = 'name';
       // act
       final result =
-          await shareFileImpl!.shareXFiles(files: xFiles, text: tName);
+          await shareFileImpl!.shareXFiles(files: tXFiles, text: tName);
       // assert
       expect(result, isA<ShareResult>());
-      expect(result.status, shareResultStatus);
+      expect(result.status, tShareResultStatus);
     });
 
     test('should forward the call to Share.shareXFiles (dismissed)', () async {
       // arrange
-      const shareResultStatus = ShareResultStatus.dismissed;
+      const tShareResultStatus = ShareResultStatus.dismissed;
       const MethodChannel('dev.fluttercommunity.plus/share')
           .setMockMethodCallHandler((MethodCall methodCall) async {
         if (methodCall.method == 'shareFilesWithResult') {
@@ -46,23 +46,23 @@ void main() {
         }
         return null;
       });
-      final xFiles = <XFile>[
+      final tXFiles = <XFile>[
         XFile('path1', mimeType: 'image/jpg'),
         XFile('path1', mimeType: 'image/png')
       ];
       const tName = 'name';
       // act
       final result =
-          await shareFileImpl!.shareXFiles(files: xFiles, text: tName);
+          await shareFileImpl!.shareXFiles(files: tXFiles, text: tName);
       // assert
       expect(result, isA<ShareResult>());
-      expect(result.status, shareResultStatus);
+      expect(result.status, tShareResultStatus);
     });
 
     test('should forward the call to Share.shareXFiles (unavailable)',
         () async {
       // arrange
-      const shareResultStatus = ShareResultStatus.unavailable;
+      const tShareResultStatus = ShareResultStatus.unavailable;
       const MethodChannel('dev.fluttercommunity.plus/share')
           .setMockMethodCallHandler((MethodCall methodCall) async {
         if (methodCall.method == 'shareFilesWithResult') {
@@ -70,17 +70,17 @@ void main() {
         }
         return null;
       });
-      final xFiles = <XFile>[
+      final tXFiles = <XFile>[
         XFile('path1', mimeType: 'image/jpg'),
         XFile('path1', mimeType: 'image/png')
       ];
       const tName = 'name';
       // act
       final result =
-          await shareFileImpl!.shareXFiles(files: xFiles, text: tName);
+          await shareFileImpl!.shareXFiles(files: tXFiles, text: tName);
       // assert
       expect(result, isA<ShareResult>());
-      expect(result.status, shareResultStatus);
+      expect(result.status, tShareResultStatus);
     });
   });
 }

@@ -91,13 +91,13 @@ void main() {
 
       test('should return ServerFailure when the call to api is unsuccessful',
           () async {
-        final serveException = ServerException(
+        // arrange
+        final tServeException = ServerException(
           message: 'error',
           messageEn: 'error',
           statusCode: -1,
         );
-        // arrange
-        when(() => mockRemoteDataSource!.login()).thenThrow(serveException);
+        when(() => mockRemoteDataSource!.login()).thenThrow(tServeException);
         // act
         final result = await repositoryImpl!.loginUser();
         Failure? resultFailure;
@@ -110,13 +110,13 @@ void main() {
       test(
           'should return CacheFailure when the call to save user is unsuccessful',
           () async {
-        final cacheException =
-            CacheException(message: 'error', messageEn: 'error');
         // arrange
+        final tCacheException =
+            CacheException(message: 'error', messageEn: 'error');
         when(() => mockRemoteDataSource!.login())
             .thenAnswer((_) async => tUserModel);
         when(() => mockLocalDataSource!.cacheUser(tUserModel))
-            .thenThrow(cacheException);
+            .thenThrow(tCacheException);
         // act
         final result = await repositoryImpl!.loginUser();
         Failure? resultFailure;
@@ -130,10 +130,11 @@ void main() {
       test(
           'should return ParseDataFailure when the call to remote data source is unsuccessful because of data',
           () async {
-        final parseDataException =
-            ParseDataException(message: 'error', messageEn: 'error');
         // arrange
-        when(() => mockRemoteDataSource!.login()).thenThrow(parseDataException);
+        final tParseDataException =
+            ParseDataException(message: 'error', messageEn: 'error');
+        when(() => mockRemoteDataSource!.login())
+            .thenThrow(tParseDataException);
         // act
         final result = await repositoryImpl!.loginUser();
         Failure? resultFailure;
@@ -168,11 +169,10 @@ void main() {
       test(
         'should return CacheFailure when there is no cached data present',
         () async {
-          final cacheException =
-              CacheException(message: 'error', messageEn: 'error');
-
           // arrange
-          when(() => mockLocalDataSource!.getUser()).thenThrow(cacheException);
+          final tCacheException =
+              CacheException(message: 'error', messageEn: 'error');
+          when(() => mockLocalDataSource!.getUser()).thenThrow(tCacheException);
           // act
           final result = await repositoryImpl!.loginUser();
           Failure? resultFailure;
@@ -187,11 +187,10 @@ void main() {
       test(
         'should return TokenFailure when the token is no longer valid',
         () async {
-          final tokenException =
-              TokenException(message: 'error', messageEn: 'error');
-
           // arrange
-          when(() => mockLocalDataSource!.getUser()).thenThrow(tokenException);
+          final tTokenException =
+              TokenException(message: 'error', messageEn: 'error');
+          when(() => mockLocalDataSource!.getUser()).thenThrow(tTokenException);
           // act
           final result = await repositoryImpl!.loginUser();
           Failure? resultFailure;
@@ -206,12 +205,11 @@ void main() {
       test(
         'should return CacheFailure when there is a problem with the data format',
         () async {
-          final parseDataException =
-              ParseDataException(message: 'error', messageEn: 'error');
-
           // arrange
+          final tParseDataException =
+              ParseDataException(message: 'error', messageEn: 'error');
           when(() => mockLocalDataSource!.getUser())
-              .thenThrow(parseDataException);
+              .thenThrow(tParseDataException);
           // act
           final result = await repositoryImpl!.loginUser();
           Failure? resultFailure;
@@ -236,10 +234,9 @@ void main() {
     test(
         'should return LocalAuthFailure when user has no biometrics and user in cache',
         () async {
+      // arrange
       final tHasBiometrics = Future.value(false);
       final tHasLocalAuthenticate = Future.value(false);
-
-      // arrange
       when(() => mockLocalDataSource!.getUser())
           .thenAnswer((_) async => tUserModel);
       when(() => mockLocalAuth!.hasBiometrics)
@@ -262,10 +259,9 @@ void main() {
     test(
         'should return User when user has biometrics, has auth and user in cache',
         () async {
+      // arrange
       final tHasBiometrics = Future.value(true);
       final tHasLocalAuthenticate = Future.value(true);
-
-      // arrange
       when(() => mockLocalDataSource!.getUser())
           .thenAnswer((_) async => tUserModel);
       when(() => mockLocalAuth!.hasBiometrics)
@@ -286,10 +282,9 @@ void main() {
     test(
         'should return LocalAuthFailure when user has biometrics, no biometric auth, a user in cache',
         () async {
+      // arrange
       final tHasBiometrics = Future.value(true);
       final tHasLocalAuthenticate = Future.value(false);
-
-      // arrange
       when(() => mockLocalDataSource!.getUser())
           .thenAnswer((_) async => tUserModel);
       when(() => mockLocalAuth!.hasBiometrics)
@@ -311,11 +306,10 @@ void main() {
     test(
         'should return CacheFailure when user has biometrics but no user in cache',
         () async {
-      final cacheExecption =
-          CacheException(message: 'error', messageEn: 'error');
-
       // arrange
-      when(() => mockLocalDataSource!.getUser()).thenThrow(cacheExecption);
+      final tCacheExecption =
+          CacheException(message: 'error', messageEn: 'error');
+      when(() => mockLocalDataSource!.getUser()).thenThrow(tCacheExecption);
       // act
       final result = await repositoryImpl!.loginLocalUser();
       Failure? resultFailure;
@@ -332,11 +326,10 @@ void main() {
     test(
         'should return CacheFailure when user has biometrics but data format error',
         () async {
-      final parseDataExecption =
-          ParseDataException(message: 'error', messageEn: 'error');
-
       // arrange
-      when(() => mockLocalDataSource!.getUser()).thenThrow(parseDataExecption);
+      final tParseDataExecption =
+          ParseDataException(message: 'error', messageEn: 'error');
+      when(() => mockLocalDataSource!.getUser()).thenThrow(tParseDataExecption);
       // act
       final result = await repositoryImpl!.loginLocalUser();
       Failure? resultFailure;
@@ -353,11 +346,10 @@ void main() {
     test(
         'should return CacheFailure when user has biometrics token no longer valid',
         () async {
-      final tokenException =
-          TokenException(message: 'error', messageEn: 'error');
-
       // arrange
-      when(() => mockLocalDataSource!.getUser()).thenThrow(tokenException);
+      final tTokenException =
+          TokenException(message: 'error', messageEn: 'error');
+      when(() => mockLocalDataSource!.getUser()).thenThrow(tTokenException);
       // act
       final result = await repositoryImpl!.loginLocalUser();
       Failure? resultFailure;
@@ -383,14 +375,13 @@ void main() {
     test(
         'should return TokenFailure when the user token in the cache is no longer valid',
         () async {
-      final tHasBiometrics = Future.value(true);
-      final tokenException =
-          TokenException(message: 'error', messageEn: 'error');
-
       // arrange
+      final tHasBiometrics = Future.value(true);
+      final tTokenException =
+          TokenException(message: 'error', messageEn: 'error');
       when(() => mockLocalAuth!.hasBiometrics)
           .thenAnswer((_) async => tHasBiometrics);
-      when(() => mockLocalDataSource!.getUser()).thenThrow(tokenException);
+      when(() => mockLocalDataSource!.getUser()).thenThrow(tTokenException);
       // act
       final result = await repositoryImpl!.checkUserHasAlreadyLoggedIn();
       Failure? resultFailure;
@@ -406,15 +397,13 @@ void main() {
     test(
         'should return CacheFailure when there is a user fetch error in the cache',
         () async {
-      final tHasBiometrics = Future.value(true);
-
-      final cacheException =
-          CacheException(message: 'error', messageEn: 'error');
-
       // arrange
+      final tHasBiometrics = Future.value(true);
+      final tCacheException =
+          CacheException(message: 'error', messageEn: 'error');
       when(() => mockLocalAuth!.hasBiometrics)
           .thenAnswer((_) async => tHasBiometrics);
-      when(() => mockLocalDataSource!.getUser()).thenThrow(cacheException);
+      when(() => mockLocalDataSource!.getUser()).thenThrow(tCacheException);
       // act
       final result = await repositoryImpl!.checkUserHasAlreadyLoggedIn();
       Failure? resultFailure;
@@ -428,8 +417,8 @@ void main() {
     });
 
     test('should return true when cached user is valid & biometrics', () async {
-      final tHasBiometrics = Future.value(true);
       // arrange
+      final tHasBiometrics = Future.value(true);
       when(() => mockLocalAuth!.hasBiometrics)
           .thenAnswer((_) async => tHasBiometrics);
       when(() => mockLocalDataSource!.getUser())
@@ -446,8 +435,8 @@ void main() {
 
     test('should return false when cached user is valid but no biometric found',
         () async {
-      final tHasBiometrics = Future.value(false);
       // arrange
+      final tHasBiometrics = Future.value(false);
       when(() => mockLocalAuth!.hasBiometrics)
           .thenAnswer((_) async => tHasBiometrics);
       // act

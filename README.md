@@ -1,6 +1,6 @@
 # Template
 Authentication flutter app example for Android and iOS.  
-Implementation of a clean architecture with riverpod and +180 tests (+95% code coverage without UI, provider & go_router).  
+Implementation of a clean architecture with riverpod and 180 tests (+95% code coverage without UI, provider & go_router).  
 The objective of this project is to make the best use of good practices and to provide a template for a new project.
 
 ![Demo](https://github.com/PKeviin/flutter-login-example/blob/master/demo.gif)
@@ -136,3 +136,4 @@ test/
 - https://brickhub.dev/bricks/app_ui/0.0.4
 - https://brickhub.dev/bricks/clean_architecture_folders_lib/0.1.0+2
 - https://github.com/gskinnerTeam/flutter-wonderous-app
+- https://betterprogramming.pub/flutter-unit-testing-the-beginners-guide-35105164722e#22c2

@@ -4,6 +4,7 @@ import 'package:template/core/utils/utils_validator.dart';
 void main() {
   group('Utils Validator', () {
     test('validator email', () {
+      // assert
       expect(UtilsValidator.validateEmail('test@gmail.com'), true);
       expect(UtilsValidator.validateEmail('test@ok.lol'), true);
       expect(UtilsValidator.validateEmail(' test@gmail.com '), false);
@@ -12,6 +13,7 @@ void main() {
     });
 
     test('validator phone', () {
+      // assert
       expect(UtilsValidator.validationTel('0601010101'), true);
       expect(UtilsValidator.validationTel('06.01.01.01.01'), true);
       expect(UtilsValidator.validationTel('+33612457890'), true);
@@ -26,6 +28,7 @@ void main() {
     });
 
     test('validator password', () {
+      // assert
       expect(UtilsValidator.validationPassword('1234'), false);
       expect(UtilsValidator.validationPassword('12345s'), false);
       expect(UtilsValidator.validationPassword('1232180un4'), true);
@@ -34,6 +37,7 @@ void main() {
     });
 
     test('validator double', () {
+      // assert
       expect(UtilsValidator.validationDouble('1234'), true);
       expect(UtilsValidator.validationDouble('12.56'), true);
       expect(UtilsValidator.validationDouble('12,56'), false);
@@ -42,6 +46,7 @@ void main() {
     });
 
     test('validator int', () {
+      // assert
       expect(UtilsValidator.validationInt('1'), true);
       expect(UtilsValidator.validationInt('0101501'), true);
       expect(UtilsValidator.validationInt('1234'), true);
@@ -52,6 +57,7 @@ void main() {
     });
 
     test('validator url', () {
+      // assert
       expect(UtilsValidator.validationUrl('https://www.google.com'), true);
       expect(UtilsValidator.validationUrl('http://google.com'), true);
       expect(UtilsValidator.validationUrl('google.com'), true);
@@ -60,6 +66,7 @@ void main() {
     });
 
     test('validator date', () {
+      // assert
       expect(UtilsValidator.validationDate('2021/04/10'), true);
       expect(UtilsValidator.validationDate('20-10-2021'), true);
       expect(UtilsValidator.validationDate('10-fev-2021'), true);

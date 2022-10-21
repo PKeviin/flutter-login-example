@@ -24,11 +24,11 @@ void main() {
           const tHasBiometrics = true;
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(true);
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
               .thenAnswer((_) => tCanCheckBiometricsFuture);
+          // act
           final result = await localAuthImpl!.hasBiometrics;
           // assert
           verify(() => mockLocalAuth!.canCheckBiometrics);
@@ -45,11 +45,11 @@ void main() {
           const tHasBiometrics = false;
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(false);
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
               .thenAnswer((_) => tCanCheckBiometricsFuture);
+          // act
           final result = await localAuthImpl!.hasBiometrics;
           // assert
           verifyNever(() => mockLocalAuth!.isDeviceSupported());
@@ -66,11 +66,11 @@ void main() {
           const tHasBiometrics = false;
           final tIsDeviceSupportedFuture = Future.value(false);
           final tCanCheckBiometricsFuture = Future.value(true);
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
               .thenAnswer((_) => tCanCheckBiometricsFuture);
+          // act
           final result = await localAuthImpl!.hasBiometrics;
           // assert
           verify(() => mockLocalAuth!.canCheckBiometrics);
@@ -86,10 +86,9 @@ void main() {
           // arrange
           const tHasBiometrics = false;
           final tPlatformException = PlatformException(code: '00');
-
-          // act
           when(() => localAuthImpl!.hasBiometrics)
               .thenThrow(tPlatformException);
+          // act
           final result = await localAuthImpl!.hasBiometrics;
           // assert
           expect(result, tHasBiometrics);
@@ -106,9 +105,9 @@ void main() {
             BiometricType.fingerprint,
             BiometricType.face
           ];
-          // act
           when(() => mockLocalAuth!.getAvailableBiometrics())
               .thenAnswer((_) => Future.value(tAvailableBiometrics));
+          // act
           final result = await localAuthImpl!.availableBiometrics;
           // assert
           verify(() => mockLocalAuth!.getAvailableBiometrics());
@@ -121,9 +120,9 @@ void main() {
           // arrange
           const tBiometricsType = <BiometricType>[];
           final tPlatformException = PlatformException(code: '00');
-          // act
           when(() => localAuthImpl!.availableBiometrics)
               .thenThrow(tPlatformException);
+          // act
           final result = await localAuthImpl!.availableBiometrics;
           // assert
           verify(() => localAuthImpl!.availableBiometrics);
@@ -141,8 +140,6 @@ void main() {
           const tHasLocalAuthenticate = true;
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(true);
-
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
@@ -155,6 +152,7 @@ void main() {
               ),
             ),
           ).thenAnswer((_) => Future.value(tHasLocalAuthenticate));
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => localAuthImpl!.hasBiometrics);
@@ -178,8 +176,6 @@ void main() {
           const tHasLocalAuthenticate = false;
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(true);
-
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
@@ -192,6 +188,7 @@ void main() {
               ),
             ),
           ).thenAnswer((_) => Future.value(tHasLocalAuthenticate));
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => localAuthImpl!.hasBiometrics);
@@ -215,8 +212,6 @@ void main() {
           const tHasLocalAuthenticate = true;
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(false);
-
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
@@ -229,6 +224,7 @@ void main() {
               ),
             ),
           ).thenAnswer((_) => Future.value(tHasLocalAuthenticate));
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => localAuthImpl!.hasBiometrics);
@@ -245,8 +241,6 @@ void main() {
           const tHasLocalAuthenticate = true;
           final tPlatformException = PlatformException(code: '0');
           final tCanCheckBiometricsFuture = Future.value(true);
-
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenThrow(tPlatformException);
           when(() => mockLocalAuth!.canCheckBiometrics)
@@ -259,6 +253,7 @@ void main() {
               ),
             ),
           ).thenAnswer((_) => Future.value(tHasLocalAuthenticate));
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => localAuthImpl!.hasBiometrics);
@@ -280,9 +275,9 @@ void main() {
           // arrange
           const tHasLocalAuthenticate = false;
           final tPlatformException = PlatformException(code: '00');
-          // act
           when(() => localAuthImpl!.hasLocalAuthenticate)
               .thenThrow(tPlatformException);
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => localAuthImpl!.hasLocalAuthenticate);
@@ -297,8 +292,6 @@ void main() {
           final tPlatformException = PlatformException(code: '00');
           final tIsDeviceSupportedFuture = Future.value(true);
           final tCanCheckBiometricsFuture = Future.value(true);
-
-          // act
           when(() => mockLocalAuth!.isDeviceSupported())
               .thenAnswer((_) => tIsDeviceSupportedFuture);
           when(() => mockLocalAuth!.canCheckBiometrics)
@@ -311,6 +304,7 @@ void main() {
               ),
             ),
           ).thenThrow(tPlatformException);
+          // act
           final result = await localAuthImpl!.hasLocalAuthenticate;
           // assert
           verify(() => mockLocalAuth!.canCheckBiometrics);
