@@ -18,16 +18,10 @@ final localeProvider = StateNotifierProvider<LocaleState, Locale>((ref) {
   );
 });
 
-abstract class LocaleRepository {
-  String get getLanguageCode;
-  String? get getCountryCode;
-  void setLocale(Locale locale);
-}
-
-class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
+class LocaleState extends StateNotifier<Locale> {
   LocaleState({
     required this.secureStorage,
-  }) : super(kFallbackLocale)  {
+  }) : super(kFallbackLocale) {
     initLocale();
   }
   SecureStorageRepository secureStorage;
@@ -52,15 +46,12 @@ class LocaleState extends StateNotifier<Locale> implements LocaleRepository {
   }
 
   /// Get the language code
-  @override
   String get getLanguageCode => state.languageCode;
 
   /// Get the country code
-  @override
   String? get getCountryCode => state.countryCode;
 
   /// Changing the language used
-  @override
   Future<void> setLocale(Locale locale) async {
     state = locale;
     await secureStorage.addItem(keyLanguageCode, state.languageCode);

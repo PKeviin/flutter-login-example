@@ -16,12 +16,7 @@ final themeModeProvider = StateNotifierProvider<ThemeState, ThemeMode>((ref) {
   );
 });
 
-abstract class ThemeRepository {
-  ThemeMode get getTheme;
-  void setTheme(ThemeMode theme);
-}
-
-class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
+class ThemeState extends StateNotifier<ThemeMode> {
   ThemeState({
     required this.secureStorage,
   }) : super(ThemeMode.light) {
@@ -54,11 +49,9 @@ class ThemeState extends StateNotifier<ThemeMode> implements ThemeRepository {
   }
 
   /// Get theme
-  @override
   ThemeMode get getTheme => state;
 
   /// Changing the theme
-  @override
   Future<void> setTheme(ThemeMode theme) async {
     state = theme;
     await secureStorage.addItem(keyThemeMode, state.name);
