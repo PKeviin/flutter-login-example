@@ -3,16 +3,16 @@ Authentication flutter app example for Android and iOS.
 Implementation of a clean architecture with riverpod and +180 tests (95% code coverage without UI, provider & go_router).  
 The objective of this project is to make the best use of good practices and to provide a template for a new project.
 
-### Getting Started
+## Getting Started
 Editing `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file.  
 Run `main_dev.dart`, `main_preprod.dart`, `main_prod.dart`
 
-### Commande line
-##### Build release
+## Commande line
+#### Build release
 iOS : `flutter build ios -t lib/main_prod.dart --release`  
 Android : `flutter build appbundle -t lib/main_prod.dart --release`
 
-##### Build runner for [freezed](https://pub.dev/packages/freezed) and [json_serializable](https://pub.dev/packages/json_serializable)
+#### Build runner for [freezed](https://pub.dev/packages/freezed) and [json_serializable](https://pub.dev/packages/json_serializable)
 `flutter pub run build_runner build --delete-conflicting-outputs`
 
 #### [Splash screen](https://pub.dev/packages/flutter_native_splash)
@@ -29,7 +29,7 @@ sh scripts/create_clean_lcov_and_generate_html.sh true
 ```
 
 
-### Informations
+## Informations
 1. Implementation of `FakeLoginRemoteDataSourceImpl`, Using `LoginRemoteDataSourceImpl` to implement real login
 2. Added a listener in the `app.dart` file to display a global failure snackbar
 3. Added a listener in the `app.dart` file to display a global loader overlay with [loader_overlay](https://pub.dev/packages/loader_overlay)
@@ -37,7 +37,7 @@ sh scripts/create_clean_lcov_and_generate_html.sh true
 5. Saving user in phone, Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
 
 
-### Package used
+## Package used
 1. [Riverpod](https://pub.dev/packages/flutter_riverpod) implementation for state-management
 2. Using [go_router](https://pub.dev/packages/go_router) and `ChangeNotifier` to handle redirects
 3. [Wiredash](https://pub.dev/packages/wiredash) implementation in `app.dart` file to manage feedbacks
@@ -50,19 +50,19 @@ sh scripts/create_clean_lcov_and_generate_html.sh true
 8. Using [fvm](https://fvm.app/) to manage flutter versions with [sidekick](https://github.com/fluttertools/sidekick)
 9. Using [mocktail](https://pub.dev/packages/mocktail) for tests
 
-### Possibility of improvement
+## Possibility of improvement
 1. Replace [flutter_dotenv](https://pub.dev/packages/flutter_dotenv) package to make key hacking harder. Instead, use the [ENVied](https://pub.dev/packages/envied) package and enable obfuscation.
    - https://codewithandrea.com/articles/flutter-api-keys-dart-define-env-files/
 2. Added accessibility with [Semantics](https://api.flutter.dev/flutter/widgets/Semantics-class.html)
    - https://blog.gskinner.com/archives/2022/09/flutter-crafting-a-great-experience-for-screen-readers.html
 3. Implementation widget test, provider test, go_router test and integration tests
 
-### Useful package
+## Useful package
 1. [pigeon](https://pub.dev/packages/pigeon)
 2. [alchemist](https://pub.dev/packages/alchemist)
 
 
-### Project structure
+## Project structure
 ```
 lib/
 ├─ core/
@@ -122,7 +122,7 @@ lib/
 test/
 ```
 
-### The links that helped me create this template
+## The links that helped me create this template
 - [Dev Café](https://www.youtube.com/channel/UCOAErkorTQ0ZbUK9vkFyn8A)
 - [Reso Coder](https://resocoder.com/)
 - [Code with Andrea](https://codewithandrea.com/)
