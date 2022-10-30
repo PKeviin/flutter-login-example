@@ -81,13 +81,13 @@ flutter pub run flutter_native_splash:remove
 ### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
 ```shell
 # Production
-flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-production.yaml
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-production.yaml
 
 # Staging
-flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-staging.yaml
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-staging.yaml
 
 # Development
-flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-development.yaml
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-development.yaml
 ```
 
 ### Test coverage [More detail here](https://www.etiennetheodore.com/test-coverage-explain-with-lcov-on-dart/)
