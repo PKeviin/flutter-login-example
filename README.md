@@ -31,8 +31,26 @@ The objective of this project is to make the best use of good practices and to p
 <a name="getting_started"></a>
 ## 🚀 Getting Started 
 
-Editing `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file.  
-Run `main_dev.dart`, `main_preprod.dart`, `main_prod.dart`.
+This project contains 3 flavors:
+
+- development
+- staging
+- production
+
+Editing `.env.dev`, `.env.stg`, `.env.prod` files and add `.env*` to `.gitignore` file.
+
+To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
+
+```sh
+# Run Development
+$ flutter run --flavor development --target lib/main_development.dart
+
+# Run Staging
+$ flutter run --flavor staging --target lib/main_staging.dart
+
+# Run Production
+$ flutter run --flavor production --target lib/main_production.dart
+```
 
 ---
 
@@ -54,14 +72,26 @@ Run `main_dev.dart`, `main_preprod.dart`, `main_prod.dart`.
 `flutter pub run build_runner build --delete-conflicting-outputs`
 
 ### [Splash screen](https://pub.dev/packages/flutter_native_splash)
-`flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml`  
-`flutter pub run flutter_native_splash:remove`
+```shell
+flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml
+flutter pub run flutter_native_splash:remove
+```
+
 
 ### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
-`flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon.yaml`
+```shell
+# Production
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-production.yaml
+
+# Staging
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-staging.yaml
+
+# Development
+flutter pub run flutter_launcher_icons:main -f flutter_launcher_icon-development.yaml
+```
 
 ### Test coverage [More detail here](https://www.etiennetheodore.com/test-coverage-explain-with-lcov-on-dart/)
-```
+```shell
 sh scripts/import_files_coverage.sh template
 sh scripts/create_clean_lcov_and_generate_html.sh true
 ```
@@ -75,7 +105,7 @@ sh scripts/create_clean_lcov_and_generate_html.sh true
 - Using [go_router](https://pub.dev/packages/go_router) and `ChangeNotifier` to handle redirects
 - [Wiredash](https://pub.dev/packages/wiredash) implementation in `app.dart` file to manage feedbacks
 - Implemented [sentry_flutter](https://pub.dev/packages/sentry_flutter) in `main_prepod.dart` and `main_prod.dart` to capture errors & [logger](https://pub.dev/packages/logger)
-- Managing different environments with [flutter_dotenv](https://pub.dev/packages/flutter_dotenv). Editing the `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file
+- Managing different environments with [flutter_dotenv](https://pub.dev/packages/flutter_dotenv). Editing the `.env.dev`, `.env.stg`, `.env.prod` files and add `.env*` to `.gitignore` file
 - Using [intl](https://pub.dev/packages/intl) to handle multiple languages (`lib/core/locales`)
    - https://plugins.jetbrains.com/plugin/13666-flutter-intl
    - https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl

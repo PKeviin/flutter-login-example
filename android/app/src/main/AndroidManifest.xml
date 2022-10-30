@@ -2,14 +2,11 @@
     package="com.example.template">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:label="Template"
+        android:label="${appName}"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
