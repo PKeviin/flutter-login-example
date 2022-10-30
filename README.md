@@ -79,6 +79,8 @@ flutter pub run flutter_native_splash:remove
 
 
 ### [Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
+Generation of icons for the different flavors for Android and iOS
+
 ```shell
 # Production
 flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-production.yaml
