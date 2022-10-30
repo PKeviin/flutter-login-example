@@ -39,11 +39,11 @@ Run `main_dev.dart`, `main_preprod.dart`, `main_prod.dart`.
 <a name="informations"></a>
 ## ℹ️ Informations
 
-1. Implementation of `FakeLoginRemoteDataSourceImpl`, Using `LoginRemoteDataSourceImpl` to implement real login
-2. Added a listener in the `app.dart` file to display a global failure snackbar
-3. Added a listener in the `app.dart` file to display a global loader overlay with [loader_overlay](https://pub.dev/packages/loader_overlay)
-4. Implementation of `privacy_provider.dart` to manage user's privacy status
-5. Saving user in phone, Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
+- Implementation of `FakeLoginRemoteDataSourceImpl`, Using `LoginRemoteDataSourceImpl` to implement real login
+- Added a listener in the `app.dart` file to display a global failure snackbar
+- Added a listener in the `app.dart` file to display a global loader overlay with [loader_overlay](https://pub.dev/packages/loader_overlay)
+- Implementation of `privacy_provider.dart` to manage user's privacy status
+- Saving user in phone, Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
 
 ---
 
@@ -71,24 +71,24 @@ sh scripts/create_clean_lcov_and_generate_html.sh true
 <a name="package_used"></a>
 ## 📦 Package used
 
-1. [Riverpod](https://pub.dev/packages/flutter_riverpod) implementation for state-management
-2. Using [go_router](https://pub.dev/packages/go_router) and `ChangeNotifier` to handle redirects
-3. [Wiredash](https://pub.dev/packages/wiredash) implementation in `app.dart` file to manage feedbacks
-4. Implemented [sentry_flutter](https://pub.dev/packages/sentry_flutter) in `main_prepod.dart` and `main_prod.dart` to capture errors & [logger](https://pub.dev/packages/logger)
-5. Managing different environments with [flutter_dotenv](https://pub.dev/packages/flutter_dotenv). Editing the `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file
-6. Using [intl](https://pub.dev/packages/intl) to handle multiple languages (`lib/core/locales`)
+- [Riverpod](https://pub.dev/packages/flutter_riverpod) implementation for state-management
+- Using [go_router](https://pub.dev/packages/go_router) and `ChangeNotifier` to handle redirects
+- [Wiredash](https://pub.dev/packages/wiredash) implementation in `app.dart` file to manage feedbacks
+- Implemented [sentry_flutter](https://pub.dev/packages/sentry_flutter) in `main_prepod.dart` and `main_prod.dart` to capture errors & [logger](https://pub.dev/packages/logger)
+- Managing different environments with [flutter_dotenv](https://pub.dev/packages/flutter_dotenv). Editing the `.env.dev`, `.env.preprod`, `.env.prod` files and add `.env*` to `.gitignore` file
+- Using [intl](https://pub.dev/packages/intl) to handle multiple languages (`lib/core/locales`)
    - https://plugins.jetbrains.com/plugin/13666-flutter-intl
    - https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl
-7. Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
-8. Using [fvm](https://fvm.app/) to manage flutter versions with [sidekick](https://github.com/fluttertools/sidekick)
-9. Using [mocktail](https://pub.dev/packages/mocktail) for tests
+- Using [local_auth](https://pub.dev/packages/local_auth) to re-login with biometrics
+- Using [fvm](https://fvm.app/) to manage flutter versions with [sidekick](https://github.com/fluttertools/sidekick)
+- Using [mocktail](https://pub.dev/packages/mocktail) for tests
 
 ---
 
 <a name="translations"></a>
 ## 🌐 Translations 
 
-This project relies on [flutter_localizations][flutter_localizations_link] with [Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl).
+This project relies on [flutter_localizations][https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html] with [Flutter Intl](https://plugins.jetbrains.com/plugin/13666-flutter-intl).
 
 ### Adding Strings
 1. To add a new localizable string, open the `intl_en.arb` and all other `.arb` file at `lib/core/lcoales/l10n/`.
@@ -148,11 +148,10 @@ For each supported locale, add a new ARB file in `lib/core/locales/l10n`.
 
 ---
 
+<a name="deploy"></a>
 ## 🚚 Deploying the app
 
-### 📱 Deploy the Mobile app
-
-#### 🛠 Prerequisites
+### 🛠 Prerequisites
 - Code Signin Assets
    - 🍏 Apple Certificate
       - public key (download from the developer.apple.com console)
@@ -161,27 +160,24 @@ For each supported locale, add a new ARB file in `lib/core/locales/l10n`.
       - `key.properties` file -> to store at: `app/android/key.properties`
       - `android_key.keystore` file -> to store at: `app/android/app/android_key.keystore`
 
-#### 🏷 Bump the app version
+### 🏷 Bump the app version
 In `pubspec.yaml`:
 ``` yaml
 version: 0.0.1+1 # {version}+{build} Bump version following semantic version rules, and bump build ALWAYS (for each new release)
 ```
-commit and push to `master` branch
+commit and push to `master` branch  
 commit and push tag `v{version} (v0.0.1)` to `master` branch
 
-#### 📦 Building apps for the stores
-🍏 iOS
-   - `flutter build ios -t lib/main_prod.dart --release`
+### 📦 Building apps for the stores
+- 🍏 iOS : `flutter build ios -t lib/main_prod.dart --release`
+- 🤖 Android : `flutter build appbundle -t lib/main_prod.dart --release`
 
-🤖 Android:
-   - `flutter build appbundle -t lib/main_prod.dart --release`
-
-#### 🚚 Upload to stores
+### 🚚 Upload to stores
 
 ##### 🍏 iOS
-📦 Upload the build to App Store Connect using the [Transporter App](https://apps.apple.com/us/app/transporter/id1450874784)
-
+Upload the build to App Store Connect using the [Transporter App](https://apps.apple.com/us/app/transporter/id1450874784)  
 Go to the App Store Connect console: https://appstoreconnect.apple.com/apps/
+
 ###### ☑️ TestFlight
 - ⏳ Wait for the build to be available for testing
 - 🔍 Submit for review
@@ -195,6 +191,7 @@ Go to the App Store Connect console: https://appstoreconnect.apple.com/apps/
 
 ##### 🤖 Android
 Go to Google Play console: https://play.google.com/console/u/0/developers/
+
 ###### ☑️ Tests Internes
 - 👉 Create a Release
 - 📦 Uploader the build
@@ -221,8 +218,8 @@ Go to Google Play console: https://play.google.com/console/u/0/developers/
 <a name="useful_package"></a>
 ## 📦 Useful package
 
-1. [pigeon](https://pub.dev/packages/pigeon)
-2. [alchemist](https://pub.dev/packages/alchemist)
+- [pigeon](https://pub.dev/packages/pigeon)
+- [alchemist](https://pub.dev/packages/alchemist)
 
 ---
 
