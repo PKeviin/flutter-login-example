@@ -199,8 +199,8 @@ commit and push to `master` branch
 commit and push tag `v{version} (v0.0.1)` to `master` branch
 
 ### 📦 Building apps for the stores
-- 🍏 iOS : `flutter build ios -t lib/main_prod.dart --release`
-- 🤖 Android : `flutter build appbundle -t lib/main_prod.dart --release`
+- 🍏 iOS : `flutter build ios --flavor production --target lib/main_prod.dart --release`
+- 🤖 Android : `flutter build appbundl --flavor production --target lib/main_prod.dart --release`
 
 ### 🚚 Upload to stores
 
