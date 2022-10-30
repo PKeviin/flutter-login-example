@@ -327,6 +327,7 @@ The links that helped me create this template
 - [Code with Andrea](https://codewithandrea.com/)
 - [Flutter Mapp](https://fluttermapp.com)
 - [Udemey : Flutter & Dart - The Complete Guide (2022 Edition)](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/)
+- [Flavors Android & iOS](https://medium.com/@animeshjain/build-flavors-in-flutter-android-and-ios-with-different-firebase-projects-per-flavor-27c5c5dac10b)
 - https://github.com/rrousselGit/riverpod
 - https://github.com/lucavenir/go_router_riverpod
 - https://github.com/flutter/packages/tree/main/packages/go_router
