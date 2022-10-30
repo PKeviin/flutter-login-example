@@ -4,9 +4,9 @@ flutter pub get
 sh scripts/import_files_coverage.sh template
 flutter test --coverage
 lcov --remove coverage/lcov.info \
-'lib/main_dev.dart' \
-'lib/main_preprod.dart' \
-'lib/main_prod.dart' \
+'lib/main_development.dart' \
+'lib/main_staging.dart' \
+'lib/main_production.dart' \
 'lib/app.dart' \
 'lib/ui/*.dart' \
 'lib/core/utils/utils_ui.dart' \

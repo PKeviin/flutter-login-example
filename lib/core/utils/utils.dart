@@ -28,7 +28,7 @@ class Utils {
     final logger = container.read(loggerImplProvider);
     await logger.initErrorDisplayManagement(
       message: 'Error',
-      isDev: Credential.isDev,
+      isDev: Credential.isDevelopment,
     );
     logger.initDebugPrint(
       isRelease: kReleaseMode,

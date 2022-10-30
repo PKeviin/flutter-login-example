@@ -15,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
-    debugLogDiagnostics: Credential.isDev,
+    debugLogDiagnostics: Credential.isDevelopment,
     // Global key for snacback
     navigatorKey: navigatorKey,
     // Initial location

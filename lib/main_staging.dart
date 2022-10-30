@@ -12,7 +12,7 @@ import 'core/utils/utils.dart';
 
 Future main() async {
   await runZonedGuarded(() async {
-    await dotenv.load(fileName: '.env.preprod');
+    await dotenv.load(fileName: '.env.stg');
     await Utils.initBeforeRunApp();
     await SentryFlutter.init(
       (options) {
@@ -26,7 +26,7 @@ Future main() async {
     final container = ProviderContainer();
     await container.read(loggerImplProvider).traceLogError(
           message: 'dart error',
-          isDev: Credential.isDev,
+          isDev: Credential.isDevelopment,
           error: error,
           stacktrace: stacktrace,
         );

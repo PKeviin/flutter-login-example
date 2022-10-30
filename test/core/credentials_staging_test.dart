@@ -9,23 +9,23 @@ Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('dotenv', () {
-    group('.env.prod', () {
+    group('.env.stg', () {
       setUp(() {
-        dotenv.testLoad(fileInput: fixture('../../.env.prod'));
+        dotenv.testLoad(fileInput: fixture('../../.env.stg'));
       });
 
-      test('Incorrect environement should be rejected', () {
+      test('incorrect environement should be rejected', () {
         // arrange
-        const tResult = 'prod';
+        const tResult = 'staging';
         // act
         final env = dotenv.env['ENV'];
-        final isProd = env == tResult;
+        final isPreprod = env == tResult;
         // assert
         expect(env, tResult);
         expect(env, Credential.env);
-        expect(isProd, Credential.isProduction);
-        expect(!isProd, Credential.isDev);
-        expect(!isProd, Credential.isPreprod);
+        expect(isPreprod, Credential.isStaging);
+        expect(!isPreprod, Credential.isDevelopment);
+        expect(!isPreprod, Credential.isProduction);
       });
 
       test('incorrect api url should be rejected', () {

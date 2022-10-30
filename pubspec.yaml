@@ -85,7 +85,7 @@ flutter:
     - assets/images/flags/
     - assets/images/errors/
     - .env.dev
-    - .env.preprod
+    - .env.stg
     - .env.prod
   fonts:
     - family: OpenSans

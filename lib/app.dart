@@ -51,7 +51,7 @@ class App extends ConsumerWidget {
           overlayWidget: const Center(child: CircularIndicator()),
           child: MaterialApp.router(
             title: 'Template App',
-            debugShowCheckedModeBanner: Credential.isDev,
+            debugShowCheckedModeBanner: Credential.isDevelopment,
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

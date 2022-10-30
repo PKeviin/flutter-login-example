@@ -15,7 +15,7 @@ abstract class ExceptionCustom implements Exception {
       final container = ProviderContainer();
       container.read(loggerImplProvider).traceLogError(
             message: 'dart error',
-            isDev: Credential.isDev,
+            isDev: Credential.isDevelopment,
             error: error,
             stacktrace: stacktrace,
           );

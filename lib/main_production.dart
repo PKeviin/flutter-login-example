@@ -26,7 +26,7 @@ Future main() async {
     final container = ProviderContainer();
     await container.read(loggerImplProvider).traceLogError(
           message: 'dart error',
-          isDev: Credential.isDev,
+          isDev: Credential.isDevelopment,
           error: error,
           stacktrace: stacktrace,
         );
